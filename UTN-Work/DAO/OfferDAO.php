@@ -85,5 +85,18 @@ class OfferDAO implements IOfferDAO{
             }
         }
     }
+
+    public function getOfferById($offerId)
+    {
+        $this->retrieveData();
+        $offer = null;
+        foreach($this->offers as $obj)
+        {
+            if($obj->getOfferId() == $offerId)
+                $offer = $obj;
+        }
+
+        return $offer;
+    }
 }
 ?>
