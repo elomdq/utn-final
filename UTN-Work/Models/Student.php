@@ -1,10 +1,10 @@
 <?php 
 
-namespace Model;
+namespace Models;
 
-use Model\User as User;
-use Model\Offer as Offer;
-use Model\Company as Company;
+use Models\User as User;
+use Models\Offer as Offer;
+use Models\Company as Company;
 
 class Student extends User{
 
@@ -12,8 +12,8 @@ class Student extends User{
     private $studentId;
     private $careerId;
     private $fileNumber;
-    private $nombre;
-    private $apellido;
+    private $firstName;
+    private $lastName;
     private $dni;
     private $gender;
     private $birthDate;
@@ -37,7 +37,7 @@ class Student extends User{
 
     //return List<Offer>
     public function listAppliedOffers(){
-
+        
     }
 
     public function viewProfile(){
@@ -71,11 +71,8 @@ class Student extends User{
     public function getFileNumber(){ return $this->fileNumber; }
     public function setFileNumber($fileNumber): self { $this->fileNumber = $fileNumber; return $this; }
 
-    public function getNombre(){ return $this->nombre; }
-    public function setNombre($nombre): self { $this->nombre = $nombre; return $this; }
-
-    public function getApellido(){ return $this->apellido; }
-    public function setApellido($apellido): self { $this->apellido = $apellido; return $this; }
+    public function getLastName(){ return $this->lastName; }
+    public function setLastName($lastName): self { $this->lastName = $lastName; return $this; }
 
     public function getDni(){ return $this->dni; }
     public function setDni($dni): self { $this->dni = $dni; return $this; }
@@ -88,6 +85,9 @@ class Student extends User{
 
     public function getPhoneNumber(){ return $this->phoneNumber; }
     public function setPhoneNumber($phoneNumber): self { $this->phoneNumber = $phoneNumber; return $this; }
+
+    public function getFirstName(){ return $this->firstName; }
+    public function setFirstName($firstName): self { $this->firstName = $firstName; return $this; }
 }
 
 ?>

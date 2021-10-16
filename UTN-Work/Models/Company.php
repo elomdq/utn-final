@@ -1,10 +1,10 @@
 <?php 
 
-namespace Model;
+namespace Models;
 
-use Model\User as User;
-use Model\Student as Student;
-use Model\Offer as Offer;
+use Models\User as User;
+use Models\Student as Student;
+use Models\Offer as Offer;
 
 class Company extends User{
 

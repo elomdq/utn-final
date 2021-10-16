@@ -1,6 +1,6 @@
 <?php 
 
-namespace Model;
+namespace Models;
 
 class Offer{
 
@@ -14,11 +14,10 @@ class Offer{
     private $careerId;
 
     public function showDetails(){
-
+        
     }
 
     
-
     public function getOfferId(){ return $this->offerId; }
     public function setOfferId($offerId): self { $this->offerId = $offerId; return $this; }
 

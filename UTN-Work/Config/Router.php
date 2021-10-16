@@ -7,7 +7,8 @@ use Config\Request as Request;
 class Router{
 
     public static function route(Request $request){
-        $controllerName = $request->getController();
+
+        $controllerName = $request->getcontroller() . 'Controller';
         $methodName = $request->getMethod();
         $methodParameters = $request->getparameters();
 

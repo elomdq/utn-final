@@ -1,8 +1,8 @@
 <?php 
 
-namespace Model;
+namespace Models;
 
-use Model\User as User;
+use Models\User as User;
 
 class Admin extends User{
 

@@ -11,6 +11,8 @@ class Request{
 
     public function __construct()
     {
+        /*if($_GET)
+        {echo $_GET['url'];}*/
 
         //Filtrado de URL que nos envia el .htaccess y armado de array con los datos (controller, method y parameters)
         $url = filter_input(INPUT_GET, "url", FILTER_SANITIZE_URL);
@@ -25,7 +27,7 @@ class Request{
 
         //Luego obtenemos el nombre del method elegido
         if(empty($urlArray))
-            $this->method = "Index";
+            $this->method = "showLoginView";
         else
             $this->method = array_shift($urlArray);
 
@@ -49,6 +51,11 @@ class Request{
 
         //Para manejo de Files ver framework modelo de catedra
     }
+
+    private static function getMethodRequest()
+    {
+        return $_SERVER["REQUEST_METHOD"];
+    }  
 
     public function getController(){ return $this->controller; }
     public function setController($controller): self { $this->controller = $controller; return $this; }
