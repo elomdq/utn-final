@@ -13,7 +13,7 @@ class CareerDAO implements ICareerDAO{
 
     public function __construct()
     {
-        $this->filename = ROOT . "Data/careers.php";
+        $this->filename = ROOT . "Data/careers.json";
 
         if(!file_exists($this->filename)){
             $this->careerConection = new CareerConection;

@@ -49,6 +49,11 @@ class CompanyDAO implements ICompanyDAO{
             $companyData['city'] = $compnay->getCity();
             $companyData['direction'] = $compnay->getDirection();
             $companyData['cuit'] = $compnay->getCuit();
+            $companyData['email'] = $compnay->getEmail();
+            $companyData['active'] = $compnay->getActive();
+            $companyData['userId'] = $compnay->getUserId();
+
+
            
             array_push($array_to_encode, $companyData);
 
@@ -78,7 +83,7 @@ class CompanyDAO implements ICompanyDAO{
                 $company->setUserId($companyData['userId']);
                 $company->setActive($companyData['active']);
 
-                array_push($this->offers, $company);
+                array_push($this->companies, $company);
             }
         }
     }

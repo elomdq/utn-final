@@ -16,16 +16,24 @@
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item no-arrow mx-1">
+                <a class="nav-link" href="<?php echo FRONT_ROOT . "Company/showCompaniesList"; ?>" id="offers" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Empresas</span>
+                </a>
+            </li>
+
+            <li class="nav-item no-arrow mx-1">
                 <a class="nav-link" href="<?php echo FRONT_ROOT . "Offer/showOffersList"; ?>" id="offers" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Ofertas Laborales</span>
                 </a>
             </li>
 
+            <!--
             <li class="nav-item no-arrow mx-1">
                 <a class="nav-link" href="<?php echo FRONT_ROOT . "Home/logout"; ?>" id="session" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Cerrar Sesión</span>
                 </a>
             </li>
+            -->
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -45,13 +53,13 @@
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Estado Academico
                     </a>
-                    <!--
+                    
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="<?php echo FRONT_ROOT . "home/logout"; ?>" data-toggle="modal" data-target="#logoutModal">
+                    <a class="dropdown-item" href="<?php echo FRONT_ROOT . "home/logout"; ?>" >
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Cerrar Sesion
                     </a>
-                    -->
+                    
                 </div>
             </li>
 

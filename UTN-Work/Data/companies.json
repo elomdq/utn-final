@@ -1,0 +1,32 @@
+[
+    {
+        "companyName": "Globant",
+        "telephone": "+54 2236480548",
+        "city": "Mar del Plata",
+        "direction": "Colon 400",
+        "cuit": "20-3568479-8",
+        "email": "contacto@globant.com",
+        "active": true,
+        "userId": 300
+    },
+    {
+        "companyName": "Accenture",
+        "telephone": "+54 223268475",
+        "city": "Mar del Plata",
+        "direction": "Independencia 4500",
+        "cuit": "20-27598452-8",
+        "email": "contacto@accenture.com",
+        "active": true,
+        "userId": 300
+    },
+    {
+        "companyName": "GlobalLogic",
+        "telephone": "+54 223359784",
+        "city": "Mar del Plata",
+        "direction": "Constitucion 400",
+        "cuit": "20-26485915-8",
+        "email": "hola@globallogic.com",
+        "active": true,
+        "userId": 300
+    }
+]
