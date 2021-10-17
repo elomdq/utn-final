@@ -1,10 +1,10 @@
 <?php 
-namespace Conections;
+namespace Connections;
 
 use DAO\CareerDAO as CareerDAO;
 use Models\Career as Career;
 
-class CareerConection{
+class CareerConnection{
 
     private $url;
     private $curlHandler;
@@ -32,6 +32,5 @@ class CareerConection{
     
 }
 
-
-
+?>
 

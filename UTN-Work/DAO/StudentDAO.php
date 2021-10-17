@@ -3,15 +3,23 @@ namespace DAO;
 
 use DAO\IStudentDAO as IStudentDAO;
 use Models\Student as Student;
+use Connections\StudentConnection as StudentConnection;
 
 class StudentDAO implements IStudentDAO{
 
     private $students = array();
     private $filename;
+    private $studentConnection;
 
     public function __construct()
     {
         $this->filename = ROOT . "Data/students.json";
+
+        /*
+        if(!file_exists($this->filename)){
+            $this->studentConnection = new StudentConnection;
+            $this->downloadDataToJson($this->careerConection->executeCurl());
+        }*/
     }
 
     public function add(Student $student){
@@ -97,6 +105,38 @@ class StudentDAO implements IStudentDAO{
         
         return $student;
     }
+
+    public function connectToApi()
+    {
+       
+
+    }
+
+    public function downloadDataToJson($apiResponse){
+        
+        //decodifico el json en un array
+        $arrayStudents = json_decode($apiResponse, true);
+
+        foreach($arrayStudents as $studentData)
+        {
+            $student = new Student;
+            $student->setStudentId($studentData['studentId']);
+            $student->setCareerId($studentData['careerId']);
+            $student->setFileNumber($studentData['fileNumber']);
+            $student->setFirstName($studentData['name']);
+            $student->setLastName($studentData['lastName']);
+            $student->setDni($studentData['dni']);
+            $student->setGender($studentData['gender']);
+            $student->setPhoneNumber($studentData['phoneNumber']);
+            $student->setBirthDate($studentData['birthDate']);
+            $student->setEmail($studentData['email']);
+            $student->setActive($studentData['active']);
+                
+            array_push($this->students, $student);
+        }
+
+        $this->saveData();
+    } 
 
 }
 

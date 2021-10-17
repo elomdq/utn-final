@@ -24,7 +24,7 @@ class HomeController{
     {
         $student = $this->studentDAO->GetStudentByEmail($email);
 
-        if($student != null)
+        if($student != null && $student->getActive() == true)
         {
             $_SESSION["loggedUser"] = $student;
             $this->home();

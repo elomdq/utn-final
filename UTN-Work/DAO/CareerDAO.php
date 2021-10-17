@@ -1,7 +1,7 @@
 <?php 
 namespace DAO;
 
-use Conections\CareerConection;
+use Connections\CareerConnection;
 use Models\Career as Career;
 use DAO\ICareerDAO as ICareerDAO;
 
@@ -9,14 +9,14 @@ class CareerDAO implements ICareerDAO{
 
     private $careers = array();
     private $filename;
-    private $careerConection; 
+    private $careerConnection; 
 
     public function __construct()
     {
         $this->filename = ROOT . "Data/careers.json";
 
         if(!file_exists($this->filename)){
-            $this->careerConection = new CareerConection;
+            $this->careerConnection = new CareerConnection;
             $this->downloadDataToJson($this->careerConection->executeCurl());
         }
     }
