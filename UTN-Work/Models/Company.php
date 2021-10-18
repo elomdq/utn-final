@@ -14,7 +14,6 @@ class Company extends User{
     private $direction;
     private $cuit;
 
-
     public function viewProfile()
     {
         

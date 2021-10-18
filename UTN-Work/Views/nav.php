@@ -16,7 +16,7 @@
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item no-arrow mx-1">
-                <a class="nav-link" href="<?php echo FRONT_ROOT . "Company/showCompaniesList"; ?>" id="offers" role="button" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" href="<?php echo FRONT_ROOT . "Company/listCompanies"; ?>" id="offers" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Empresas</span>
                 </a>
             </li>
@@ -53,13 +53,20 @@
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Estado Academico
                     </a>
+
+                    <?php if(isset($_SESSION["admin"])) {?>
+                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Company/addView"; ?>">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Admin Empresa
+                    </a>
+                    <?php } ?>
                     
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?php echo FRONT_ROOT . "home/logout"; ?>" >
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Cerrar Sesion
                     </a>
-                    
+
                 </div>
             </li>
 

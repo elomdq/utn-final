@@ -7,7 +7,7 @@
         "cuit": "20-3568479-8",
         "email": "contacto@globant.com",
         "active": true,
-        "userId": 300
+        "userId": 1
     },
     {
         "companyName": "Accenture",
@@ -17,7 +17,7 @@
         "cuit": "20-27598452-8",
         "email": "contacto@accenture.com",
         "active": true,
-        "userId": 300
+        "userId": 2
     },
     {
         "companyName": "GlobalLogic",
@@ -27,6 +27,26 @@
         "cuit": "20-26485915-8",
         "email": "hola@globallogic.com",
         "active": true,
-        "userId": 300
+        "userId": 3
+    },
+    {
+        "companyName": "Test",
+        "telephone": "123",
+        "city": "A la vuelta",
+        "direction": "Mar del Plata",
+        "cuit": "123@123",
+        "email": null,
+        "active": null,
+        "userId": 3
+    },
+    {
+        "companyName": "Test2",
+        "telephone": "123213123",
+        "city": "A la vuelta",
+        "direction": "Mar del Plata",
+        "cuit": "123@123",
+        "email": null,
+        "active": null,
+        "userId": 4
     }
 ]

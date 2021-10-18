@@ -24,12 +24,22 @@ class HomeController{
     {
         $student = $this->studentDAO->GetStudentByEmail($email);
 
-        if($student != null && $student->getActive() == true)
+        if($email == 'admin@admin')
         {
-            $_SESSION["loggedUser"] = $student;
+            $admin = 'admin';
+            $_SESSION["loggedUser"] =  $student;
+            $_SESSION["admin"]=$admin;
             $this->home();
-        } else
-            $this->showLoginView();
+        }
+        else 
+        {
+            if($student != null && $student->getActive() == true )
+                {
+                    $_SESSION["loggedUser"] = $student;
+                    $this->home();
+                } else
+                    $this->showLoginView();
+        }
     }
 
     public function showLoginView()
