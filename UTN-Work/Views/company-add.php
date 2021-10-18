@@ -43,7 +43,7 @@
                          <div class="col-lg-">
                               <div>
                                    <label for="active">Active</label>
-                                   <input type="checkbox" name="active" class="form-control" required min="0">
+                                   <input type="checkbox" name="active" class="form-control" min="0">
                               </div>
                          </div>
                     </div>

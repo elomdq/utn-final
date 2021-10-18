@@ -32,6 +32,13 @@ class CompanyController{
                 $company->setDirection($city);
                 $company->setCity($direction);
                 $company->setCuit($cuit);
+                $company->setEmail($email);
+                if (isset($_POST['active'])) 
+                {
+                    $company->setActive(true);
+                } else {
+                    $company->setActive(false);
+                }
 
                 $this->companyDAO->Add($company);
 

@@ -48,5 +48,45 @@
         "email": null,
         "active": null,
         "userId": 4
+    },
+    {
+        "companyName": "Test3",
+        "telephone": "12",
+        "city": "12",
+        "direction": "Mar del Plata",
+        "cuit": "1212",
+        "email": null,
+        "active": null,
+        "userId": 5
+    },
+    {
+        "companyName": "Test",
+        "telephone": "123",
+        "city": "A la vuelta",
+        "direction": "Mar del Plata",
+        "cuit": "123",
+        "email": null,
+        "active": null,
+        "userId": 6
+    },
+    {
+        "companyName": "Test",
+        "telephone": "123",
+        "city": "A la vuelta",
+        "direction": "Mar del Plata",
+        "cuit": "123",
+        "email": null,
+        "active": false,
+        "userId": 7
+    },
+    {
+        "companyName": "Test2",
+        "telephone": "123",
+        "city": "A la vuelta",
+        "direction": "Mar del Plata",
+        "cuit": "123",
+        "email": null,
+        "active": true,
+        "userId": 8
     }
 ]
