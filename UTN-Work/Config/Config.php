@@ -8,6 +8,8 @@ define("FRONT_ROOT", "http://localhost/lab4/tp-final/utn-final/UTN-Work/");
 define("VIEWS_PATH", "Views/");
 define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "css/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
+define("VENDOR_PATH", FRONT_ROOT.VIEWS_PATH . "vendor/");
+
 
 define("DB_HOST", "localhost");
 define("DB_NAME", "University");
