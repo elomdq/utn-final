@@ -37,6 +37,7 @@ $companyDAO = new CompanyDAO;
             <!-- </a> -->
         <?php } ?>
 
+<!--
 <div class="container">
     <h2 class="mb-4">Compañias Disponibles</h2>
     <table class="table bg-light-alpha">
@@ -70,3 +71,4 @@ $companyDAO = new CompanyDAO;
         </tbody>
     </table>
 </div>
+-->
