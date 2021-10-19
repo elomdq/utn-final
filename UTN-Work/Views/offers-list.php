@@ -24,7 +24,6 @@ $offers = new OfferDAO;
     <div class="row justify-content-center">
 
         <?php foreach ($offers->getAll() as $offer) { ?>
-            <!-- Earnings (Monthly) Card Example -->
             <!-- <a class="col-xl-8 col-md-8" href="#"> -->
             <div class="col-8  mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -38,7 +37,7 @@ $offers = new OfferDAO;
                                 <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div> -->
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                               <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
                             </div>
                         </div>
                         <a href="<?php echo FRONT_ROOT . "offer/showOfferDetails/" . $offer->getOfferId(); ?>" class="stretched-link"> ver más </a>
