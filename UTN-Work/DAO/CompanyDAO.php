@@ -16,6 +16,7 @@ class CompanyDAO implements ICompanyDAO{
 
     public function add(Company $company){
         $this->retrieveAll();
+        $company->setUserId($this->getLastId()+1);
         array_push($this->companies, $company);
         $this->saveData();
     }
@@ -60,6 +61,13 @@ class CompanyDAO implements ICompanyDAO{
             $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
             file_put_contents($this->filename, $jsonEnconde);
         }
+    }
+
+    private function getLastId(){
+        $this->retrieveAll();
+        $auxList = $this->companies;
+        $lastItem = end($auxList);
+        return $lastItem->getUserId();
     }
 
     private function retrieveAll(){

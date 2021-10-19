@@ -4,6 +4,21 @@ use Models\Offer as Offer;
 use DAO\OfferDAO as OfferDAO;
 
 $offers = new OfferDAO;
+$offerList = array();
+
+if($_SESSION['userType'] == 0)
+{
+    foreach ($offers->getAll() as $offer) { 
+        if($offer->getCareerId() == $_SESSION['loggedUser']->getCareerId())
+        {
+            array_push($offerList, $offer);
+        }
+    }
+}
+else{
+    $offerList = $offers->getAll();
+}
+
 /*$offer1 = new Offer;
 
     $offer1->setOfferId(1);
@@ -23,7 +38,7 @@ $offers = new OfferDAO;
     <!-- Content Row -->
     <div class="row justify-content-center">
 
-        <?php foreach ($offers->getAll() as $offer) { ?>
+        <?php foreach ($offerList as $offer) { ?>
             <!-- <a class="col-xl-8 col-md-8" href="#"> -->
             <div class="col-8  mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
