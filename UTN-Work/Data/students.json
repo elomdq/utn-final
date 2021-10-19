@@ -1,18 +1,5 @@
 [
     {
-        "studentId": 0,
-        "careerId": 2,
-        "name": "Admin",
-        "lastName": "Admin",
-        "fileNumber": "Admin",
-        "dni": "Admin",
-        "phoneNumber": "Admin",
-        "gender": "El root",
-        "birthDate": "2021-06-28T00:00:00",
-        "email": "admin@admin",
-        "active": true
-    },
-    {
         "studentId": 1,
         "careerId": 2,
         "name": "Devlen",

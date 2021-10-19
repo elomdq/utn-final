@@ -9,9 +9,8 @@ class Admin extends User{
     private $name;
     private $lastName;
 
-    function __construct($name,$lastName){
-        $this->setName($name);
-        $this->setLastName($lastName);
+    function __construct(){
+       
     }
 
     public function viewProfile()
@@ -47,9 +46,9 @@ class Admin extends User{
     //return admin
     public function createAdmin(){}
 
-    public function getName(){ return $this->name; }
+    public function getFirstName(){ return $this->name; }
     public function getLastName(){ return $this->lastName; }
-    public function setName($name): self { $this->name = $name; return $this; }
+    public function setFirstName($name): self { $this->name = $name; return $this; }
     public function setLastName($lastName): self { $this->lastName = $lastName; return $this; }
 
 }

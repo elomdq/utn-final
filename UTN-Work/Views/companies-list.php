@@ -13,7 +13,7 @@ require_once('nav.php');
             <th>Direccion</th>
             <th>CUIT</th>
             <th>Email</th>
-            <?php if(isset($_SESSION["admin"])){ ?> <th>Delete</th> <?php } ?>
+            <?php if($_SESSION['userType'] == 1){ ?> <th>Delete</th> <?php } ?>
         </thead>
         <tbody>
             <?php
@@ -27,7 +27,7 @@ require_once('nav.php');
                         <td><?php echo $company->getDirection(); ?></td>
                         <td><?php echo $company->getCuit(); ?></td>
                         <td><?php echo $company->getEmail(); ?></td>
-                        <?php if(isset($_SESSION["admin"])){ ?> <td><input type="checkbox" name="active" class="form-control" min="0"></td> <?php } ?>
+                        <?php if($_SESSION['userType'] == 1){ ?> <td><input type="checkbox" name="active" class="form-control" min="0"></td> <?php } ?>
                     </tr>
             <?php
                 }

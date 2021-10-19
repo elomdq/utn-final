@@ -43,21 +43,25 @@
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?php echo $_SESSION['loggedUser']->getFirstName() . " " . $_SESSION['loggedUser']->getLastName(); ?></span>
                     <!-- <img class="img-profile rounded-circle" src="img/undraw_profile.svg"> -->
                 </a>
+                
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Student/showStudentProfile"; ?>">
+                    <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Profile/showProfile"; ?>">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Perfil
                     </a>
+
+                    <?php if($_SESSION['userType'] == 0) {?>
                     <a class="dropdown-item" href="#">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Estado Academico
                     </a>
+                    <?php } ?>
 
-                    <?php if(isset($_SESSION["admin"])) {?>
+                    <?php if($_SESSION['userType'] == 1) {?>
                         <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Company/addView"; ?>">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Admin Empresa
+                        Agregar Empresa
                     </a>
                     <?php } ?>
                     

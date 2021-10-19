@@ -7,7 +7,7 @@
                          <div class="col-lg-3">
                               <div class="form-group">
                                    <label for="companyName">Nombre</label>
-                                   <input type="text" name="companyName" required class="form-control" placeholder="Nombre Company">
+                                   <input type="text" name="companyName" required class="form-control" placeholder="Nombre de empresa">
                               </div>
                          </div>                         
                          <div class="col-lg-2">
@@ -25,7 +25,7 @@
                          <div class="col-lg-2">
                               <div class="form-group">
                                    <label for="companyDir">Direction</label>
-                                   <input type="text" name="companyDir" class="form-control" required placeholder="Cireccion" min="0">
+                                   <input type="text" name="companyDir" class="form-control" required placeholder="Direccion" min="0">
                               </div>
                          </div>
                          <div class="col-lg-2">
