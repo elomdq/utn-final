@@ -53,8 +53,6 @@ class CompanyDAO implements ICompanyDAO{
             $companyData['email'] = $compnay->getEmail();
             $companyData['active'] = $compnay->getActive();
             $companyData['userId'] = $compnay->getUserId();
-
-
            
             array_push($array_to_encode, $companyData);
 
