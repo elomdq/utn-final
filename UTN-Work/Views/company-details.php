@@ -20,20 +20,18 @@ if(isset($_SESSION['company'])){
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"><?php echo $company->getCompanyName(); ?></h6>
-              <!--
+              
+                <?php if($_SESSION['userType'] == 1) {?>
                 <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                        <div class="dropdown-header">Dropdown Header:</div>
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "company/editCompany/" . $company->getUserId(); ?>">Editar</a>
                     </div>
                 </div>
-                -->
+                <?php } ?>
+                
             </div>
 
             <!-- Card Body -->

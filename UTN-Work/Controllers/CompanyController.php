@@ -20,6 +20,7 @@ class CompanyController{
         require_once VIEWS_PATH . "company-add.php";
     }
 
+
     public function createCompany($companyName,$telephone,$city,$direction,$cuit,$email)  {
         if($_POST)
         {
@@ -82,6 +83,53 @@ class CompanyController{
 
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "company-details.php";
+    }
+
+    public function editCompany($companyId)
+    {
+        require_once VIEWS_PATH . "validate-session.php";
+
+        //paso la oferta por la variable superglobal SESSION
+        $_SESSION['company'] = $this->companyDAO->getCompanyById($companyId);
+
+        require_once VIEWS_PATH . "nav.php" ;
+        require_once VIEWS_PATH . "company-edit.php";
+    }
+
+    public function modifyCompany($companyName, $telephone, $city, $direction, $cuit, $email, $active, $userId)
+    {
+
+        if($_POST)
+        {
+            //$_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['direction'], $_POST['cuit'], $_POST['email']
+            if($this->ValidateInputValues($companyName, $telephone, $city, $direction, $cuit, $email))
+            {
+            
+                $company = new Company;
+
+                $company->setUserId($userId);
+                $company->setCompanyName($_POST['companyName']);
+                $company->setTelephone($_POST['telephone']);
+                $company->setDirection($_POST['city']);
+                $company->setCity($_POST['direction']);
+                $company->setCuit($_POST['cuit']);
+                $company->setEmail($_POST['email']);
+                if (isset($_POST['active'])) 
+                {
+                    $company->setActive(true);
+                } else {
+                    $company->setActive(false);
+                }
+
+                $this->companyDAO->overrideCompany($company);
+                
+                $this->showCompanyDetails($company->getUserId());
+            } else {
+                $this->addView("Verifique que los campos se encuentren correctamente completos.");
+            }
+        } else {
+            $this->addView("Incorrecto ingreso de datos.");
+        }
     }
 }
 

@@ -6,6 +6,7 @@ use DAO\CompanyDAO as CompanyDAO;
 $companyDAO = new CompanyDAO;
 $companiesList = array();
 
+//Chequeo si hay una key de busqueda antes de cagar la lista
 if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
 {
     foreach($companyDAO->getAll() as $company)
@@ -20,7 +21,6 @@ if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
 {
     $companiesList = $companyDAO->getAll();
 }
-
 ?>
 
 <!-- Contenedor -->
@@ -46,34 +46,31 @@ if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
 
         <!-- List of Companies -->
         <?php foreach ($companiesList as $company) { ?>
-            <!-- Earnings (Monthly) Card Example -->
             <!-- <a class="col-xl-8 col-md-8" href="#"> -->
             <div class="col-8  mb-3">
                 <div class="card border-left-primary shadow h-100 py-1">
                     <div class="card-body py-2">
                         <div class="row no-gutters align-items-center">
+                            
                             <div class="col mr-2">
                                 <div class="text-md font-weight-bold text-primary text-uppercase">
-                                    <?php echo $company->getCompanyName(); ?></div>
-                                <!-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
-                                    <?php #echo $company->getDescription(); 
-                                    ?></div> -->
-                                <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div> -->
+                                    <?php echo $company->getCompanyName(); ?>
+                                </div>
+                                <?php if($_SESSION['userType']==1){ ?>
+                                    <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getUserId(); ?>" class="stretched-link"></a>        
+                                <?php } ?>
                             </div>
-                            <div class="col-auto">
-                                <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
-                            </div>
+
                             <?php if($_SESSION['userType'] != 1) { ?>
                             <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getUserId(); ?>" class="stretched-link"> ver más </a>
                             <?php } ?>
                             <!-- <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getUserId(); ?>" class="<?php if($_SESSION['userType'] != 1) { echo "stretched-link" ; } ?> "> ver más </a> -->
+                           
                             <?php if ($_SESSION['userType'] == 1) { ?>
-                                <a href='#' class="mx-2"><i class="fas fa-pencil-alt fa-2x text-blue-400"></i></a>
-                                <a href=" <?php echo FRONT_ROOT . "company/deleteCompany/" . $company->getUserId(); ?> " class="mx-2"><i class="far fa-trash-alt fa-2x  text-red-400"></i></a>
-                                
+                            <a href="<?php echo FRONT_ROOT . "company/editCompany/" . $company->getUserId(); ?>" class="mx-2"><i class="fas fa-pencil-alt fa-2x text-blue-400"></i></a>
+                            <a href=" <?php echo FRONT_ROOT . "company/deleteCompany/" . $company->getUserId(); ?> " class="mx-2"><i class="far fa-trash-alt fa-2x  text-red-400"></i></a>
                             <?php } ?>
                         </div>
-
                     </div>
                 </div>
             </div>

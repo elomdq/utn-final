@@ -42,12 +42,12 @@
     {
         "companyName": "Test3",
         "telephone": "12",
-        "city": "12",
-        "direction": "Mar del Plata",
+        "city": "Mar del Plata",
+        "direction": "12",
         "cuit": "1212",
-        "email": null,
-        "active": null,
-        "userId": 5
+        "email": "hola@hola",
+        "active": true,
+        "userId": "5"
     },
     {
         "companyName": "Test",
@@ -78,5 +78,15 @@
         "email": null,
         "active": true,
         "userId": 8
+    },
+    {
+        "companyName": "Prueba",
+        "telephone": "223159874",
+        "city": "Sarasa",
+        "direction": "Tandil",
+        "cuit": "20812589548",
+        "email": "hola@prueba.com",
+        "active": true,
+        "userId": 9
     }
 ]
