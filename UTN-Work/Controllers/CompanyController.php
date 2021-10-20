@@ -21,21 +21,22 @@ class CompanyController{
     }
 
 
-    public function createCompany($companyName,$telephone,$city,$direction,$cuit,$email)  {
+    public function createCompany(...$values)  {
        
         if($_POST)
         {
-            if($this->ValidateInputValues($companyName, $telephone, $city, $direction, $cuit, $email))
+            if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['direction'], $_POST['cuit'], $_POST['email']))
             {
 
                 $company = new Company;
-                $company->setCompanyName($companyName);
-                $company->setTelephone($telephone);
-                $company->setDirection($city);
-                $company->setCity($direction);
-                $company->setCuit($cuit);
-                $company->setEmail($email);
 
+                $company->setCompanyName($_POST['companyName']);
+                $company->setTelephone($_POST['telephone']);
+                $company->setDirection($_POST['city']);
+                $company->setCity($_POST['direction']);
+                $company->setCuit($_POST['cuit']);
+                $company->setEmail($_POST['email']);
+                
                 if (isset($_POST['active'])) 
                 {
                     $company->setActive(true);
@@ -118,8 +119,7 @@ class CompanyController{
                 $company->setCity($_POST['direction']);
                 $company->setCuit($_POST['cuit']);
                 $company->setEmail($_POST['email']);
-                if(isset($_POST))
-                    echo $_POST['active'];
+               
                 if (isset($_POST['active'])) 
                 {
                     $company->setActive(true);
