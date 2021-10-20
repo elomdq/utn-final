@@ -51,6 +51,12 @@ class CompanyController{
         }
     } 
 
+    public function deleteCompany($companyId)
+    {
+        $this->companyDAO->remove($companyId);
+        $this->listCompanies();
+    }
+
     public function listCompanies(){
         require_once VIEWS_PATH . "validate-session.php";
         require_once VIEWS_PATH . "nav.php";
@@ -66,6 +72,16 @@ class CompanyController{
                 $validated = true;
         
         return $validated;
+    }
+
+    public function showCompanyDetails($companyId){
+        require_once VIEWS_PATH . "validate-session.php";
+
+        //paso la oferta por la variable superglobal SESSION
+        $_SESSION['company'] = $this->companyDAO->getCompanyById($companyId);
+
+        require_once VIEWS_PATH . "nav.php" ;
+        require_once VIEWS_PATH . "company-details.php";
     }
 }
 

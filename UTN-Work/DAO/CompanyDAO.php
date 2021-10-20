@@ -27,7 +27,7 @@ class CompanyDAO implements ICompanyDAO{
 
         foreach($this->companies as $company)
         {
-            if($company->getUserId() == $companyId)
+            if($company->getUserId() != $companyId)
                 array_push($newList, $company);
         }
 
@@ -94,6 +94,18 @@ class CompanyDAO implements ICompanyDAO{
                 array_push($this->companies, $company);
             }
         }
+    }
+
+    public function getCompanyById($companyId){
+        $this->retrieveAll();
+        $company = null;
+        foreach($this->companies as $obj)
+        {
+            if($obj->getUserId() == $companyId)
+                $company = $obj;
+        }
+
+        return $company;
     }
 
 }
