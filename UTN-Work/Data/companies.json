@@ -1,5 +1,45 @@
 [
     {
+        "companyName": "Globant",
+        "telephone": "+54 2236480548",
+        "city": "Mar del Plata",
+        "direction": "Colon 400",
+        "cuit": "20-3568479-8",
+        "email": "contacto@globant.com",
+        "active": true,
+        "userId": 1
+    },
+    {
+        "companyName": "Accenture",
+        "telephone": "+54 223268475",
+        "city": "Mar del Plata",
+        "direction": "Independencia 4500",
+        "cuit": "20-27598452-8",
+        "email": "contacto@accenture.com",
+        "active": true,
+        "userId": 2
+    },
+    {
+        "companyName": "GlobalLogic",
+        "telephone": "+54 223359784",
+        "city": "Mar del Plata",
+        "direction": "Constitucion 400",
+        "cuit": "20-26485915-8",
+        "email": "hola@globallogic.com",
+        "active": true,
+        "userId": 3
+    },
+    {
+        "companyName": "Test",
+        "telephone": "123",
+        "city": "A la vuelta",
+        "direction": "Mar del Plata",
+        "cuit": "123@123",
+        "email": null,
+        "active": null,
+        "userId": 3
+    },
+    {
         "companyName": "Test3",
         "telephone": "12",
         "city": "12",
@@ -8,5 +48,35 @@
         "email": null,
         "active": null,
         "userId": 5
+    },
+    {
+        "companyName": "Test",
+        "telephone": "123",
+        "city": "A la vuelta",
+        "direction": "Mar del Plata",
+        "cuit": "123",
+        "email": null,
+        "active": null,
+        "userId": 6
+    },
+    {
+        "companyName": "Test",
+        "telephone": "123",
+        "city": "A la vuelta",
+        "direction": "Mar del Plata",
+        "cuit": "123",
+        "email": null,
+        "active": false,
+        "userId": 7
+    },
+    {
+        "companyName": "Test2",
+        "telephone": "123",
+        "city": "A la vuelta",
+        "direction": "Mar del Plata",
+        "cuit": "123",
+        "email": null,
+        "active": true,
+        "userId": 8
     }
 ]
