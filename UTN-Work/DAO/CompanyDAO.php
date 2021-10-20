@@ -1,10 +1,12 @@
-<?php 
+<?php
+
 namespace DAO;
 
 use Models\Company as Company;
 use DAO\ICompanyDAO as ICompanyDAO;
 
-class CompanyDAO implements ICompanyDAO{
+class CompanyDAO implements ICompanyDAO
+{
 
     private $companies = array();
     private $filename;
@@ -14,20 +16,21 @@ class CompanyDAO implements ICompanyDAO{
         $this->filename = ROOT . "Data/companies.json";
     }
 
-    public function add(Company $company){
+    public function add(Company $company)
+    {
         $this->retrieveAll();
-        $company->setUserId($this->getLastId()+1);
+        $company->setUserId($this->getLastId() + 1);
         array_push($this->companies, $company);
         $this->saveData();
     }
 
-    public function remove($companyId){
+    public function remove($companyId)
+    {
         $newList = array();
         $this->retrieveAll();
 
-        foreach($this->companies as $company)
-        {
-            if($company->getUserId() == $companyId)
+        foreach ($this->companies as $company) {
+            if ($company->getUserId() != $companyId)
                 array_push($newList, $company);
         }
 
@@ -35,16 +38,17 @@ class CompanyDAO implements ICompanyDAO{
         $this->saveData();
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         $this->retrieveAll();
         return $this->companies;
     }
 
-    private function saveData(){
+    private function saveData()
+    {
         $array_to_encode = array();
 
-        foreach($this->companies as $compnay)
-        {
+        foreach ($this->companies as $compnay) {
             $companyData['companyName'] = $compnay->getCompanyName();
             $companyData['telephone'] = $compnay->getTelephone();
             $companyData['city'] = $compnay->getCity();
@@ -55,7 +59,7 @@ class CompanyDAO implements ICompanyDAO{
             $companyData['userId'] = $compnay->getUserId();
 
 
-           
+
             array_push($array_to_encode, $companyData);
 
             $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
@@ -63,24 +67,24 @@ class CompanyDAO implements ICompanyDAO{
         }
     }
 
-    private function getLastId(){
+    private function getLastId()
+    {
         $this->retrieveAll();
         $auxList = $this->companies;
         $lastItem = end($auxList);
         return $lastItem->getUserId();
     }
 
-    private function retrieveAll(){
+    private function retrieveAll()
+    {
         $this->companies = array();
 
-        if(file_exists($this->filename))
-        {
+        if (file_exists($this->filename)) {
             $jsonDecode = file_get_contents($this->filename);
 
-            $array_to_decode = $jsonDecode? json_decode($jsonDecode, true): array();
+            $array_to_decode = $jsonDecode ? json_decode($jsonDecode, true) : array();
 
-            foreach($array_to_decode as $companyData)
-            {
+            foreach ($array_to_decode as $companyData) {
                 $company = new Company;
                 $company->setCompanyName($companyData['companyName']);
                 $company->setTelephone($companyData['telephone']);
@@ -96,6 +100,29 @@ class CompanyDAO implements ICompanyDAO{
         }
     }
 
-}
+    public function getCompanyById($companyId)
+    {
+        $this->retrieveAll();
+        $company = null;
+        foreach ($this->companies as $obj) {
+            if ($obj->getUserId() == $companyId)
+                $company = $obj;
+        }
 
-?>
+        return $company;
+    }
+
+    public function overwriteCompany($company)
+    {
+        $this->retrieveAll();
+        $i = 0;
+
+        foreach ($this->companies as $obj) {
+            if ($obj->getUserId() == $company->getUserId()) {
+                $this->companies[$i] = $company;
+            }
+            $i++;
+        }
+        $this->saveData();
+    }
+}

@@ -1,0 +1,9 @@
+[
+    {
+        "userId": 0,
+        "name": "Admin",
+        "lastName": "Admin",
+        "email": "admin@admin",
+        "active": true
+    }
+]

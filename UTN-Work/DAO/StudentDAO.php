@@ -14,12 +14,6 @@ class StudentDAO implements IStudentDAO{
     public function __construct()
     {
         $this->filename = ROOT . "Data/students.json";
-
-        /*
-        if(!file_exists($this->filename)){
-            $this->studentConnection = new StudentConnection;
-            $this->downloadDataToJson($this->careerConection->executeCurl());
-        }*/
     }
 
     public function add(Student $student){
@@ -91,7 +85,8 @@ class StudentDAO implements IStudentDAO{
 
     public function getStudentByEmail($email)
     {
-        $this->retrieveData();
+        //$this->retrieveData();
+        $this->connectToApi();
 
         $student = null;
 
@@ -108,10 +103,12 @@ class StudentDAO implements IStudentDAO{
 
     public function connectToApi()
     {
-       
-
+        $this->studentConnection = new StudentConnection;
+        $response = $this->studentConnection->executeCurl();
+        $this->downloadData($response);
     }
 
+    /*
     public function downloadDataToJson($apiResponse){
         
         //decodifico el json en un array
@@ -136,7 +133,31 @@ class StudentDAO implements IStudentDAO{
         }
 
         $this->saveData();
-    } 
+    }*/
+
+    public function downloadData($apiResponse){
+        
+        //decodifico el json en un array
+        $arrayStudents = json_decode($apiResponse, true);
+
+        foreach($arrayStudents as $studentData)
+        {
+            $student = new Student;
+            $student->setStudentId($studentData['studentId']);
+            $student->setCareerId($studentData['careerId']);
+            $student->setFileNumber($studentData['fileNumber']);
+            $student->setFirstName($studentData['firstName']);
+            $student->setLastName($studentData['lastName']);
+            $student->setDni($studentData['dni']);
+            $student->setGender($studentData['gender']);
+            $student->setPhoneNumber($studentData['phoneNumber']);
+            $student->setBirthDate($studentData['birthDate']);
+            $student->setEmail($studentData['email']);
+            $student->setActive($studentData['active']);
+                
+            array_push($this->students, $student);
+        }
+    }
 
 }
 

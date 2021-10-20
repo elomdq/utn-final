@@ -37,23 +37,7 @@ if($_SESSION['offer'])
                 <div class="col-10 m-3">
                     <div>Salary: <?php echo $offer->getSalary() ?> </div>
                 </div>
-                <!--                
-                <hr class="col-10 m-0">
-                <div class="col-10 m-3">
-                    <div>Telefono: <?php echo $user->getPhoneNumber() ?></div>
-                </div>
-                <hr class="col-10 m-0">
-                <div class="col-10 m-3">
-                    <div>Email: <?php echo $user->getEmail() ?> </div>
-                </div>
-                <hr class="col-10 m-0">
-                <div class="col-10 m-3">
-                    <div>Genero: <?php echo $user->getGender() ?> </div>
-                </div>
-                <hr class="col-10 m-0">
-                <div class="col-10 m-3">
-                    <div>Fecha de Nacimiento: <?php echo str_split($user->getBirthDate(),10)[0] ?> </div>
-                </div> -->
+                
             </div>
 
         </div>

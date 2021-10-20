@@ -49,6 +49,7 @@ class Request{
         elseif ($_POST)
             $this->parameters = $_POST;
 
+            
         //Para manejo de Files ver framework modelo de catedra
     }
 

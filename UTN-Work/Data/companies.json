@@ -37,36 +37,26 @@
         "cuit": "123@123",
         "email": null,
         "active": null,
-        "userId": 3
-    },
-    {
-        "companyName": "Test2",
-        "telephone": "123213123",
-        "city": "A la vuelta",
-        "direction": "Mar del Plata",
-        "cuit": "123@123",
-        "email": null,
-        "active": null,
         "userId": 4
     },
     {
         "companyName": "Test3",
         "telephone": "12",
-        "city": "12",
-        "direction": "Mar del Plata",
+        "city": "Mar del Plata",
+        "direction": "12",
         "cuit": "1212",
-        "email": null,
-        "active": null,
+        "email": "hola@hola",
+        "active": true,
         "userId": 5
     },
     {
-        "companyName": "Test",
+        "companyName": "Test - Edited",
         "telephone": "123",
-        "city": "A la vuelta",
-        "direction": "Mar del Plata",
+        "city": "Mar del Plata",
+        "direction": "A la vuelta",
         "cuit": "123",
-        "email": null,
-        "active": null,
+        "email": "test@gmail.com",
+        "active": true,
         "userId": 6
     },
     {
@@ -88,5 +78,35 @@
         "email": null,
         "active": true,
         "userId": 8
+    },
+    {
+        "companyName": "Prueba",
+        "telephone": "223159874",
+        "city": "Sarasa",
+        "direction": "Tandil",
+        "cuit": "20812589548",
+        "email": "hola@prueba.com",
+        "active": true,
+        "userId": 9
+    },
+    {
+        "companyName": "Avalith",
+        "telephone": "2234598741",
+        "city": "Mar del Plata",
+        "direction": "Avellaneda 3333",
+        "cuit": "20-4859671-1",
+        "email": "info@avalith.com",
+        "active": true,
+        "userId": "10"
+    },
+    {
+        "companyName": "Celula Cero",
+        "telephone": "2236899005",
+        "city": "3 de Febrero 5000",
+        "direction": "Mar del Plata",
+        "cuit": "20-4859581-8",
+        "email": "info@celulacero.com",
+        "active": false,
+        "userId": 11
     }
 ]
