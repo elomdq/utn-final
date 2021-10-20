@@ -17,7 +17,7 @@ if(isset($_SESSION['company'])) {
 <section id="listado" class="mb-5">
     
     <div class="container">
-        <form action="<?php echo FRONT_ROOT ?>Company/modifyCompany/; ?>" method="POST" class="bg-light-alpha p-5">
+        <form action="<?php echo FRONT_ROOT . "Company/modifyCompany/" ?>" method="POST" class="bg-light-alpha p-5">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">
@@ -28,7 +28,7 @@ if(isset($_SESSION['company'])) {
                 <div class="col-lg-2">
                     <div class="form-group">
                         <label for="telephone">Telefono</label>
-                        <input id="telephone" type="number" required name="telephone" class="form-control" value="<?php echo $company->getTelephone(); ?>" min="0">
+                        <input id="telephone" type="text" required name="telephone" class="form-control" value="<?php echo $company->getTelephone(); ?>" min="0">
                     </div>
                 </div>
                 <div class="col-lg-2">
@@ -46,7 +46,7 @@ if(isset($_SESSION['company'])) {
                 <div class="col-lg-2">
                     <div class="form-group">
                         <label for="cuit">CUIT</label>
-                        <input id="cuit" type="number" name="cuit" class="form-control" required value="<?php echo $company->getCuit(); ?>" min="0">
+                        <input id="cuit" type="text" name="cuit" class="form-control" required value="<?php echo $company->getCuit(); ?>" min="0">
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -58,7 +58,7 @@ if(isset($_SESSION['company'])) {
                 <div class="col-lg-">
                     <div>
                         <label for="active">Active</label>
-                        <input id="active" type="checkbox" name="active" class="form-control" min="0" checked="<?php echo ($company->getActive())? "true" : "false" ; ?>">
+                        <input id="active" type="checkbox" name="active" class="form-control" min="0" <?php if($company->getActive()) echo "checked";?> >
                     </div>
                 </div>
             </div>

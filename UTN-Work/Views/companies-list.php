@@ -19,8 +19,22 @@ if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
     unset($_SESSION['searchKey']);
 } else
 {
-    $companiesList = $companyDAO->getAll();
+    if($_SESSION['userType'] != 1)
+    {
+        foreach($companyDAO->getAll() as $company)
+        {
+            if($company->getActive()){
+                array_push($companiesList, $company);
+            }
+        }
+    }
+    else
+    {
+        $companiesList = $companyDAO->getAll();
+    }
 }
+
+
 ?>
 
 <!-- Contenedor -->

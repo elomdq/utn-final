@@ -55,6 +55,12 @@ if(isset($_SESSION['company'])){
                 <div class="col-10 m-3">
                     <div>Email: <?php echo $company->getEmail() ?> </div>
                 </div>
+                <?php if($_SESSION['userType'] == 1){ ?>
+                    <hr class="col-10 m-0">
+                    <div class="col-10 m-3">
+                        <div>Active: <?php echo $company->getActive(); ?> </div>
+                    </div>
+                <?php } ?>
             </div>
 
         </div>

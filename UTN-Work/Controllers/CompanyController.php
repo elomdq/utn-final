@@ -11,17 +11,18 @@ class CompanyController{
 
     public function __construct()
     {
-        $this->companyDAO = new CompanyDAO;
-        
+        $this->companyDAO = new CompanyDAO;    
     }
 
     public function addView($message = ""){
+        require_once VIEWS_PATH . "validate-session.php";
         require_once VIEWS_PATH . "nav.php";
         require_once VIEWS_PATH . "company-add.php";
     }
 
 
     public function createCompany($companyName,$telephone,$city,$direction,$cuit,$email)  {
+       
         if($_POST)
         {
             if($this->ValidateInputValues($companyName, $telephone, $city, $direction, $cuit, $email))
@@ -34,6 +35,7 @@ class CompanyController{
                 $company->setCity($direction);
                 $company->setCuit($cuit);
                 $company->setEmail($email);
+
                 if (isset($_POST['active'])) 
                 {
                     $company->setActive(true);
@@ -58,10 +60,11 @@ class CompanyController{
         $this->listCompanies();
     }
 
+
     public function listCompanies(){
         require_once VIEWS_PATH . "validate-session.php";
         require_once VIEWS_PATH . "nav.php";
-        $this->companiesList = $this->companyDAO->GetAll();
+        //$this->companiesList = $this->companyDAO->GetAll();
         require_once(VIEWS_PATH."companies-list.php");
     }
 
@@ -78,42 +81,45 @@ class CompanyController{
     public function showCompanyDetails($companyId){
         require_once VIEWS_PATH . "validate-session.php";
 
-        //paso la oferta por la variable superglobal SESSION
+        //paso la empresa por la variable superglobal SESSION
         $_SESSION['company'] = $this->companyDAO->getCompanyById($companyId);
 
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "company-details.php";
     }
 
+    //acciona el proceso de edicion de una empresa
     public function editCompany($companyId)
     {
         require_once VIEWS_PATH . "validate-session.php";
 
-        //paso la oferta por la variable superglobal SESSION
+        //paso la empresa por la variable superglobal SESSION
         $_SESSION['company'] = $this->companyDAO->getCompanyById($companyId);
 
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "company-edit.php";
     }
 
-    public function modifyCompany($companyName, $telephone, $city, $direction, $cuit, $email, $active, $userId)
+    //se encarga de recibir los datos de la empresa, validar, generar el objeto y sobreescribir el .json
+    public function modifyCompany(...$values) //no concidero el active y el userId como params, aunque pueden ser enviados
     {
 
         if($_POST)
         {
-            //$_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['direction'], $_POST['cuit'], $_POST['email']
-            if($this->ValidateInputValues($companyName, $telephone, $city, $direction, $cuit, $email))
+            if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['direction'], $_POST['cuit'], $_POST['email']))
             {
             
                 $company = new Company;
 
-                $company->setUserId($userId);
+                $company->setUserId($_POST['userId']);
                 $company->setCompanyName($_POST['companyName']);
                 $company->setTelephone($_POST['telephone']);
                 $company->setDirection($_POST['city']);
                 $company->setCity($_POST['direction']);
                 $company->setCuit($_POST['cuit']);
                 $company->setEmail($_POST['email']);
+                if(isset($_POST))
+                    echo $_POST['active'];
                 if (isset($_POST['active'])) 
                 {
                     $company->setActive(true);
@@ -121,7 +127,7 @@ class CompanyController{
                     $company->setActive(false);
                 }
 
-                $this->companyDAO->overrideCompany($company);
+                $this->companyDAO->overwriteCompany($company);
                 
                 $this->showCompanyDetails($company->getUserId());
             } else {
