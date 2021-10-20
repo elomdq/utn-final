@@ -112,16 +112,14 @@ class CompanyDAO implements ICompanyDAO
         return $company;
     }
 
-    public function overrideCompany($company)
+    public function overwriteCompany($company)
     {
         $this->retrieveAll();
         $i = 0;
+
         foreach ($this->companies as $obj) {
             if ($obj->getUserId() == $company->getUserId()) {
                 $this->companies[$i] = $company;
-                var_dump($this->companies[$i]);
-                echo "<br>";
-                var_dump($company);
             }
             $i++;
         }
