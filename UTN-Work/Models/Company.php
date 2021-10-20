@@ -3,7 +3,7 @@
 namespace Models;
 
 use Models\User as User;
-use Models\Student as Student;
+//use Models\Student as Student;
 use Models\Offer as Offer;
 
 class Company extends User{
