@@ -15,12 +15,15 @@ class OfferController{
     }
 
     public function showOffersList(){
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "offers-list.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
     public function showOfferDetails($offerId){
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
 
         //paso la oferta por la variable superglobal SESSION
@@ -28,6 +31,7 @@ class OfferController{
 
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "offer-details.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
 }

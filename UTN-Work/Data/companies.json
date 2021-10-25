@@ -108,5 +108,15 @@
         "email": "info@celulacero.com",
         "active": false,
         "userId": 11
+    },
+    {
+        "companyName": "Empresa 2",
+        "telephone": "2245689715",
+        "city": "Fraires 598",
+        "direction": "Balcarce",
+        "cuit": "23-584759-1",
+        "email": "info@empresa2.com",
+        "active": true,
+        "userId": 14
     }
 ]
