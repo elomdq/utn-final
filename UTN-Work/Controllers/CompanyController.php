@@ -15,9 +15,11 @@ class CompanyController{
     }
 
     public function addView($message = ""){
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
         require_once VIEWS_PATH . "nav.php";
         require_once VIEWS_PATH . "company-add.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
 
@@ -63,10 +65,12 @@ class CompanyController{
 
 
     public function listCompanies(){
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
         require_once VIEWS_PATH . "nav.php";
         //$this->companiesList = $this->companyDAO->GetAll();
         require_once(VIEWS_PATH."companies-list.php");
+        require_once(VIEWS_PATH."footer.php");
     }
 
     private function ValidateInputValues($companyName, $telephone, $city, $direction, $cuit, $email){
@@ -80,6 +84,7 @@ class CompanyController{
     }
 
     public function showCompanyDetails($companyId){
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
 
         //paso la empresa por la variable superglobal SESSION
@@ -87,11 +92,13 @@ class CompanyController{
 
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "company-details.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
     //acciona el proceso de edicion de una empresa
     public function editCompany($companyId)
     {
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
 
         //paso la empresa por la variable superglobal SESSION
@@ -99,6 +106,7 @@ class CompanyController{
 
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "company-edit.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
     //se encarga de recibir los datos de la empresa, validar, generar el objeto y sobreescribir el .json

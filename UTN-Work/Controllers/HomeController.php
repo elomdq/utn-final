@@ -19,9 +19,11 @@ class HomeController{
     }
 
     public function home(){
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "home.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
     public function login($email, $userType) //0-student 1-admin 2-company
@@ -59,11 +61,13 @@ class HomeController{
 
     public function showLoginView()
     {
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "login.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
     public function logout(){
-        session_destroy();
+        unset($_SESSION['loggedUser']); //no usar destroy ya que puedo tener cosas en el session que quiero guardar o persistir todavia
         $this->showLoginView();
     }
 

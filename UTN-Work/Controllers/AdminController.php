@@ -15,9 +15,11 @@ class AdminController{
 
     public function showCompaniesList()
     {
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
         require_once VIEWS_PATH . "nav.php";
         require_once VIEWS_PATH . "companies-list.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
 }
