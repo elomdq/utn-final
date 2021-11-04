@@ -24,8 +24,8 @@
                          </div>
                          <div class="col-lg-2">
                               <div class="form-group">
-                                   <label for="companyDir">Direction</label>
-                                   <input id="companyDir" type="text" name="direction" class="form-control" placeholder="Direccion" min="0">
+                                   <label for="companyDir">Direccion</label>
+                                   <input id="companyDir" type="text" name="address" class="form-control" placeholder="Direccion" min="0">
                               </div>
                          </div>
                          <div class="col-lg-2">

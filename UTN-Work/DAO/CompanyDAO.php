@@ -52,7 +52,7 @@ class CompanyDAO implements ICompanyDAO
             $companyData['companyName'] = $company->getCompanyName();
             $companyData['telephone'] = $company->getTelephone();
             $companyData['city'] = $company->getCity();
-            $companyData['direction'] = $company->getDirection();
+            $companyData['address'] = $company->getAddress();
             $companyData['cuit'] = $company->getCuit();
             $companyData['email'] = $company->getEmail();
             $companyData['active'] = $company->getActive();
@@ -86,7 +86,7 @@ class CompanyDAO implements ICompanyDAO
                 $company = new Company;
                 $company->setCompanyName($companyData['companyName']);
                 $company->setTelephone($companyData['telephone']);
-                $company->setDirection($companyData['direction']);
+                $company->setAddress($companyData['address']);
                 $company->setCity($companyData['city']);
                 $company->setCuit($companyData['cuit']);
                 $company->setEmail($companyData['email']);

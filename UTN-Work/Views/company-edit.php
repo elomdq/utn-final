@@ -39,8 +39,8 @@ if(isset($_SESSION['company'])) {
                 </div>
                 <div class="col-lg-2">
                     <div class="form-group">
-                        <label for="direction">Direction</label>
-                        <input id="direction" type="text" name="direction" class="form-control" required value="<?php echo $company->getDirection(); ?>" min="0">
+                        <label for="address">Direccion</label>
+                        <input id="address" type="text" name="address" class="form-control" required value="<?php echo $company->getAddress(); ?>" min="0">
                     </div>
                 </div>
                 <div class="col-lg-2">

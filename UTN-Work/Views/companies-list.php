@@ -112,7 +112,7 @@ if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
                         <td><?php echo $company->getCompanyName(); ?></td>
                         <td><?php echo $company->getTelephone(); ?></td>
                         <td><?php echo $company->getCity(); ?></td>
-                        <td><?php echo $company->getDirection(); ?></td>
+                        <td><?php echo $company->getAddress(); ?></td>
                         <td><?php echo $company->getCuit(); ?></td>
                         <td><?php echo $company->getEmail(); ?></td>
                         <?php if ($_SESSION['userType'] == 1) { ?> <td><input type="checkbox" name="active" class="form-control" min="0"></td> <?php } ?>

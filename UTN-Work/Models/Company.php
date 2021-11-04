@@ -11,7 +11,7 @@ class Company extends User{
     private $companyName;
     private $telephone;
     private $city;
-    private $direction;
+    private $address;
     private $cuit;
 
     public function viewProfile()
@@ -44,11 +44,11 @@ class Company extends User{
     public function getCity(){ return $this->city; }
     public function setCity($city): self { $this->city = $city; return $this; }
 
-    public function getDirection(){ return $this->direction; }
-    public function setDirection($direction): self { $this->direction = $direction; return $this; }
-
     public function getCuit(){ return $this->cuit; }
     public function setCuit($cuit): self { $this->cuit = $cuit; return $this; }
+
+    public function getAddress(){ return $this->address; }
+    public function setAddress($address): self { $this->address = $address; return $this; }
 }
 
 ?>

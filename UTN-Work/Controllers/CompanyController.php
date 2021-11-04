@@ -27,15 +27,15 @@ class CompanyController{
        
         if($_POST)
         {
-            if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['direction'], $_POST['cuit'], $_POST['email']))
+            if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['address'], $_POST['cuit'], $_POST['email']))
             {
 
                 $company = new Company;
 
                 $company->setCompanyName($_POST['companyName']);
                 $company->setTelephone($_POST['telephone']);
-                $company->setDirection($_POST['city']);
-                $company->setCity($_POST['direction']);
+                $company->setAddress($_POST['city']);
+                $company->setCity($_POST['address']);
                 $company->setCuit($_POST['cuit']);
                 $company->setEmail($_POST['email']);
                 
@@ -73,11 +73,11 @@ class CompanyController{
         require_once(VIEWS_PATH."footer.php");
     }
 
-    private function ValidateInputValues($companyName, $telephone, $city, $direction, $cuit, $email){
+    private function ValidateInputValues($companyName, $telephone, $city, $address, $cuit, $email){
         $validated = false;
 
-        if(isset($companyName) && isset($telephone) && isset($city) && isset($direction) && isset($cuit) && isset($email))
-            if(!empty($companyName) && !empty($telephone) && !empty($city) && !empty($direction) && !empty($cuit) && !empty($email))
+        if(isset($companyName) && isset($telephone) && isset($city) && isset($address) && isset($cuit) && isset($email))
+            if(!empty($companyName) && !empty($telephone) && !empty($city) && !empty($address) && !empty($cuit) && !empty($email))
                 $validated = true;
         
         return $validated;
@@ -115,7 +115,7 @@ class CompanyController{
 
         if($_POST)
         {
-            if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['direction'], $_POST['cuit'], $_POST['email']))
+            if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['address'], $_POST['cuit'], $_POST['email']))
             {
             
                 $company = new Company;
@@ -123,8 +123,8 @@ class CompanyController{
                 $company->setUserId($_POST['userId']);
                 $company->setCompanyName($_POST['companyName']);
                 $company->setTelephone($_POST['telephone']);
-                $company->setDirection($_POST['city']);
-                $company->setCity($_POST['direction']);
+                $company->setAddress($_POST['address']);
+                $company->setCity($_POST['city']);
                 $company->setCuit($_POST['cuit']);
                 $company->setEmail($_POST['email']);
                
