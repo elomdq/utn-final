@@ -43,10 +43,11 @@
                                             <label for="company" class="">Empresa</label>
                                         </div>
                                         </div>
-                                        <!--<div class="form-group">
+                                        <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password">
                                         </div>
+                                        <!--
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
@@ -66,10 +67,10 @@
                                     <!-- <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
+                                    </div> -->
                                     <div class="text-center">
                                         <a class="small" href="register.html">Create an Account!</a>
-                                    </div> -->
+                                    </div> 
                                 </div>
                             </div>
                         </div>
