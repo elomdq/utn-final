@@ -15,8 +15,8 @@ class CompanyController{
     }
 
     public function addView($message = ""){
-        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "nav.php";
         require_once VIEWS_PATH . "company-add.php";
         require_once(VIEWS_PATH."footer.php");
@@ -65,8 +65,8 @@ class CompanyController{
 
 
     public function listCompanies(){
-        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "nav.php";
         //$this->companiesList = $this->companyDAO->GetAll();
         require_once(VIEWS_PATH."companies-list.php");
@@ -84,8 +84,8 @@ class CompanyController{
     }
 
     public function showCompanyDetails($companyId){
-        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
+        require_once(VIEWS_PATH."header.php");
 
         //paso la empresa por la variable superglobal SESSION
         $_SESSION['company'] = $this->companyDAO->getCompanyById($companyId);
@@ -98,8 +98,8 @@ class CompanyController{
     //acciona el proceso de edicion de una empresa
     public function editCompany($companyId)
     {
-        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
+        require_once(VIEWS_PATH."header.php");
 
         //paso la empresa por la variable superglobal SESSION
         $_SESSION['company'] = $this->companyDAO->getCompanyById($companyId);

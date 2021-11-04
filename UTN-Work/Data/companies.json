@@ -118,5 +118,15 @@
         "email": "info@empresa2.com",
         "active": true,
         "userId": 14
+    },
+    {
+        "companyName": "Prueba 3",
+        "telephone": "23565465",
+        "city": "dfsdfsdfsd",
+        "address": "MDQ",
+        "cuit": "24163846",
+        "email": "prueba3@gmail.com",
+        "active": true,
+        "userId": "15"
     }
 ]

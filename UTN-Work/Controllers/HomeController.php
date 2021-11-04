@@ -19,8 +19,8 @@ class HomeController{
     }
 
     public function home(){
-        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "validate-session.php";
+        require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "home.php";
         require_once(VIEWS_PATH."footer.php");
@@ -53,6 +53,7 @@ class HomeController{
                     $this->showLoginView();
                 break;
             case 2:
+                    $this->showLoginView();
                 break;
             default:
                 break;

@@ -37,7 +37,7 @@ class Connection{
     }
 
 
-    //funcion para ejecutar un statement con distintas queries (que necesitan distintos parametros)
+    //funcion para ejecutar un statement con consulta de datos
     public function execute($query, $parameters = array(), $queryType = QueryType::Query)
     {
         try {
@@ -54,6 +54,7 @@ class Connection{
         }
     }
 
+    //funcion para ejecutar un statement con modificacion/agregado/eliminacion de datos
     public function executeNonQuery($query, $parameters, $queryType = QueryType::Query)
     {
         try{
@@ -68,7 +69,7 @@ class Connection{
         }
     }
 
-
+    //funcion prepara la query en el statement
     private function prepare($query)
     {
         try {
@@ -78,6 +79,7 @@ class Connection{
         }
     }
 
+    //funcion para enlazar variables con valores
     private function bindParameters($parameters = array(), $queryType = QueryType::Query)
     {
         $i = 0;

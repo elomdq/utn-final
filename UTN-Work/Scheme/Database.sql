@@ -7,7 +7,7 @@ create table if not exists users(
 	email varchar(50) not null,
 	pass varchar(10) not null,
 	active boolean not null,
-	constraint `pk_user` primary key(id_users),
+	constraint `pk_user` primary key(id_user),
 	CONSTRAINT `unq_email` UNIQUE(email)
 ) ENGINE=INNODB;
 
