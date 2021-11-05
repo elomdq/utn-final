@@ -13,7 +13,7 @@
 		
 	Autoload::start();
 
-	session_start();
+	session_start(); //cambiar ubicacion a donde se use
 
 	//require_once(VIEWS_PATH."header.php");
 

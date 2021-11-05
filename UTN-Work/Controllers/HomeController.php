@@ -73,13 +73,13 @@ class HomeController{
         require_once(VIEWS_PATH."footer.php");
     }
 
-    public function register($email){
+    public function confirmData($email){
         $student = $this->studentDAO->studentByEmailApi($email);
 
         if($student != null && $student->getActive() == true )
         {
             require_once(VIEWS_PATH."header.php");
-            require_once VIEWS_PATH . "register-form.php";
+            require_once VIEWS_PATH . "confirm-data.php";
             require_once(VIEWS_PATH."footer.php");
         } else {
             require_once(VIEWS_PATH."header.php");

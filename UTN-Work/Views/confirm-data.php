@@ -3,7 +3,7 @@
 namespace Views;
 ?>
 
-<!--<section id="register-form">-->
+<section id="register-form">
     <div class="container">
         <div class="row justify-content-center bg-white">
             <div class="col-8">
@@ -16,57 +16,58 @@ namespace Views;
 
                     <div class="card-body">
 
-                        <form class="" action="" method="">
+                        <form class="" action="<?php echo FRONT_ROOT; ?>home/register" method="post">
 
-                            <div class="form-group py-1">
-                                <label for="email">Email</label>
-                                <input type="text" readonly class="form-control" id="email" value="<?php echo $student->getEmail(); ?>">
+                            <div class="form-group py-0">
+                                <label for="email" class="mb-1">Email</label>
+                                <input type="text" readonly class="form-control is-valid" id="email" value="<?php echo $student->getEmail(); ?>" >
                             </div>
 
-
-                            <div class="form-group py-1">
-                                <label for="firstName" class="">Nombre</label>
+                            <div class="form-group py-0">
+                                <label for="firstName" class="mb-1">Nombre</label>
                                 <input type="text" readonly class="form-control" id="firstName" value="<?php echo $student->getFirstName(); ?>">
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="lastName" class="">Apellido</label>
+                            <div class="form-group py-0">
+                                <label for="lastName" class="mb-1">Apellido</label>
                                 <input type="text" readonly class="form-control" id="lastName" value="<?php echo $student->getLastName(); ?>">
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="birthDate" class="">Fecha de Nacimiento</label>
+                            <div class="form-group py-0">
+                                <label for="birthDate" class="mb-1">Fecha de Nacimiento</label>
                                 <input type="text" readonly class="form-control" id="birthDate" value="<?php echo $student->getBirthDate(); ?>">
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="dni" class="">DNI</label>
+                            <div class="form-group py-0">
+                                <label for="dni" class="mb-1">DNI</label>
                                 <input type="text" readonly class="form-control" id="dni" value="<?php echo $student->getDni(); ?>">
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="phoneNumber" class="">Telefono</label>
+                            <div class="form-group py-0">
+                                <label for="phoneNumber" class="mb-1">Telefono</label>
                                 <input type="text" readonly class="form-control" id="phoneNumber" value="<?php echo $student->getPhoneNumber(); ?>">
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="career" class="">Carrera</label>
+                            <div class="form-group py-0">
+                                <label for="career" class="mb-1">Carrera</label>
                                 <input type="text" readonly class="form-control" id="career" value="<?php echo $student->getCareerId(); ?>">
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="gender" class="">Genero</label>
+                            <div class="form-group py-0">
+                                <label for="gender" class="mb-1">Genero</label>
                                 <input type="text" readonly class="form-control" id="gender" value="<?php echo $student->getGender(); ?>">
                             </div>
-
-                            <div class="form-group py-1">
-                                <label for="inputPassword" class="">Password</label>
+                            
+                            <!--
+                            <div class="form-group py-0">
+                                <label for="inputPassword" class="mb-1">Password</label>
                                 <input type="password" class="form-control" id="inputPassword" placeholder="Password">
                             </div>
+                            -->
 
                             <div class="row justify-content-center mt-3">
                                 <div class="col-3">
-                                    <input type="submit" class="btn btn-primary btn-block my-3" value="Registrarse">
+                                    <input type="submit" class="btn btn-primary btn-block my-3" value="Confirmar">
                                 </div>
                             </div>
 
@@ -77,4 +78,4 @@ namespace Views;
         </div>
     </div>
     
-<!-- </section> -->
+</section>
