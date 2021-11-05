@@ -15,7 +15,7 @@ namespace Views;
 
                     <div class="card-body">
 
-                        <form class="" action="<?php echo FRONT_ROOT?>home/register" method="post">
+                        <form class="" action="<?php echo FRONT_ROOT?>home/confirmData" method="post">
 
                             <div class="form-group py-1">
                                 <label for="inputEmail">Email</label>

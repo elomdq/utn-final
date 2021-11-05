@@ -88,6 +88,13 @@ class HomeController{
         }
     }
 
+    public function register(){
+        require_once(VIEWS_PATH."header.php");
+        require_once VIEWS_PATH . "register-user.php";
+        require_once(VIEWS_PATH."footer.php");
+    }
+
+
     public function logout(){
         unset($_SESSION['loggedUser']); //no usar destroy ya que puedo tener cosas en el session que quiero guardar o persistir todavia
         $this->showLoginView();
