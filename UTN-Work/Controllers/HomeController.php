@@ -20,10 +20,10 @@ class HomeController{
 
     public function home(){
         require_once VIEWS_PATH . "validate-session.php";
-        require_once(VIEWS_PATH."header.php");
+        require_once(VIEWS_PATH. "header.php");
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "home.php";
-        require_once(VIEWS_PATH."footer.php");
+        require_once(VIEWS_PATH. "footer.php");
     }
 
     public function login($email, $userType) //0-student 1-admin 2-company
@@ -31,7 +31,7 @@ class HomeController{
         switch($userType)
         {
             case 0:
-                $student = $this->studentDAO->GetStudentByEmail($email);
+                $student = $this->studentDAO->studentByEmailApi($email);
 
                 if($student != null && $student->getActive() == true )
                 {
@@ -65,6 +65,27 @@ class HomeController{
         require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH . "login.php";
         require_once(VIEWS_PATH."footer.php");
+    }
+
+    public function checkEmail(){
+        require_once(VIEWS_PATH."header.php");
+        require_once VIEWS_PATH . "check-email.php";
+        require_once(VIEWS_PATH."footer.php");
+    }
+
+    public function register($email){
+        $student = $this->studentDAO->studentByEmailApi($email);
+
+        if($student != null && $student->getActive() == true )
+        {
+            require_once(VIEWS_PATH."header.php");
+            require_once VIEWS_PATH . "register-form.php";
+            require_once(VIEWS_PATH."footer.php");
+        } else {
+            require_once(VIEWS_PATH."header.php");
+            require_once VIEWS_PATH . "check-email.php";
+            require_once(VIEWS_PATH."footer.php");
+        }
     }
 
     public function logout(){

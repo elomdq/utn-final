@@ -3,13 +3,13 @@ namespace DAO;
 
 use DAO\IStudentDAO as IStudentDAO;
 use Models\Student as Student;
-use Connections\StudentConnection as StudentConnection;
+use Connections\StudentApiConnection as StudentApiConnection;
 
 class StudentDAO implements IStudentDAO{
 
     private $students = array();
     private $filename;
-    private $studentConnection;
+    private $studentApiConnection;
 
     public function __construct()
     {
@@ -83,58 +83,41 @@ class StudentDAO implements IStudentDAO{
     }
 
 
-    public function getStudentByEmail($email)
+    public function studentByEmailApi($email)
     {
-        //$this->retrieveData();
-        $this->connectToApi();
-
         $student = null;
 
-        //$student = array_filter($this->students, function ($var) {return $var->getEmail() == $email;} );
-
-        foreach($this->students as $obj)
+        foreach($this->connectToApi() as $studentData)
         {
-            if($obj->getEmail() == $email)
-                $student = $obj;
+            if($studentData['email'] == $email)
+            {
+                $student = new Student;
+                $student->setStudentId($studentData['studentId']);
+                $student->setCareerId($studentData['careerId']);
+                $student->setFileNumber($studentData['fileNumber']);
+                $student->setFirstName($studentData['firstName']);
+                $student->setLastName($studentData['lastName']);
+                $student->setDni($studentData['dni']);
+                $student->setGender($studentData['gender']);
+                $student->setPhoneNumber($studentData['phoneNumber']);
+                $student->setBirthDate($studentData['birthDate']);
+                $student->setEmail($studentData['email']);
+                $student->setActive($studentData['active']);
+            }
+            
         }
         
         return $student;
     }
 
-    public function connectToApi()
+    private function connectToApi()
     {
-        $this->studentConnection = new StudentConnection;
-        $response = $this->studentConnection->executeCurl();
-        $this->downloadData($response);
+        $this->studentApiConnection = new StudentApiConnection;
+        $arrayStudents = json_decode($this->studentApiConnection->executeCurl(), true);
+        return $arrayStudents;
     }
 
     /*
-    public function downloadDataToJson($apiResponse){
-        
-        //decodifico el json en un array
-        $arrayStudents = json_decode($apiResponse, true);
-
-        foreach($arrayStudents as $studentData)
-        {
-            $student = new Student;
-            $student->setStudentId($studentData['studentId']);
-            $student->setCareerId($studentData['careerId']);
-            $student->setFileNumber($studentData['fileNumber']);
-            $student->setFirstName($studentData['name']);
-            $student->setLastName($studentData['lastName']);
-            $student->setDni($studentData['dni']);
-            $student->setGender($studentData['gender']);
-            $student->setPhoneNumber($studentData['phoneNumber']);
-            $student->setBirthDate($studentData['birthDate']);
-            $student->setEmail($studentData['email']);
-            $student->setActive($studentData['active']);
-                
-            array_push($this->students, $student);
-        }
-
-        $this->saveData();
-    }*/
-
     public function downloadData($apiResponse){
         
         //decodifico el json en un array
@@ -157,7 +140,7 @@ class StudentDAO implements IStudentDAO{
                 
             array_push($this->students, $student);
         }
-    }
+    }*/
 
 }
 

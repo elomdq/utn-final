@@ -4,7 +4,7 @@ namespace Connections;
 use DAO\StudentDAO as StudentDAO;
 use Models\Student as Student;
 
-class StudentConnection{
+class StudentApiConnection{
 
     private $url;
     private $curlHandler;
