@@ -38,7 +38,7 @@ class StudentDAO implements IStudentDAO{
             $this->connection->executeNonQuery($query, $parameters);
         }
         catch(Exception $e){
-
+            throw($e);
         }
     }
 
@@ -127,7 +127,6 @@ class StudentDAO implements IStudentDAO{
                 $student->setEmail($studentData['email']);
                 $student->setActive($studentData['active']);
             }
-            
         }
         
         return $student;

@@ -27,16 +27,20 @@ class UserDAO{
         $this->connection->executeNonQuery($query, $parameters);
 
         } catch(Exception $e){
-            throw $e;
+           throw $e;
+           //var_dump($e);
         }
 
     }
 
     public function getUserIdByEmail($email){
-        $query = "SELECT ".$this->tableName." (id_user) WHERE email=".$email.";";
+        $query = "SELECT (id_user) FROM ".$this->tableName." WHERE email= \"".$email."\";";
         $this->connection = Connection::GetInstance();
 
         $resultSet=$this->connection->execute($query);
+
+        echo "<br><br>";
+        var_dump($resultSet);
 
         return $resultSet['id_user'];
     }
