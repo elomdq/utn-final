@@ -18,7 +18,6 @@ class StudentDAO implements IStudentDAO{
 
     public function __construct()
     {
-        $this->filename = ROOT . "Data/students.json";
     }
     
     public function add(Student $student, $id_user){

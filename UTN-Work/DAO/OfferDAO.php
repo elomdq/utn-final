@@ -3,22 +3,47 @@ namespace DAO;
 
 use Models\Offer as Offer;
 use DAO\IOfferDAO as IOfferDAO;
+use DAO\Connection as Connection;
 
 class OfferDAO implements IOfferDAO{
+
+    private $connection;
+    private $tableName = 'offers';
 
     private $offers = array();
     private $filename;
 
     public function __construct()
     {
-        $this->filename = ROOT . "Data/offers.json";
     }
 
     public function add(Offer $offer){
-        $this->retrieveData();
-        array_push($this->offers, $offer);
-        $this->saveData();
+
+        try{
+            $query = "INSERT INTO ".$this->tableName."(jobPosition, career, title, active, publicationDate, offerDescription) VALUES(:jobPosition, :career, :title, :active, :publicationDate, :offerDescription);";
+
+            $parameters['jobPosition']=$offer->getJobPosition();
+            $parameters['id_company']=$offer->getCompanyId();
+            $parameters['career']=$offer->getCareerId();
+            $parameters['title']=$offer->getTitle();
+            $parameters['active']=$offer->getActive();
+            $parameters['publicationDate']=$offer->getPublicationDate();
+            $parameters['offerDescription']=$offer->getDescription();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->executeNonQuery($query, $parameters);
+        }
+        catch(Exception $e){
+
+        }
     }
+
+    //public function add(Offer $offer){
+    //    $this->retrieveData();
+    //    array_push($this->offers, $offer);
+    //    $this->saveData();
+    //}
 
     public function remove($offerId){
         $newList = array();
