@@ -4,29 +4,51 @@ namespace DAO;
 use DAO\IStudentDAO as IStudentDAO;
 use Models\Student as Student;
 use Connections\StudentApiConnection as StudentApiConnection;
+use \Exception as Exception;
+use DAO\Connection as Connection;
+use DAO\UserDAO as UserDAO;
 
 class StudentDAO implements IStudentDAO{
 
-    private $students = array();
-    private $filename;
-    private $studentApiConnection;
+    private $connection;
+    private $tableName = 'students';
+    private $userDAO;
+
 
     public function __construct()
     {
         $this->filename = ROOT . "Data/students.json";
     }
 
-    public function add(Student $student){
-        $this->retrieveData();
-        array_push($this->students, $student);
-        $this->saveData();
+    public function add(Student $student, $id_user){
+
+        try{
+            $query = "INSERT INTO ".$this->tableName."(firstName, lastName, dni, birthDate, gender, id_user) VALUES(:firstname, :lastName, :dni, :birthDate, :gender, :id_user);";
+
+            $parameters['firstName']=$student->getFirstName();
+            $parameters['lastName']=$student->getLastName();
+            $parameters['dni']=$student->getDni();
+            $parameters['birthDate']=$student->getBirthDate();
+            $parameters['gender']=$student->getGender();
+            $parameters['id_user']=$id_user;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->executeNonQuery($query, $parameters);
+        }
+        catch(Exception $e){
+
+        }
     }
 
-    public function remove($studentId){}
+    public function remove($studentId){
+
+    }
 
     public function getAll(){
-        $this->retrieveData();
-        return $this->students;
+        
+
+
     }
 
     private function saveData(){

@@ -57,7 +57,7 @@ class Student extends User{
     }
 
     //return bool
-    public function aplliedToOffer(Offer $offer){
+    public function appliedToOffer(Offer $offer){
 
     }
 

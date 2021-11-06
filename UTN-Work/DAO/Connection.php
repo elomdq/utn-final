@@ -29,7 +29,7 @@ class Connection{
     public function getPdoStatement(){ return $this->pdoStatement; }
     public function setPdoStatement($pdoStatement): self { $this->pdoStatement = $pdoStatement; return $this; }
 
-    public function getInstance(){
+    public static function getInstance(){
         if(self::$instance == null)
             self::$instance = new Connection;
 

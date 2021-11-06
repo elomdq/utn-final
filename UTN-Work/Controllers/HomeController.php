@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Models\Student as Student;
 use DAO\StudentDAO as StudentDAO;
+use DAO\UserDAO as UserDAO;
 use DAO\AdminDAO as AdminDAO;
 
 
@@ -11,10 +12,12 @@ class HomeController{
 
     private $studentDAO;
     private $adminDAO;
+    private $userDao;
 
     public function __construct()
     {
         $this->studentDAO = new StudentDAO;
+        $this->userDAO = new userDAO;
         $this->adminDAO = new AdminDAO;
     }
 
@@ -88,10 +91,29 @@ class HomeController{
         }
     }
 
-    public function register(){
+    public function generatePassword(){
         require_once(VIEWS_PATH."header.php");
-        require_once VIEWS_PATH . "register-user.php";
+        require_once VIEWS_PATH . "generate-password.php";
         require_once(VIEWS_PATH."footer.php");
+    }
+
+    public function register($password){
+        if($_POST)
+        {
+            if(isset($_POST['password']))
+                if(isset($_SESSION['student']))
+                    $_SESSION['student']->setPassword($password);
+
+            $parameters = array();
+            $parameters['email'] = $_SESSION['student']->getEmail();
+            $parameters['password'] = $_SESSION['student']->getPassword();
+            $parameters['active'] = $_SESSION['student']->getActive();
+
+            $this->userDAO->add($parameters);
+            $this->studentDAO->add($_SESSION['student'], $this->userDAO->getUserIdByEmail($_SESSION['student']->getEmail()));
+
+            unset($_SESSION['student']);
+        }
     }
 
 
