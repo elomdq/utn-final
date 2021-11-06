@@ -8,6 +8,7 @@ use \Exception as Exception;
 use DAO\Connection as Connection;
 use DAO\UserDAO as UserDAO;
 
+
 class StudentDAO implements IStudentDAO{
 
     private $connection;
@@ -19,7 +20,7 @@ class StudentDAO implements IStudentDAO{
     {
         $this->filename = ROOT . "Data/students.json";
     }
-
+    
     public function add(Student $student, $id_user){
 
         try{
