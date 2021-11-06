@@ -12,6 +12,7 @@ class Offer{
     private $active;
     private $publicationDate;
     private $careerId;
+    private $jobPosition;
 
     public function showDetails(){
         
@@ -23,6 +24,9 @@ class Offer{
 
     public function getTitle(){ return $this->title; }
     public function setTitle($title): self { $this->title = $title; return $this; }
+
+    public function getJobPosition(){ return $this->jobPosition; }
+    public function setJobPosition($jobPosition): self { $this->jobPosition = $jobPosition; return $this; }
 
     public function getDescription(){ return $this->description; }
     public function setDescription($description): self { $this->description = $description; return $this; }
