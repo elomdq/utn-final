@@ -6,14 +6,14 @@ use Models\Student as Student;
 use Connections\StudentApiConnection as StudentApiConnection;
 use \Exception as Exception;
 use DAO\Connection as Connection;
-use DAO\UserDAO as UserDAO;
+
 
 
 class StudentDAO implements IStudentDAO{
 
     private $connection;
     private $tableName = 'students';
-    private $userDAO;
+    //private $userDAO;
 
 
     public function __construct()
@@ -23,8 +23,9 @@ class StudentDAO implements IStudentDAO{
     public function add(Student $student, $id_user){
 
         try{
-            $query = "INSERT INTO ".$this->tableName."(firstName, lastName, dni, birthDate, gender, id_user) VALUES(:firstname, :lastName, :dni, :birthDate, :gender, :id_user);";
+            $query = "INSERT INTO ". $this->tableName ."(firstName, lastName, dni, birthDate, gender, id_user) VALUES(:firstname, :lastName, :dni, :birthDate, :gender, :id_user);";
 
+            $parameters = array();
             $parameters['firstName']=$student->getFirstName();
             $parameters['lastName']=$student->getLastName();
             $parameters['dni']=$student->getDni();
@@ -32,11 +33,17 @@ class StudentDAO implements IStudentDAO{
             $parameters['gender']=$student->getGender();
             $parameters['id_user']=$id_user;
 
+            foreach($parameters as $key => $value)
+            {
+                echo $key." => ".$value."<br>";
+            }
+
             $this->connection = Connection::GetInstance();
 
             $this->connection->executeNonQuery($query, $parameters);
         }
         catch(Exception $e){
+            var_dump($e);
             throw($e);
         }
     }
@@ -52,7 +59,7 @@ class StudentDAO implements IStudentDAO{
     }
 
     private function saveData(){
-        $array_to_encode = array();
+        /*$array_to_encode = array();
 
         foreach($this->students as $student)
         {
@@ -72,11 +79,11 @@ class StudentDAO implements IStudentDAO{
 
             $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
             file_put_contents($this->filename, $jsonEnconde);
-        }
+        }*/
     }
 
     private function retrieveData(){
-        $this->students = array();
+        /*$this->students = array();
 
         if(file_exists($this->filename))
         {
@@ -101,7 +108,7 @@ class StudentDAO implements IStudentDAO{
 
                 array_push($this->students, $student);
             }
-        }
+        }*/
     }
 
 

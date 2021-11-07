@@ -97,12 +97,12 @@ class HomeController{
         require_once(VIEWS_PATH."footer.php");
     }
 
-    public function register($password){
+    public function register(...$values){
         if($_POST)
         {
             if(isset($_POST['password']))
                 if(isset($_SESSION['student']))
-                    $_SESSION['student']->setPassword($password);
+                    $_SESSION['student']->setPassword($_POST['password']);
 
             $parameters = array();
             $parameters['email'] = $_SESSION['student']->getEmail();

@@ -41,9 +41,9 @@ class Connection{
     public function execute($query, $parameters = array(), $queryType = QueryType::Query)
     {
         try {
-            $this->Prepare($query); //prepara la query del statement
+            $this->prepare($query); //prepara la query del statement
 
-            $this->BindParameters($parameters, $queryType); //relaciona los valores con las variables de la query
+            $this->bindParameters($parameters, $queryType); //relaciona los valores con las variables de la query
  
             $this->pdoStatement->execute(); //ejecuta la query del statement
 
@@ -60,7 +60,12 @@ class Connection{
         try{
             $this->prepare($query);
             $this->bindParameters($parameters, $queryType);
+
+            echo "Statement preparada <br><br>";
+
             $this->pdoStatement->execute();
+
+            echo "Statement ejecutada <br><br>";
 
             return $this->pdoStatement->rowCount();
         }
@@ -88,7 +93,10 @@ class Connection{
             $i++;
 
             if ($queryType == QueryType::Query)
+            {
+                echo ":" . $parameterName.", ". $parameters[$parameterName] . "<br>";
                 $this->pdoStatement->bindParam(":" . $parameterName, $parameters[$parameterName]); //si pongo directo el $value no lo toma
+            }
             else
                 $this->pdoStatement->bindParam($i, $parameters[$parameterName]);
         }

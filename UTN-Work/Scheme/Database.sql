@@ -24,17 +24,30 @@ create table if not exists students(
 	id_student int AUTO_INCREMENT not null,
 	firstName varchar(40),
 	lastName varchar(40),
-	dni varchar(10) not null,
-    birthDate date not null,
-    gender char,
-    id_user int not null,
-	id_telephone int not null,
-	fileNumber varchar(50) not null,
-	id_career int not null,
+	dni varchar(10),
+    birthDate date,
+    gender char(1),
+    id_user int,
+	id_telephone int,
+	fileNumber varchar(50),
+	id_career int,
     CONSTRAINT `pk_student` PRIMARY KEY(id_student),
     CONSTRAINT `fk_user_student` FOREIGN KEY(id_user) REFERENCES users(id_user),
 	CONSTRAINT `fk_id_career` FOREIGN KEY(id_career) REFERENCES careers(id_career),
 	CONSTRAINT `fk_id_telephone` FOREIGN KEY(id_telephone) REFERENCES telephones(id_telephone),
+    CONSTRAINT `unq_student` UNIQUE(dni)
+) ENGINE=INNODB;
+
+create table if not exists students(
+	id_student int AUTO_INCREMENT not null,
+	firstName varchar(40),
+	lastName varchar(40),
+	dni varchar(20),
+    birthDate varchar(50),
+    gender varchar(30),
+    id_user int,
+    CONSTRAINT `pk_student` PRIMARY KEY(id_student),
+    CONSTRAINT `fk_user_student` FOREIGN KEY(id_user) REFERENCES users(id_user),
     CONSTRAINT `unq_student` UNIQUE(dni)
 ) ENGINE=INNODB;
 
