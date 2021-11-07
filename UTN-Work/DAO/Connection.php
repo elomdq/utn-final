@@ -55,22 +55,19 @@ class Connection{
     }
 
     //funcion para ejecutar un statement con modificacion/agregado/eliminacion de datos
-    public function executeNonQuery($query, $parameters, $queryType = QueryType::Query)
+    public function executeNonQuery($query, $parameters = array(), $queryType = QueryType::Query)
     {
         try{
             $this->prepare($query);
+            
             $this->bindParameters($parameters, $queryType);
 
-            echo "Statement preparada <br><br>";
-
             $this->pdoStatement->execute();
-
-            echo "Statement ejecutada <br><br>";
 
             return $this->pdoStatement->rowCount();
         }
         catch(Exception $ex){
-            throw $ex;
+             throw $ex;
         }
     }
 
@@ -94,7 +91,6 @@ class Connection{
 
             if ($queryType == QueryType::Query)
             {
-                echo ":" . $parameterName.", ". $parameters[$parameterName] . "<br>";
                 $this->pdoStatement->bindParam(":" . $parameterName, $parameters[$parameterName]); //si pongo directo el $value no lo toma
             }
             else

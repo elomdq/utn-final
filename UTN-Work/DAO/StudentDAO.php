@@ -20,30 +20,25 @@ class StudentDAO implements IStudentDAO{
     {
     }
     
-    public function add(Student $student, $id_user){
+    public function add(Student $student){
 
         try{
-            $query = "INSERT INTO ". $this->tableName ."(firstName, lastName, dni, birthDate, gender, id_user) VALUES(:firstname, :lastName, :dni, :birthDate, :gender, :id_user);";
+            $query = "INSERT INTO ". $this->tableName ." (firstName, lastName, dni, birthDate, gender, id_user) VALUES(:firstName, :lastName, :dni, :birthDate, :gender, :idUser);";
 
             $parameters = array();
             $parameters['firstName']=$student->getFirstName();
             $parameters['lastName']=$student->getLastName();
             $parameters['dni']=$student->getDni();
-            $parameters['birthDate']=$student->getBirthDate();
+            $parameters['birthDate']= str_split($student->getBirthDate(),10)[0];
+            //$student->setGender( str_replace("-", " ", $student->getGender()) );
             $parameters['gender']=$student->getGender();
-            $parameters['id_user']=$id_user;
-
-            foreach($parameters as $key => $value)
-            {
-                echo $key." => ".$value."<br>";
-            }
+            $parameters['idUser']=$student->getUserId();;
 
             $this->connection = Connection::GetInstance();
 
             $this->connection->executeNonQuery($query, $parameters);
         }
         catch(Exception $e){
-            var_dump($e);
             throw($e);
         }
     }
@@ -143,6 +138,27 @@ class StudentDAO implements IStudentDAO{
         $this->studentApiConnection = new StudentApiConnection;
         $arrayStudents = json_decode($this->studentApiConnection->executeCurl(), true);
         return $arrayStudents;
+    }
+
+    public function getStudentByUserId($userId)
+    {
+        $query = "SELECT * FROM ".$this->tableName." WHERE id_user= \"".$userId."\";";
+        $this->connection = Connection::GetInstance();
+
+        $resultSet=$this->connection->execute($query);
+        
+        $student = new Student;
+        $student->setStudentId($resultSet[0]['id_student']);
+        $student->setCareerId($resultSet[0]['id_career']);
+        $student->setFileNumber($resultSet[0]['fileNumber']);
+        $student->setFirstName($resultSet[0]['firstName']);
+        $student->setLastName($resultSet[0]['lastName']);
+        $student->setDni($resultSet[0]['dni']);
+        $student->setGender($resultSet[0]['gender']);
+        $student->setPhoneNumber($resultSet[0]['id_telephone']);
+        $student->setBirthDate($resultSet[0]['birthDate']);
+
+        return $student;
     }
 
     /*

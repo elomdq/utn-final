@@ -6,6 +6,7 @@ use Models\User as User;
 
 if($_POST)
 {
+
     $student = new Student();
     $student->setFirstName($_POST['firstName']);
     $student->setLastName($_POST['lastName']);
@@ -44,8 +45,8 @@ if($_POST)
                             </div>
 
                             <div class="form-group py-0">
-                                <label for="inputPassword" class="mb-1">Confirmar Contraseña</label>
-                                <input type="password" name="password2" class="form-control" id="inputPassword" placeholder="">
+                                <label for="inputPassword2" class="mb-1">Confirmar Contraseña</label>
+                                <input type="password" name="password2" class="form-control" id="inputPassword2" placeholder="">
                             </div>
                          
                             <div class="row justify-content-center mt-3">

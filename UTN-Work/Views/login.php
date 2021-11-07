@@ -30,7 +30,7 @@
 
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="password" placeholder="Contraseña">
+                                                id="password" placeholder="Contraseña" name="password">
                                         </div>
 
                                         <div class="form-group d-flex justify-content-around py-3">

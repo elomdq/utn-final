@@ -29,38 +29,67 @@ class HomeController{
         require_once(VIEWS_PATH. "footer.php");
     }
 
-    public function login($email, $userType) //0-student 1-admin 2-company
+    public function login($email, $password, $userType) //0-student 1-admin 2-company
     {
-        switch($userType)
+
+        echo "Estoy en login <br>";
+        echo $email;
+        echo $password;
+        echo $userType;
+        echo "<br>";
+
+        echo "Buscando User <br>";
+        $userData = $this->userDAO->getUserByEmail($email);
+
+        echo "Termino busqueda user <br>";
+        var_dump($userData);
+
+        if($userData[0])
         {
-            case 0:
-                $student = $this->studentDAO->studentByEmailApi($email);
+            if($password == $userData[0]['pass'])
+            {
+                echo "Contraseña correcta <br>";
 
-                if($student != null && $student->getActive() == true )
+                switch($userType)
                 {
-                    $_SESSION["loggedUser"] = $student;
-                    $_SESSION['userType'] = $userType;
-                    $this->home();
-                } else
-                    $this->showLoginView();
-                break;
-            case 1:
-                $admin = $this->adminDAO->GetAdminByEmail($email);
+                case 0:
+                    echo "Buscando Student <br>";
+                    $student = $this->studentDAO->getStudentByUserId($userData[0]['id_user']);
 
-                if($admin != null && $admin->getActive() == true )
-                {
-                    $_SESSION['loggedUser'] = $admin;
-                    $_SESSION['userType'] = $userType;
-                    $this->home();
-                } else
+                    $student->setUserId($userData[0]['id_user']);
+                    $student->setEmail($userData[0]['email']);
+                    $student->setPassword($userData[0]['pass']);
+                    $student->setActive($userData[0]['active']);
+
+                    if($student != null && $student->getActive() == true )
+                    {
+                        $_SESSION["loggedUser"] = $student;
+                        $_SESSION['userType'] = $userType;
+                        $this->home();
+                    } else
+                        $this->showLoginView();
+                    break;
+                case 1:
+                    $admin = $this->adminDAO->GetAdminByEmail($email);
+
+                    if($admin != null && $admin->getActive() == true )
+                    {
+                        $_SESSION['loggedUser'] = $admin;
+                        $_SESSION['userType'] = $userType;
+                        $this->home();
+                    } else
+                        $this->showLoginView();
+                    break;
+                case 2:
                     $this->showLoginView();
-                break;
-            case 2:
-                    $this->showLoginView();
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+                }
+
+            }
         }
+
     }
 
     public function showLoginView()
@@ -91,10 +120,15 @@ class HomeController{
         }
     }
 
-    public function generatePassword(){
-        require_once(VIEWS_PATH."header.php");
-        require_once VIEWS_PATH . "generate-password.php";
-        require_once(VIEWS_PATH."footer.php");
+    public function generatePassword(...$values){
+
+        if($_POST)
+        {
+            
+            require_once(VIEWS_PATH."header.php");
+            require_once VIEWS_PATH . "generate-password.php";
+            require_once(VIEWS_PATH."footer.php");
+        }
     }
 
     public function register(...$values){
@@ -110,9 +144,14 @@ class HomeController{
             $parameters['active'] = $_SESSION['student']->getActive();
 
             $this->userDAO->add($parameters);
-            $this->studentDAO->add($_SESSION['student'], $this->userDAO->getUserIdByEmail($_SESSION['student']->getEmail()));
+
+            $_SESSION['student']->setUserId($this->userDAO->getUserIdByEmail($_SESSION['student']->getEmail()));
+
+            $this->studentDAO->add($_SESSION['student']);
 
             unset($_SESSION['student']);
+
+            $this->showLoginView();
         }
     }
 

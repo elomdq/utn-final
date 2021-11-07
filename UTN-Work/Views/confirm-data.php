@@ -16,7 +16,7 @@ namespace Views;
 
                     <div class="card-body">
 
-                        <form class="" action="<?php echo FRONT_ROOT; ?>home/generatePassword" method="post">
+                        <form class="" action="<?php echo FRONT_ROOT; ?>home/generatePassword/" method="post">
 
                             <div class="form-group py-0">
                                 <label for="email" class="mb-1">Email</label>
@@ -59,14 +59,7 @@ namespace Views;
                             </div>
                             
                             <input type="hidden" name="active" class="form-control" id="active" value="<?php echo $student->getActive(); ?>">
-                            
-                            <!--
-                            <div class="form-group py-0">
-                                <label for="inputPassword" class="mb-1">Password</label>
-                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                            </div>
-                            -->
-
+                        
                             <div class="row justify-content-center mt-3">
                                 <div class="col-3">
                                     <input type="submit" class="btn btn-primary btn-block my-3" value="Confirmar">
