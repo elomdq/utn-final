@@ -28,10 +28,16 @@ class UserDAO{
 
         } catch(Exception $e){
            throw $e;
-           //var_dump($e);
         }
 
     }
+
+    public function remove($userId){
+        $query = "UPDATE users set active = 0";
+        $this->connection = Connection::GetInstance();
+        $this->connection->executeNonQuery($query);
+    }
+
 
     public function getUserIdByEmail($email){
         $query = "SELECT (id_user) FROM ".$this->tableName." WHERE email= \"".$email."\";";

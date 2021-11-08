@@ -23,7 +23,7 @@ class StudentDAO implements IStudentDAO{
     public function add(Student $student){
 
         try{
-            $query = "INSERT INTO ". $this->tableName ." (firstName, lastName, dni, birthDate, gender, id_user) VALUES(:firstName, :lastName, :dni, :birthDate, :gender, :idUser);";
+            $query = "INSERT INTO ". $this->tableName ." (firstName, lastName, dni, birthDate, gender, id_user, id_career, filenumber) VALUES(:firstName, :lastName, :dni, :birthDate, :gender, :idUser, :id_career, :filenumber);";
 
             $parameters = array();
             $parameters['firstName']=$student->getFirstName();
@@ -32,7 +32,10 @@ class StudentDAO implements IStudentDAO{
             $parameters['birthDate']= str_split($student->getBirthDate(),10)[0];
             //$student->setGender( str_replace("-", " ", $student->getGender()) );
             $parameters['gender']=$student->getGender();
-            $parameters['idUser']=$student->getUserId();;
+            $parameters['idUser']=$student->getUserId();
+            $parameters['id_career'] = $student->getCareerId();
+            $parameters['filenumber'] = $student->getFileNumber();
+
 
             $this->connection = Connection::GetInstance();
 
@@ -43,69 +46,22 @@ class StudentDAO implements IStudentDAO{
         }
     }
 
-    public function remove($studentId){
-
-    }
-
     public function getAll(){
         
+        try{
 
+            $query = "SELECT * FROM ". $this->tableName ;
 
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->execute($query);
+
+            return $resultSet;
+
+        }catch(Exception $e){
+            throw $e;
+        }
     }
-
-    private function saveData(){
-        /*$array_to_encode = array();
-
-        foreach($this->students as $student)
-        {
-            $studentData['studentId'] = $student->getStudentId();
-            $studentData['careerId'] = $student->getCareerId();
-            $studentData['name'] = $student->getFirstName();
-            $studentData['lastName'] = $student->getLastName();
-            $studentData['fileNumber'] = $student->getFileNumber();
-            $studentData['dni'] = $student->getDni();
-            $studentData['phoneNumber'] = $student->getPhoneNumber();
-            $studentData['gender'] = $student->getGender();
-            $studentData['birthDate'] = $student->getBirthDate();
-            $studentData['email'] = $student->getEmail();
-            $studentData['active'] = $student->getActive();
-
-            array_push($array_to_encode, $studentData);
-
-            $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
-            file_put_contents($this->filename, $jsonEnconde);
-        }*/
-    }
-
-    private function retrieveData(){
-        /*$this->students = array();
-
-        if(file_exists($this->filename))
-        {
-            $jsonContent = file_get_contents($this->filename);
-
-            $array_to_decode = ($jsonContent)? json_decode($jsonContent, true) : array(); 
-
-            foreach($array_to_decode as $studentData)
-            {
-                $student = new Student;
-                $student->setStudentId($studentData['studentId']);
-                $student->setCareerId($studentData['careerId']);
-                $student->setFileNumber($studentData['fileNumber']);
-                $student->setFirstName($studentData['name']);
-                $student->setLastName($studentData['lastName']);
-                $student->setDni($studentData['dni']);
-                $student->setGender($studentData['gender']);
-                $student->setPhoneNumber($studentData['phoneNumber']);
-                $student->setBirthDate($studentData['birthDate']);
-                $student->setEmail($studentData['email']);
-                $student->setActive($studentData['active']);
-
-                array_push($this->students, $student);
-            }
-        }*/
-    }
-
 
     public function studentByEmailApi($email)
     {
@@ -161,31 +117,7 @@ class StudentDAO implements IStudentDAO{
         return $student;
     }
 
-    /*
-    public function downloadData($apiResponse){
-        
-        //decodifico el json en un array
-        $arrayStudents = json_decode($apiResponse, true);
-
-        foreach($arrayStudents as $studentData)
-        {
-            $student = new Student;
-            $student->setStudentId($studentData['studentId']);
-            $student->setCareerId($studentData['careerId']);
-            $student->setFileNumber($studentData['fileNumber']);
-            $student->setFirstName($studentData['firstName']);
-            $student->setLastName($studentData['lastName']);
-            $student->setDni($studentData['dni']);
-            $student->setGender($studentData['gender']);
-            $student->setPhoneNumber($studentData['phoneNumber']);
-            $student->setBirthDate($studentData['birthDate']);
-            $student->setEmail($studentData['email']);
-            $student->setActive($studentData['active']);
-                
-            array_push($this->students, $student);
-        }
-    }*/
-
+    
 }
 
 ?>

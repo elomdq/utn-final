@@ -36,7 +36,8 @@ $user = $_SESSION['loggedUser'];
             <!-- Card Body -->
             <div class="row card-body justify-content-center py-2">
                 <div class="col-10 m-3">
-                    <div>Carrera: <?php echo $careerDAO->getCareerById($user->getCareerId())->getDescription(); ?></div>
+                    <!-- le estoy pegando a la api ara obtener la descripcion de la carrera, mejorar eso -->
+                    <div>Carrera: <?php echo $careerDAO->getCareerById_Api($user->getCareerId())->getDescription(); ?></div>
                 </div>
                 <hr class="col-10 m-0">
                 <div class="col-10 m-3">

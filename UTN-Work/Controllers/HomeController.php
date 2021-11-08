@@ -32,28 +32,15 @@ class HomeController{
     public function login($email, $password, $userType) //0-student 1-admin 2-company
     {
 
-        echo "Estoy en login <br>";
-        echo $email;
-        echo $password;
-        echo $userType;
-        echo "<br>";
-
-        echo "Buscando User <br>";
         $userData = $this->userDAO->getUserByEmail($email);
-
-        echo "Termino busqueda user <br>";
-        var_dump($userData);
 
         if($userData[0])
         {
             if($password == $userData[0]['pass'])
             {
-                echo "Contraseña correcta <br>";
-
                 switch($userType)
                 {
                 case 0:
-                    echo "Buscando Student <br>";
                     $student = $this->studentDAO->getStudentByUserId($userData[0]['id_user']);
 
                     $student->setUserId($userData[0]['id_user']);
