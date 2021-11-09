@@ -1,10 +1,7 @@
 <?php 
 namespace Connections;
 
-use DAO\CareerDAO as CareerDAO;
-use Models\Career as Career;
-
-class CareerConnection{
+class CareerApiConnection{
 
     private $url;
     private $curlHandler;

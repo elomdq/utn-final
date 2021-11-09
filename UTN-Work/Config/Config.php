@@ -12,7 +12,7 @@ define("VENDOR_PATH", FRONT_ROOT.VIEWS_PATH . "vendor/");
 
 
 define("DB_HOST", "localhost");
-define("DB_NAME", "University");
+define("DB_NAME", "tp_final");
 define("DB_USER", "root");
 define("DB_PASS", "");
 

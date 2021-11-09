@@ -3,8 +3,6 @@
 namespace Models;
 
 use Models\User as User;
-use Models\Offer as Offer;
-use Models\Company as Company;
 
 class Student extends User{
 
@@ -18,49 +16,6 @@ class Student extends User{
     private $gender;
     private $birthDate;
     private $phoneNumber;
-
-    
-    //return List<Offer>
-    public function listOffers(){
-
-    }
-
-    //return List<Company>
-    public function listCompanies(){
-
-    }
-
-    //return Company
-    public function listCompaniesByName($name){
-
-    }
-
-    //return List<Offer>
-    public function listAppliedOffers(){
-        
-    }
-
-    public function viewProfile(){
-
-    }
-
-    public function viewAcademicProfile(){
-
-    }
-
-    public function viewOfferDetail(Offer $offer){
-
-    }
-
-    public function viewCompanyProfile(Company $company){
-
-    }
-
-    //return bool
-    public function aplliedToOffer(Offer $offer){
-
-    }
-
 
     public function getStudentId(){ return $this->studentId; }
     public function setStudentId($studentId): self { $this->studentId = $studentId; return $this; }

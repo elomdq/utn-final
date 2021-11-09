@@ -13,11 +13,7 @@
 		
 	Autoload::start();
 
-	session_start();
-
-	require_once(VIEWS_PATH."header.php");
+	session_start(); //cambiar ubicacion a donde se use
 
 	Router::Route(new Request());
-
-	require_once(VIEWS_PATH."footer.php");
 ?>

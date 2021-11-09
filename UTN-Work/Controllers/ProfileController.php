@@ -13,6 +13,7 @@ class ProfileController{
 
     public function showProfile(){
         require_once VIEWS_PATH . "validate-session.php";
+        require_once(VIEWS_PATH . "header.php");
         require_once VIEWS_PATH . "nav.php" ;
 
         switch($_SESSION['userType'])
@@ -28,7 +29,7 @@ class ProfileController{
             default:
                 break;
         }
-        
+        require_once(VIEWS_PATH."footer.php");
     }
 
 

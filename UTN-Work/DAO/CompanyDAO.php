@@ -4,67 +4,127 @@ namespace DAO;
 
 use Models\Company as Company;
 use DAO\ICompanyDAO as ICompanyDAO;
+use \Exception as Exception;
+use DAO\Connection as Connection;
 
 class CompanyDAO implements ICompanyDAO
 {
 
-    private $companies = array();
-    private $filename;
+    private $connection;
+    private $tableName = 'companies';
 
     public function __construct()
     {
-        $this->filename = ROOT . "Data/companies.json";
+        
     }
 
     public function add(Company $company)
     {
-        $this->retrieveAll();
-        $company->setUserId($this->getLastId() + 1);
-        array_push($this->companies, $company);
-        $this->saveData();
+        try{
+            $query = "INSERT INTO ".$this->tableName." (companyName, id_user, adress, cuit, active, city, email, adress) VALUES(:companyName, :id_user, :adress, :cuit, :active, :city, :email, :adress);";
+
+            $parameters = array();
+            $parameters['companyName'] = $company->getCompanyName();
+            $parameters['id_user'] = $company->getUserId();
+            $parameters['adress'] = $company->getAddress();
+            $parameters['cuit'] = $company->getCuit();
+            $parameters['active'] = $company->getActive();
+            $parameters['city'] = $company->getCity();
+            $parameters['email'] = $company->getEmail();
+            $parameters['adress'] = $company->getAddress();
+
+            $this->connection = Connection::GetInstance();
+            $this->connection->executeNonQuery($query, $parameters);
+        }
+        catch(Exception $e){
+            throw $e;
+        }
+    }
+
+    public function findCompanyByIdDB($idCompany){
+        try {
+            $query="SELECT * FROM ".$this->tableName." WHERE id_company = \"".$idCompany."\";";
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->executeNonQuery($query);
+            
+            $Company = new Company;
+            $Company->setIdCompany($resultSet[0]['id_company']);
+            $Company->setCompanyName($resultSet[0]['companyName']);
+            $Company->setTelephone($resultSet[0]['phoneNumber']);
+            $Company->setCity($resultSet[0]['city']);
+            $Company->setCuit($resultSet[0]['cuit']);
+            $Company->setEmail($resultSet[0]['email']);
+            $Company->setAddress($resultSet[0]['adress']);
+            $Company->setActive($resultSet[0]['active']);
+    
+            return $Company;
+        } catch (Exception $e){
+
+        }
     }
 
     public function remove($companyId)
     {
-        $newList = array();
-        $this->retrieveAll();
-
-        foreach ($this->companies as $company) {
-            if ($company->getUserId() != $companyId)
-                array_push($newList, $company);
+        try{
+            $query = "UPDATE users set active = 0";
+            $this->connection = Connection::GetInstance();
+            $this->connection->executeNonQuery($query);
         }
-
-        $this->companies = $newList;
-        $this->saveData();
+        catch(Exception $e){
+            throw $e;
+        }
     }
 
     public function getAll()
     {
-        $this->retrieveAll();
-        return $this->companies;
+        try{
+            $query = "SELECT * FROM ".$this->tableName.";";
+
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->execute($query);
+
+            $companies = array();
+
+            foreach($resultSet as $row)
+            {
+                $company = new Company;
+                $company->setUserId($row['id_user']);
+                $company->setEmail($row['email']);
+                $company->setPassword($row['pass']);
+                $company->setCompanyName($row['companyName']);
+                $company->setAddress($row['direccion']);
+                $company->setCuit($row['cuit']);
+                $company->setactive($row['active']);
+
+                array_push($companies, $company);
+            }
+
+            return $companies;
+        }
+        catch(Exception $e){
+            throw $e;
+        }
     }
 
     private function saveData()
     {
         $array_to_encode = array();
 
-        foreach ($this->companies as $compnay) {
-            $companyData['companyName'] = $compnay->getCompanyName();
-            $companyData['telephone'] = $compnay->getTelephone();
-            $companyData['city'] = $compnay->getCity();
-            $companyData['direction'] = $compnay->getDirection();
-            $companyData['cuit'] = $compnay->getCuit();
-            $companyData['email'] = $compnay->getEmail();
-            $companyData['active'] = $compnay->getActive();
-            $companyData['userId'] = $compnay->getUserId();
-
-
-
+        foreach ($this->companies as $company) {
+            $companyData['companyName'] = $company->getCompanyName();
+            $companyData['telephone'] = $company->getTelephone();
+            $companyData['city'] = $company->getCity();
+            $companyData['address'] = $company->getAddress();
+            $companyData['cuit'] = $company->getCuit();
+            $companyData['email'] = $company->getEmail();
+            $companyData['active'] = $company->getActive();
+            $companyData['userId'] = $company->getUserId();
+           
             array_push($array_to_encode, $companyData);
-
-            $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
-            file_put_contents($this->filename, $jsonEnconde);
         }
+        
+        $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
+        file_put_contents($this->filename, $jsonEnconde);
     }
 
     private function getLastId()
@@ -88,7 +148,7 @@ class CompanyDAO implements ICompanyDAO
                 $company = new Company;
                 $company->setCompanyName($companyData['companyName']);
                 $company->setTelephone($companyData['telephone']);
-                $company->setDirection($companyData['direction']);
+                $company->setAddress($companyData['address']);
                 $company->setCity($companyData['city']);
                 $company->setCuit($companyData['cuit']);
                 $company->setEmail($companyData['email']);

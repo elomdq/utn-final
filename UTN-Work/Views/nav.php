@@ -15,20 +15,20 @@
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
 
-            <li class="nav-item no-arrow mx-1">
+            <li class="nav-item mx-1">
                 <a class="nav-link" href="<?php echo FRONT_ROOT . "Company/listCompanies"; ?>" id="companies" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Empresas</span>
                 </a>
             </li>
 
-            <li class="nav-item no-arrow mx-1">
+            <li class="nav-item mx-1">
                 <a class="nav-link" href="<?php echo FRONT_ROOT . "Offer/showOffersList"; ?>" id="offers" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Ofertas Laborales</span>
                 </a>
             </li>
 
             <!--
-            <li class="nav-item no-arrow mx-1">
+            <li class="nav-item mx-1">
                 <a class="nav-link" href="<?php echo FRONT_ROOT . "Home/logout"; ?>" id="session" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Cerrar Sesión</span>
                 </a>
@@ -62,6 +62,13 @@
                         <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Company/addView"; ?>">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Agregar Empresa
+                        </a>
+                    <?php } ?>
+
+                    <?php if($_SESSION['userType'] == 1) {?>
+                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Offer/addView"; ?>">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Agregar Oferta
                         </a>
                     <?php } ?>
                     

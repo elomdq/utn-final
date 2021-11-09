@@ -45,7 +45,7 @@ if(isset($_SESSION['company'])){
                 </div>
                 <hr class="col-10 m-0">
                 <div class="col-10 m-3">
-                    <div>Direccion: <?php echo $company->getDirection() ?></div>
+                    <div>Direccion: <?php echo $company->getAddress() ?></div>
                 </div>
                 <hr class="col-10 m-0">
                 <div class="col-10 m-3">

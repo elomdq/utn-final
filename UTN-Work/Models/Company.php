@@ -8,35 +8,18 @@ use Models\Offer as Offer;
 
 class Company extends User{
 
+    private $idCompany;
     private $companyName;
     private $telephone;
     private $city;
-    private $direction;
+    private $address;
     private $cuit;
-
-    public function viewProfile()
-    {
-        
-    }
-
-    //return List<Offer>, habria que ver si hay que agregar una variable repo de ofertas de la empresa que levante de la base de datos, o 
-    //si cada ves que llamo a esta funcion conecto con la base de datos en funcion al userId o un id de la empresa (como el CUIT u otro generado)
-    public function listOffers(){
-
-    }
-
-    public function viewOfferDetails(Offer $offer){
-
-    }
-
-    //return lista de estudiantes
-    public function viewApplicants(Offer $offer){
-
-    }
-
 
     public function getCompanyName(){ return $this->companyName; }
     public function setCompanyName($companyName): self { $this->companyName = $companyName; return $this; }
+
+    public function getIdCompany(){ return $this->idCompany; }
+    public function setIdCompany($idCompany): self { $this->idCompany = $idCompany; return $this; }
 
     public function getTelephone(){ return $this->telephone; }
     public function setTelephone($telephone): self { $this->telephone = $telephone; return $this; }
@@ -44,11 +27,11 @@ class Company extends User{
     public function getCity(){ return $this->city; }
     public function setCity($city): self { $this->city = $city; return $this; }
 
-    public function getDirection(){ return $this->direction; }
-    public function setDirection($direction): self { $this->direction = $direction; return $this; }
-
     public function getCuit(){ return $this->cuit; }
     public function setCuit($cuit): self { $this->cuit = $cuit; return $this; }
+
+    public function getAddress(){ return $this->address; }
+    public function setAddress($address): self { $this->address = $address; return $this; }
 }
 
 ?>
