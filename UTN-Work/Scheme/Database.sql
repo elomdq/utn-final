@@ -21,6 +21,9 @@ CREATE TABLE `admins` (
  CONSTRAINT `fk_userAdmin` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;
 
+INSERT INTO users(email, pass, active) VALUES('admin@admin', '123456', 1);
+INSERT INTO admins(firstName, lastName, id_user) VALUES('Admin', 'Admin', 1);
+
 /*
 CREATE TABLE `careers` (
  `id_career` int(11) NOT NULL AUTO_INCREMENT,
@@ -44,10 +47,8 @@ CREATE TABLE `companies` (
  `id_user` int(11) NOT NULL,
  `adress` varchar(100) DEFAULT NULL,
  `city` varchar(50) DEFAULT NULL,
- `email` varchar(50) NOT NULL,
  `cuit` varchar(100) DEFAULT NULL,
- `phoneNumber` int DEFAULT NULL,
- `active` int(2) NOT NULL,
+ `phoneNumber` varchar(30) DEFAULT NULL,
  PRIMARY KEY (`id_company`),
  KEY `fk_userCompany` (`id_user`),
  CONSTRAINT `fk_userCompany` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
@@ -59,7 +60,7 @@ CREATE TABLE `offers` (
  `jobPosition` varchar(50) NOT NULL,
  `career` varchar(50) NOT NULL,
  `title` varchar(50) NOT NULL,
- `active` int(2) NOT NULL,
+ `active` tinyint(1) NOT NULL,
  `publicationDate` date NOT NULL,
  `offerDescription` varchar(5000) DEFAULT NULL,
  PRIMARY KEY (`id_jobOffer`),
