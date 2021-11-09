@@ -87,7 +87,7 @@ class CareerDAO implements ICareerDAO{
         }
     }
 
-    public function getCareerById($id){
+   /* public function getCareerById($id){
         $this->retrieveData();
         $career = null;
         foreach($this->careers as $obj)
@@ -97,7 +97,7 @@ class CareerDAO implements ICareerDAO{
         }
 
         return $career;
-    }
+    }*/
 
     public function getCareerById_Api($careerId)
     {

@@ -57,6 +57,24 @@ class CompanyDAO implements ICompanyDAO
 
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
+
+            $companies = array();
+
+            foreach($resultSet as $row)
+            {
+                $company = new Company;
+                $company->setUserId($row['id_user']);
+                $company->setEmail($row['email']);
+                $company->setPassword($row['pass']);
+                $company->setCompanyName($row['companyName']);
+                $company->setAddress($row['direccion']);
+                $company->setCuit($row['cuit']);
+                $company->setactive($row['active']);
+
+                array_push($companies, $company);
+            }
+
+            return $companies;
         }
         catch(Exception $e){
             throw $e;

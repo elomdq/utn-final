@@ -21,12 +21,13 @@ CREATE TABLE `admins` (
  CONSTRAINT `fk_userAdmin` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;
 
+/*
 CREATE TABLE `careers` (
  `id_career` int(11) NOT NULL AUTO_INCREMENT,
  `description` varchar(100) DEFAULT NULL,
  `active` tinyint(1) not null,
  PRIMARY KEY (`id_career`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB;*/
 
 /*CREATE TABLE `telephones` (
  `id_telephone` int(11) NOT NULL AUTO_INCREMENT,
@@ -77,8 +78,8 @@ CREATE TABLE `students` (
  PRIMARY KEY (`id_student`),
  UNIQUE KEY `unq_student` (`dni`),
  KEY `fk_user_student` (`id_user`),
- KEY `fk_career` (`id_career`),
- CONSTRAINT `fk_career` FOREIGN KEY (`id_career`) REFERENCES `careers` (`id_career`),
+ /*KEY `fk_career` (`id_career`),
+ CONSTRAINT `fk_career` FOREIGN KEY (`id_career`) REFERENCES `careers` (`id_career`),*/
  CONSTRAINT `fk_user_student` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;
 
