@@ -33,17 +33,11 @@ class OfferDAO implements IOfferDAO{
             $this->connection = Connection::GetInstance();
 
             $this->connection->executeNonQuery($query, $parameters);
-        }
-        catch(Exception $e){
-
+        } catch(Exception $e) {
+            throw new Exception('Algo paso',  $e->getMessage());
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
     }
-
-    //public function add(Offer $offer){
-    //    $this->retrieveData();
-    //    array_push($this->offers, $offer);
-    //    $this->saveData();
-    //}
 
     public function remove($offerId){
         $newList = array();
