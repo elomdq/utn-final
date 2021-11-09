@@ -30,7 +30,6 @@ class StudentDAO implements IStudentDAO{
             $parameters['lastName']=$student->getLastName();
             $parameters['dni']=$student->getDni();
             $parameters['birthDate']= str_split($student->getBirthDate(),10)[0];
-            //$student->setGender( str_replace("-", " ", $student->getGender()) );
             $parameters['gender']=$student->getGender();
             $parameters['idUser']=$student->getUserId();
             $parameters['id_career'] = $student->getCareerId();

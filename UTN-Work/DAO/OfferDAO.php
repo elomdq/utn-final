@@ -141,5 +141,34 @@ class OfferDAO implements IOfferDAO{
 
         return $offer;
     }
+
+    public function updateOfferById(Offer $offer, $idOffer)
+    {
+        try{
+
+                $quey2 =  "UPDATE ".$this->tableName." SET jobPosition = :jobPosition 
+                                                            career=:career 
+                                                            title=:title
+                                                            active=:active
+                                                            publicationDate=:publicationDate
+                                                            offerDescription=:offerDescription
+                                                            WHERE id_jobOffer = \"".$idOffer."\";";
+                $query = "UPDATE ".$this->tableName."(jobPosition, career, title, active, publicationDate, offerDescription) VALUES(:jobPosition, :career, :title, :active, :publicationDate, :offerDescription) WHERE id_jobOffer = \"".$idOffer."\";";
+
+                $parameters['jobPosition']=$offer->getJobPosition();
+                $parameters['id_company']=$offer->getCompanyId();
+                $parameters['career']=$offer->getCareerId();
+                $parameters['title']=$offer->getTitle();
+                $parameters['active']=$offer->getActive();
+                $parameters['publicationDate']=$offer->getPublicationDate();
+                $parameters['offerDescription']=$offer->getDescription();
+    
+                $this->connection = Connection::GetInstance();
+    
+                $this->connection->executeNonQuery($query, $parameters);
+        } catch(Exception $e){
+            throw $e;
+        }
+    }
 }
 ?>

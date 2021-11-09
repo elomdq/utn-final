@@ -13,9 +13,12 @@ class JobPositionDAO {
 
     private function connectToApi()
     {
+        try{
         $this->connection = new JobApiConnection;
         $this->jobPositions = json_decode($this->connection->executeCurl(), true);
-
+    } catch (Exception $e){
+        throw $e;
+    }
         return $this->jobPositions;
     }
 

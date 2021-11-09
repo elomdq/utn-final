@@ -8,6 +8,7 @@ use Models\Offer as Offer;
 
 class Company extends User{
 
+    private $idCompany;
     private $companyName;
     private $telephone;
     private $city;
@@ -16,6 +17,9 @@ class Company extends User{
 
     public function getCompanyName(){ return $this->companyName; }
     public function setCompanyName($companyName): self { $this->companyName = $companyName; return $this; }
+
+    public function getIdCompany(){ return $this->idCompany; }
+    public function setIdCompany($idCompany): self { $this->idCompany = $idCompany; return $this; }
 
     public function getTelephone(){ return $this->telephone; }
     public function setTelephone($telephone): self { $this->telephone = $telephone; return $this; }

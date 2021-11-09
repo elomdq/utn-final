@@ -21,20 +21,45 @@ class CompanyDAO implements ICompanyDAO
     public function add(Company $company)
     {
         try{
-            $query = "INSERT INTO ".$this->tableName." (companyName, id_user, direccion, cuit, active) VALUES(:companyName, :id_user, :direccion, :cuit, :active);";
+            $query = "INSERT INTO ".$this->tableName." (companyName, id_user, adress, cuit, active, city, email, adress) VALUES(:companyName, :id_user, :adress, :cuit, :active, :city, :email, :adress);";
 
             $parameters = array();
             $parameters['companyName'] = $company->getCompanyName();
             $parameters['id_user'] = $company->getUserId();
-            $parameters['direccion'] = $company->getAddress();
+            $parameters['adress'] = $company->getAddress();
             $parameters['cuit'] = $company->getCuit();
             $parameters['active'] = $company->getActive();
+            $parameters['city'] = $company->getCity();
+            $parameters['email'] = $company->getEmail();
+            $parameters['adress'] = $company->getAddress();
 
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query, $parameters);
         }
         catch(Exception $e){
             throw $e;
+        }
+    }
+
+    public function findCompanyByIdDB($idCompany){
+        try {
+            $query="SELECT * FROM ".$this->tableName." WHERE id_company = \"".$idCompany."\";";
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->executeNonQuery($query);
+            
+            $Company = new Company;
+            $Company->setIdCompany($resultSet[0]['id_company']);
+            $Company->setCompanyName($resultSet[0]['companyName']);
+            $Company->setTelephone($resultSet[0]['phoneNumber']);
+            $Company->setCity($resultSet[0]['city']);
+            $Company->setCuit($resultSet[0]['cuit']);
+            $Company->setEmail($resultSet[0]['email']);
+            $Company->setAddress($resultSet[0]['adress']);
+            $Company->setActive($resultSet[0]['active']);
+    
+            return $Company;
+        } catch (Exception $e){
+
         }
     }
 

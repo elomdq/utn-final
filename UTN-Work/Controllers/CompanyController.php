@@ -112,7 +112,6 @@ class CompanyController{
     //se encarga de recibir los datos de la empresa, validar, generar el objeto y sobreescribir el .json
     public function modifyCompany(...$values) //no concidero el active y el userId como params, aunque pueden ser enviados
     {
-
         if($_POST)
         {
             if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['address'], $_POST['cuit'], $_POST['email']))

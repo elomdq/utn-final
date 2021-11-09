@@ -24,8 +24,8 @@ $user = $_SESSION['loggedUser'];
                     <div class="row">                         
                          <div class="col-lg-3">
                               <div class="form-group">
-                                   <label for="companyName">Titulo</label>
-                                   <input id="companyName" type="text" name="offerTitle" required class="form-control" placeholder="Nombre de empresa">
+                                   <label for="offerTitle">Titulo</label>
+                                   <input id="offerTitle" type="text" name="offerTitle" required class="form-control" placeholder="Nombre de empresa">
                               </div>
                          </div>                         
                          <div class="col-lg-2">
@@ -39,20 +39,23 @@ $user = $_SESSION['loggedUser'];
                          </div>
                          <div class="col-lg-2">
                               <div class="form-group">
-                                   <label for="companyCity">Descripcion</label>
-                                   <input id="companyCity" type="text" name="offerDesc" class="form-control" placeholder="Ciudad" min="0">
+                                   <label for="offerDesc">Descripcion</label>
+                                   <input id="offerDesc" type="text" name="offerDesc" class="form-control" placeholder="Ciudad" min="0">
                               </div>
                          </div>
                          <div class="col-lg-2">
-                              <div class="form-group">
-                                   <label for="companyDir">Compania</label>
-                                   <input id="companyDir" type="text" name="companyId" class="form-control" placeholder="Direccion" min="0">
-                              </div>
-                         </div>
+                         <label>Compania</label> 
+                         <select class="form-control" name="companyId" class="form-control">
+                            <?php
+                                foreach ($this->companyList as $company) { ?>
+                                    <option  value= "<?php echo $company->getIdCompany(); ?>"> <?php echo $company->getCompanyName(); ?> </option>
+                            <?php }  ?>
+                        </select>
+                        </div>
                          <div class="col-lg-2">
                               <div class="form-group">
-                                   <label for="companyCuit">Fecha</label>
-                                   <input id="companyCuit" type="date" name="publicationDate" class="form-control" placeholder="Cuit" min="0">
+                                   <label for="publicationDate">Fecha</label>
+                                   <input id="publicationDate" type="date" name="publicationDate" class="form-control" placeholder="Cuit" min="0">
                               </div>
                          </div>
                          <div class="col-lg-2">
@@ -63,11 +66,11 @@ $user = $_SESSION['loggedUser'];
                                     <option  value= "<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getDescription(); ?> </option>
                             <?php }  ?>
                         </select>
-                         </div>
+                        </div>
                          <div class="col-lg-">
                               <div>
-                                   <label for="activeCompany">Active</label>
-                                   <input id="activeCompany" type="checkbox" name="active" class="form-control" min="0">
+                                   <label for="active">Active</label>
+                                   <input id="active" type="checkbox" name="active" class="form-control" min="0">
                               </div>
                          </div>
                     </div>
