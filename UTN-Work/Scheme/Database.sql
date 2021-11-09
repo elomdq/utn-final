@@ -28,14 +28,14 @@ CREATE TABLE `careers` (
  PRIMARY KEY (`id_career`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE `telephones` (
+/*CREATE TABLE `telephones` (
  `id_telephone` int(11) NOT NULL AUTO_INCREMENT,
  `phoneNumber` varchar(50) NOT NULL,
  `id_user` int(11) NOT NULL,
  PRIMARY KEY (`id_telephone`),
  KEY `fk_userTelephone` (`id_user`),
  CONSTRAINT `fk_userTelephone` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB;*/
 
 CREATE TABLE `companies` (
  `id_company` int(11) NOT NULL AUTO_INCREMENT,
@@ -71,16 +71,14 @@ CREATE TABLE `students` (
  `birthDate` date DEFAULT NULL,
  `gender` varchar(20) DEFAULT NULL,
  `id_user` int(11) DEFAULT NULL,
- `id_telephone` int(11) DEFAULT NULL,
+ `phoneNumber` varchar(20) DEFAULT NULL,
  `fileNumber` varchar(50) DEFAULT NULL,
  `id_career` int(11) DEFAULT NULL,
  PRIMARY KEY (`id_student`),
  UNIQUE KEY `unq_student` (`dni`),
  KEY `fk_user_student` (`id_user`),
  KEY `fk_career` (`id_career`),
- KEY `fk_telephone` (`id_telephone`),
  CONSTRAINT `fk_career` FOREIGN KEY (`id_career`) REFERENCES `careers` (`id_career`),
- CONSTRAINT `fk_telephone` FOREIGN KEY (`id_telephone`) REFERENCES `telephones` (`id_telephone`),
  CONSTRAINT `fk_user_student` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;
 

@@ -56,7 +56,21 @@ class StudentDAO implements IStudentDAO{
 
             $resultSet = $this->connection->execute($query);
 
-            return $resultSet;
+            $students = array();
+
+            foreach($resultSet as $row){
+                $student = new Student;
+                $student->setUserId($row['id_user']);
+                $student->setFirstName($row['firstName']);
+                $student->setLastName($row['lastName']);
+                $student->setDni($row['dni']);
+                $student->setBirthDate($row['birthDate']);
+                $student->setGender($row['gender']);
+                $student->setPhoneNumber($row['phoneNumber']);
+            }
+            
+
+            return $students;
 
         }catch(Exception $e){
             throw $e;

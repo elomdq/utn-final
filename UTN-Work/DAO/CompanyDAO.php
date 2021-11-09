@@ -4,44 +4,63 @@ namespace DAO;
 
 use Models\Company as Company;
 use DAO\ICompanyDAO as ICompanyDAO;
+use \Exception as Exception;
+use DAO\Connection as Connection;
 
 class CompanyDAO implements ICompanyDAO
 {
 
-    private $companies = array();
-    private $filename;
+    private $connection;
+    private $tableName = 'companies';
 
     public function __construct()
     {
-        $this->filename = ROOT . "Data/companies.json";
+        
     }
 
     public function add(Company $company)
     {
-        $this->retrieveAll();
-        $company->setUserId($this->getLastId() + 1);
-        array_push($this->companies, $company);
-        $this->saveData();
+        try{
+            $query = "INSERT INTO ".$this->tableName." (companyName, id_user, direccion, cuit, active) VALUES(:companyName, :id_user, :direccion, :cuit, :active);";
+
+            $parameters = array();
+            $parameters['companyName'] = $company->getCompanyName();
+            $parameters['id_user'] = $company->getUserId();
+            $parameters['direccion'] = $company->getAddress();
+            $parameters['cuit'] = $company->getCuit();
+            $parameters['active'] = $company->getActive();
+
+            $this->connection = Connection::GetInstance();
+            $this->connection->executeNonQuery($query, $parameters);
+        }
+        catch(Exception $e){
+            throw $e;
+        }
     }
 
     public function remove($companyId)
     {
-        $newList = array();
-        $this->retrieveAll();
-
-        foreach ($this->companies as $company) {
-            if ($company->getUserId() != $companyId)
-                array_push($newList, $company);
+        try{
+            $query = "UPDATE users set active = 0";
+            $this->connection = Connection::GetInstance();
+            $this->connection->executeNonQuery($query);
         }
-
-        $this->companies = $newList;
-        $this->saveData();
+        catch(Exception $e){
+            throw $e;
+        }
     }
 
     public function getAll()
     {
-        $this->retrieveAll();
-        return $this->companies;
+        try{
+            $query = "SELECT * FROM ".$this->tableName.";";
+
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->execute($query);
+        }
+        catch(Exception $e){
+            throw $e;
+        }
     }
 
     private function saveData()
