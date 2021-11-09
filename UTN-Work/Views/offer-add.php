@@ -4,9 +4,12 @@ namespace Views;
 
 use DAO\CareerDAO as CareerDAO;
 use DAO\CompanyDAO as CompanyDAO;
+use DAO\JobPositionDAO as JobPositionDAO;
 
+$puestos = new JobPositionDAO;
 $careerDAO = new CareerDAO;
 $companyDao = new CompanyDAO;
+$listJobsPositions = $puestos->getAll();
 $listaCarreras = $careerDAO->getAll_Api();
 $companyList = $companyDao->getAll();
 $user = $_SESSION['loggedUser'];
@@ -26,10 +29,13 @@ $user = $_SESSION['loggedUser'];
                               </div>
                          </div>                         
                          <div class="col-lg-2">
-                              <div class="form-group">
-                                   <label for="companyTel">Descripcion Simple</label>
-                                   <input id="companyTel" type="text" required name="offerJobPosition" class="form-control" placeholder="Telefono" min="0">
-                              </div>
+                         <label>Puesto</label> 
+                         <select class="form-control" name="jobPosition" class="form-control">
+                            <?php
+                                foreach ($this->listJobsPositions as $puesto) { ?>
+                                    <option  value= "<?php echo $puesto->getIdJobPosition(); ?>"> <?php echo $puesto->getDescripcion(); ?> </option>
+                            <?php }  ?>
+                        </select>
                          </div>
                          <div class="col-lg-2">
                               <div class="form-group">
@@ -50,11 +56,12 @@ $user = $_SESSION['loggedUser'];
                               </div>
                          </div>
                          <div class="col-lg-2">
+                         <label>Carrera</label> 
                          <select class="form-control" name="careerId" class="form-control">
                             <?php
-                                foreach ($this->listaCarreras as $carrera) {
-                                    echo "<option value='$carrera->getDescription()'>$carrera->getDescription() </option>"; }
-                            ?>
+                                foreach ($this->listaCarreras as $carrera) { ?>
+                                    <option  value= "<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getDescription(); ?> </option>
+                            <?php }  ?>
                         </select>
                          </div>
                          <div class="col-lg-">

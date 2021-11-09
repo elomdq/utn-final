@@ -4,6 +4,7 @@ namespace DAO;
 use Models\Offer as Offer;
 use DAO\IOfferDAO as IOfferDAO;
 use DAO\Connection as Connection;
+use FFI\Exception as Exception;
 
 class OfferDAO implements IOfferDAO{
 
@@ -17,7 +18,7 @@ class OfferDAO implements IOfferDAO{
     {
     }
 
-    public function add(Offer $offer){
+    public function add(Offer $offer) {
 
         try{
             $query = "INSERT INTO ".$this->tableName."(jobPosition, career, title, active, publicationDate, offerDescription) VALUES(:jobPosition, :career, :title, :active, :publicationDate, :offerDescription);";
@@ -34,12 +35,11 @@ class OfferDAO implements IOfferDAO{
 
             $this->connection->executeNonQuery($query, $parameters);
         } catch(Exception $e) {
-            throw new Exception('Algo paso',  $e->getMessage());
-            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+            throw new Exception('Error en el llamado al DAO al agregar la oferta, ',  $e->getMessage());
         }
     }
 
-    public function remove($offerId){
+    public function remove($offerId) {
         $newList = array();
         $this->retrieveData();
 
@@ -53,33 +53,37 @@ class OfferDAO implements IOfferDAO{
         $this->saveData();
     }
 
-    public function getAll(){
+    public function getAll() {
         $this->retrieveData();
         return $this->offers;
     }
 
-    private function saveData(){
+    private function saveData() {
         $array_to_encode = array();
+        try {
+            foreach($this->offers as $offer)
+            {
+                $offerData['offerId'] = $offer->getOfferId();
+                $offerData['title'] = $offer->getTitle();
+                $offerData['description'] = $offer->getDescription();
+                $offerData['companyId'] = $offer->getCompanyId();
+                $offerData['salary'] = $offer->getSalary();
+                $offerData['publicationDate'] = $offer->getPublicationDate();
+                $offerData['careerId'] = $offer->getCareerId();
+                $offerData['jobPosition'] = $offer->getCareerId();
+                $offerData['active'] = $offer->getActive();
 
-        foreach($this->offers as $offer)
-        {
-            $offerData['offerId'] = $offer->getOfferId();
-            $offerData['title'] = $offer->getTitle();
-            $offerData['description'] = $offer->getDescription();
-            $offerData['companyId'] = $offer->getCompanyId();
-            $offerData['salary'] = $offer->getSalary();
-            $offerData['publicationDate'] = $offer->getPublicationDate();
-            $offerData['careerId'] = $offer->getCareerId();
-            $offerData['active'] = $offer->getActive();
+                array_push($array_to_encode, $offerData);
 
-            array_push($array_to_encode, $offerData);
-
-            $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
-            file_put_contents($this->filename, $jsonEnconde);
-        }
+                $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
+                file_put_contents($this->filename, $jsonEnconde);
+            }
+         } catch(Exception $e) {
+                throw new Exception('Error en el llamado al DAO durante el guardado, ',  $e->getMessage());
+            }
     }
 
-    private function retrieveData(){
+    private function retrieveData() {
         $this->offers = array();
 
         if(file_exists($this->filename))
@@ -103,6 +107,26 @@ class OfferDAO implements IOfferDAO{
                 array_push($this->offers, $offer);
             }
         }
+    }
+
+    public function getOfferByIdDB($offerId)
+    {
+        $query = "SELECT * FROM ".$this->tableName." WHERE id_jobOffer= \"".$offerId."\";";
+        $this->connection = Connection::GetInstance();
+
+        $resultSet=$this->connection->execute($query);
+        
+        $offer = new Offer;
+        $offer->setofferId($resultSet[0]['id_jobOffer']);
+        $offer->setCompanyId($resultSet[0]['id_company']);
+        $offer->setJobPosition($resultSet[0]['jobPosition']);
+        $offer->setCareerId($resultSet[0]['career']);
+        $offer->setActive($resultSet[0]['active']);
+        $offer->setTitle($resultSet[0]['title']);
+        $offer->setPublicationDate($resultSet[0]['publicationDate']);
+        $offer->setDescription($resultSet[0]['offerDescription']);
+
+        return $offer;
     }
 
     public function getOfferById($offerId)

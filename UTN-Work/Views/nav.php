@@ -68,7 +68,7 @@
                     <?php if($_SESSION['userType'] == 1) {?>
                         <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Offer/addView"; ?>">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Agregar Empresa
+                        Agregar Oferta
                         </a>
                     <?php } ?>
                     

@@ -1,9 +1,6 @@
 <?php 
 namespace Connections;
 
-use DAO\StudentDAO as StudentDAO;
-use Models\Student as Student;
-
 class StudentApiConnection{
 
     private $url;

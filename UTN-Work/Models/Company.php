@@ -14,27 +14,6 @@ class Company extends User{
     private $address;
     private $cuit;
 
-    public function viewProfile()
-    {
-        
-    }
-
-    //return List<Offer>, habria que ver si hay que agregar una variable repo de ofertas de la empresa que levante de la base de datos, o 
-    //si cada ves que llamo a esta funcion conecto con la base de datos en funcion al userId o un id de la empresa (como el CUIT u otro generado)
-    public function listOffers(){
-
-    }
-
-    public function viewOfferDetails(Offer $offer){
-
-    }
-
-    //return lista de estudiantes
-    public function viewApplicants(Offer $offer){
-
-    }
-
-
     public function getCompanyName(){ return $this->companyName; }
     public function setCompanyName($companyName): self { $this->companyName = $companyName; return $this; }
 
