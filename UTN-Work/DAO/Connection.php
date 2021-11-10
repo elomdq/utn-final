@@ -5,6 +5,7 @@ use DAO\Connection as DAOConnection;
 use \PDO as PDO;
 use \Exception as Exception;
 use DAO\QueryType as QueryType;
+use \PDOException as PDOException;
 
 class Connection{
 
@@ -19,6 +20,7 @@ class Connection{
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch(Exception $e){
+            echo "El problema: ".$e->getMessage();
             throw $e;
         }
     }
@@ -50,7 +52,8 @@ class Connection{
             return $this->pdoStatement->fetchAll(); //devuelve el resultado en forma de array clave->valor
 
         } catch (Exception $ex) {
-            throw $ex;
+            echo "El problema: ".$ex->getMessage();
+            throw new Exception('Error!! ',  $ex->getMessage());
         }
     }
 
@@ -65,9 +68,11 @@ class Connection{
             $this->pdoStatement->execute();
 
             return $this->pdoStatement->rowCount();
-        }
-        catch(Exception $ex){
-             throw $ex;
+        } catch (PDOException $pdo){
+            echo "El problema: ".$pdo->getMessage();
+        } catch(Exception $ex ){
+            echo "El problema: ".$ex->getMessage();
+            throw new Exception('Error!! ',  $ex->getMessage());
         }
     }
 
@@ -77,7 +82,8 @@ class Connection{
         try {
             $this->pdoStatement = $this->pdo->prepare($query);
         } catch (Exception $ex) {
-            throw $ex;
+            echo "El problema: ".$ex->getMessage();
+            throw new Exception('Error!! ',  $ex->getMessage());
         }
     }
 

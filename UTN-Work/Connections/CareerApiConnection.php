@@ -26,6 +26,15 @@ class CareerApiConnection{
         return curl_exec($this->curlHandler);
     }
 
+    public function getUrl(){ return $this->url; }
+    public function setUrl($url): self { $this->url = $url; return $this; }
+
+    public function getCurlHandler(){ return $this->curlHandler; }
+    public function setCurlHandler($curlHandler): self { $this->curlHandler = $curlHandler; return $this; }
+
+    public function getHeader(){ return $this->header; }
+    public function setHeader($header): self { $this->header = $header; return $this; }
+
     
 }
 

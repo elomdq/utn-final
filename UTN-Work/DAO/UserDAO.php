@@ -21,37 +21,48 @@ class UserDAO{
     public function add($email, $active, $pass="123456") //email, pass, active
     {
         try{
-        $query = "INSERT INTO ".$this->tableName."(email,pass,active) VALUES(:email, :password, :active);";
+            $query = "INSERT INTO ".$this->tableName."(email,pass,active) VALUES(:email, :password, :active);";
 
-        $this->connection = Connection::GetInstance();
+            $this->connection = Connection::GetInstance();
 
-        $parameters = array();
-        $parameters['email'] = $email;
-        $parameters['password'] = $pass;
-        $parameters['active'] = $active;
+            $parameters = array();
+            $parameters['email'] = $email;
+            $parameters['password'] = $pass;
+            $parameters['active'] = $active;
         
         $this->connection->executeNonQuery($query, $parameters);
 
         } catch(Exception $e){
-           throw $e;
+            echo "El problema: ".$e->getMessage();
         }
 
     }
 
     public function remove($userId){
-        $query = "UPDATE users set active = 0";
-        $this->connection = Connection::GetInstance();
-        $this->connection->executeNonQuery($query);
+        try{
+
+            $query = "UPDATE users set active = 0";
+            $this->connection = Connection::GetInstance();
+            $this->connection->executeNonQuery($query);
+
+        } catch (Exception $e){
+            echo "El problema: ".$e->getMessage();
+        }
     }
 
 
     public function getUserIdByEmail($email){
-        $query = "SELECT (id_user) FROM ".$this->tableName." WHERE email= \"".$email."\";";
-        $this->connection = Connection::GetInstance();
+        try{
+            $query = "SELECT (id_user) FROM ".$this->tableName." WHERE email= \"".$email."\";";
+            $this->connection = Connection::GetInstance();
+    
+            $resultSet=$this->connection->execute($query); //me devuelve array con rows
+    
+            return $resultSet[0]['id_user']; //como email es constraint unique devuelvo la posicion 0 ya que solo hay una fila
+        } catch (Exception $e){
+            echo "El problema: ".$e->getMessage();
+        }
 
-        $resultSet=$this->connection->execute($query); //me devuelve array con rows
-
-        return $resultSet[0]['id_user']; //como email es constraint unique devuelvo la posicion 0 ya que solo hay una fila
     }
 
     public function getUserByEmail($email){
@@ -64,16 +75,21 @@ class UserDAO{
             return $resultSet;
         }
         catch(Exception $e){
-            throw $e;
+            echo "El problema: ".$e->getMessage();
         }  
     }
 
     public function getUserById($userId){
-        $query = "SELECT * FROM ".$this->tableName." WHERE id_user= \"".$userId."\";";
-        $this->connection = Connection::GetInstance();
+        try{
+            $query = "SELECT * FROM ".$this->tableName." WHERE id_user= \"".$userId."\";";
+            $this->connection = Connection::GetInstance();
+    
+            $resultSet=$this->connection->execute($query);
+            return $resultSet[0];
 
-        $resultSet=$this->connection->execute($query);
-        return $resultSet[0];
+        } catch(Exception $e){
+            echo "El problema: ".$e->getMessage();
+        }
     }
 
 }
