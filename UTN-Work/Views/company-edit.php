@@ -61,9 +61,11 @@ if(isset($_SESSION['company'])) {
                         <input id="active" type="checkbox" name="active" class="form-control" min="0" <?php if($company->getActive()) echo "checked";?> >
                     </div>
                 </div>
+                <input  type="hidden" name="userId" class="form-control" min="0" value="<?php echo $company->getUserId();?>" >
+                <input type="hidden" name="companyId" class="form-control" min="0" value="<?php echo $company->getIdCompany();?>" >
             </div>
             <div class="wrapper">
-                <button type="submit" name="userId" class="btn btn-dark botonCentro" value="<?php echo $company->getUserId(); ?>">Aceptar</button>
+                <button type="submit" class="btn btn-dark botonCentro">Aceptar</button>
                 <button type="reset" class="btn btn-dark botonCentro">Resetear</button>
             </div>
             <label style="color: red;"><?php if (isset($message)) echo $message; ?> </label>

@@ -14,6 +14,7 @@ $listJobsPositions = $puestos->getAll();
 $listaCarreras = $careerDAO->getAll_Api();
 
 $companyList = $companyDao->getAll();
+
 $user = $_SESSION['loggedUser'];
 
 ?>
@@ -23,10 +24,10 @@ $user = $_SESSION['loggedUser'];
           <div class="row justify-content-center bg-white">
                <div class="col-8 p-2">
                     <div class="card">
-                         <h2 class="card-header mb-2">Agregar Oferta</h2>
+                         <h3 class="card-header mb-2">Agregar Oferta</h3>
 
                          <div class="card-body">
-                              <form action="<?php echo FRONT_ROOT ?>Offer/createOffer/" method="POST" class="row bg-light-alpha p-5">
+                              <form action="<?php echo FRONT_ROOT ?>Offer/createOffer/" method="POST" class="row bg-light-alpha p-3">
 
                                    <div class="form-group col-12">
                                         <label for="offerTitle">Titulo</label>
@@ -34,7 +35,16 @@ $user = $_SESSION['loggedUser'];
                                    </div>
 
                                    <div class="form-group col-12">
-                                        <!-- <label for="jobPosition">Puesto</label> -->
+                                        <label>Carrera</label>
+                                        <select class="form-select" name="careerId">
+                                             <?php foreach ($listaCarreras as $carrera) { ?>
+                                                  <option value="<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getDescription(); ?> </option>
+                                             <?php }  ?>
+                                        </select>
+                                   </div>
+
+                                   <div class="form-group col-12">
+                                        <label for="jobPosition">Puesto</label>
                                         <select id="jobPosition" class="form-select" name="jobPosition">
                                              <?php foreach ($listJobsPositions as $puesto) { ?>
                                                   <option value="<?php echo $puesto->getIdJobPosition(); ?>"> <?php echo $puesto->getDescription(); ?> </option>
@@ -44,16 +54,10 @@ $user = $_SESSION['loggedUser'];
 
 
                                    <div class="form-group col-12">
-                                        <label for="offerDesc">Descripcion</label>
-                                        <input id="offerDesc" type="text" name="offerDesc" class="form-control" placeholder="Ciudad" min="0">
-                                   </div>
-
-                                   <div class="form-group col-12">
                                         <label>Empresa</label>
                                         <select class="form-select" name="companyId">
-                                             <?php
-                                             foreach ($this->companyList as $company) { ?>
-                                                  <option value="<?php echo $company->getIdCompany(); ?>"> <?php echo $company->getCompanyName(); ?> </option>
+                                             <?php foreach ($companyList as $company) { ?>
+                                                  <option value="<?php echo $company->getIdCompany();?>"> <?php echo $company->getCompanyName(); ?> </option>
                                              <?php }  ?>
                                         </select>
                                    </div>
@@ -61,28 +65,24 @@ $user = $_SESSION['loggedUser'];
 
                                    <div class="form-group col-12">
                                         <label for="publicationDate">Fecha</label>
-                                        <input id="publicationDate" type="date" name="publicationDate" class="form-control" placeholder="Cuit" min="0">
+                                        <input id="publicationDate" type="date" name="publicationDate" class="form-control" placeholder="Cuit">
                                    </div>
 
                                    <div class="form-group col-12">
-                                        <label>Carrera</label>
-                                        <select class="form-select" name="careerId">
-                                             <?php
-                                             foreach ($this->listaCarreras as $carrera) { ?>
-                                                  <option value="<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getDescription(); ?> </option>
-                                             <?php }  ?>
-                                        </select>
+                                        <label for="offerDesc">Descripcion</label>
+                                        <textarea id="offerDesc" name="offerDesc" class="form-control" rows="6" placeholder="Ingrese la descripción de la oferta"></textarea>
                                    </div>
 
                                    <div class="form-group col-12">
-                                        
-                                   <div class="form-check">
-                                        <input id="active" type="checkbox" name="active" class="form-check-input" min="0">
-                                        <label class="form-check-label" for="active">Active</label>
-                                   </div>
+
+                                        <div class="form-check">
+                                             <input id="active" type="checkbox" name="active" class="form-check-input">
+                                             <label class="form-check-label" for="active">Active</label>
+                                        </div>
 
                                    </div>
                                    
+                                   <input type="submit" class="btn btn-primary btn-user btn-block" value="Confirmar">
 
                               </form>
                          </div>

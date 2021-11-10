@@ -27,7 +27,7 @@ if(isset($_SESSION['company'])){
                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "company/editCompany/" . $company->getUserId(); ?>">Editar</a>
+                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "company/editCompany/" . $company->getIdCompany(); ?>">Editar</a>
                     </div>
                 </div>
                 <?php } ?>

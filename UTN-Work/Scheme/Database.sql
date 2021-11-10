@@ -21,8 +21,8 @@ CREATE TABLE `admins` (
  CONSTRAINT `fk_userAdmin` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;
 
-INSERT INTO users(email, pass, active) VALUES('admin@admin', '123456', 1);
-INSERT INTO admins(firstName, lastName, id_user) VALUES('Admin', 'Admin', 1);
+INSERT INTO `users`(email, pass, active) VALUES('admin@admin', '123456', 1);
+INSERT INTO `admins`(id_user) VALUES(1);
 
 /*
 CREATE TABLE `careers` (
@@ -48,7 +48,7 @@ CREATE TABLE `companies` (
  `adress` varchar(100) DEFAULT NULL,
  `city` varchar(50) DEFAULT NULL,
  `cuit` varchar(100) DEFAULT NULL,
- `phoneNumber` varchar(30) DEFAULT NULL,
+ `phoneNumber` int DEFAULT NULL,
  PRIMARY KEY (`id_company`),
  KEY `fk_userCompany` (`id_user`),
  CONSTRAINT `fk_userCompany` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)

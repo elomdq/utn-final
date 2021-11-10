@@ -42,7 +42,7 @@ class OfferController{
         require_once VIEWS_PATH."footer.php";
     }
 
-    public function editView($message = "", $idOffer)
+    public function editView($message = "")
     {
         require_once VIEWS_PATH ."validate-session.php";
         require_once VIEWS_PATH."header.php";
@@ -87,7 +87,8 @@ class OfferController{
             $oferta->setCompanyId($_POST['companyId']);
             $oferta->setPublicationDate($_POST['publicationDate']);
             $oferta->setCareerId($_POST['careerId']);
-                
+            
+           
             if (isset($_POST['active'])) 
             {
                 $oferta->setActive(true);

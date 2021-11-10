@@ -28,7 +28,6 @@ class UserDAO{
         $parameters['email'] = $email;
         $parameters['password'] = $pass;
         $parameters['active'] = $active;
-
         
         $this->connection->executeNonQuery($query, $parameters);
 
@@ -59,7 +58,15 @@ class UserDAO{
         $this->connection = Connection::GetInstance();
 
         $resultSet=$this->connection->execute($query);
-        return $resultSet;
+        return $resultSet[0];
+    }
+
+    public function getUserById($userId){
+        $query = "SELECT * FROM ".$this->tableName." WHERE id_user= \"".$userId."\";";
+        $this->connection = Connection::GetInstance();
+
+        $resultSet=$this->connection->execute($query);
+        return $resultSet[0];
     }
 
 }

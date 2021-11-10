@@ -21,7 +21,7 @@ class OfferDAO implements IOfferDAO{
     public function add(Offer $offer) {
 
         try{
-            $query = "INSERT INTO ".$this->tableName."(jobPosition, career, title, active, publicationDate, offerDescription) VALUES(:jobPosition, :career, :title, :active, :publicationDate, :offerDescription);";
+            $query = "INSERT INTO ".$this->tableName."(jobPosition, id_company, career, title, active, publicationDate, offerDescription) VALUES(:jobPosition, :id_company, :career, :title, :active, :publicationDate, :offerDescription);";
 
             $parameters['jobPosition']=$offer->getJobPosition();
             $parameters['id_company']=$offer->getCompanyId();
@@ -40,7 +40,7 @@ class OfferDAO implements IOfferDAO{
     }
 
     public function remove($offerId) {
-        $newList = array();
+        /*$newList = array();
         $this->retrieveData();
 
         foreach($this->offers as $offer)
@@ -50,15 +50,42 @@ class OfferDAO implements IOfferDAO{
         }
         
         $this->offers = $newList;
-        $this->saveData();
+        $this->saveData();*/
     }
 
-    public function getAll() {
-        $this->retrieveData();
-        return $this->offers;
+    public function getAll()
+    {
+        try{
+            $query = "SELECT * FROM ".$this->tableName.";";
+
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->execute($query);
+
+            $offers = array();
+    
+            foreach($resultSet as $row)
+            {
+                $offer = new Offer;
+                $offer->setOfferId($row['id_jobOffer']);
+                $offer->setCompanyId($row['id_company']);
+                $offer->setJobPosition($row['jobPosition']);
+                $offer->setCareerId($row['career']);
+                $offer->setTitle($row['title']);
+                $offer->setActive($row['active']);
+                $offer->setPublicationDate($row['publicationDate']);
+                $offer->setDescription($row['offerDescription']);
+
+                array_push($offers, $offer);
+            }
+
+            return $offers;
+        }
+        catch(Exception $e){
+            throw $e;
+        }
     }
 
-    private function saveData() {
+    /*private function saveData() {
         $array_to_encode = array();
         try {
             foreach($this->offers as $offer)
@@ -81,9 +108,9 @@ class OfferDAO implements IOfferDAO{
          } catch(Exception $e) {
                 throw new Exception('Error en el llamado al DAO durante el guardado, ',  $e->getMessage());
             }
-    }
+    }*/
 
-    private function retrieveData() {
+    /*private function retrieveData() {
         $this->offers = array();
 
         if(file_exists($this->filename))
@@ -107,9 +134,9 @@ class OfferDAO implements IOfferDAO{
                 array_push($this->offers, $offer);
             }
         }
-    }
+    }*/
 
-    public function getOfferByIdDB($offerId)
+    public function getOfferById($offerId)
     {
         $query = "SELECT * FROM ".$this->tableName." WHERE id_jobOffer= \"".$offerId."\";";
         $this->connection = Connection::GetInstance();
@@ -129,18 +156,6 @@ class OfferDAO implements IOfferDAO{
         return $offer;
     }
 
-    public function getOfferById($offerId)
-    {
-        $this->retrieveData();
-        $offer = null;
-        foreach($this->offers as $obj)
-        {
-            if($obj->getOfferId() == $offerId)
-                $offer = $obj;
-        }
-
-        return $offer;
-    }
 
     public function updateOfferById(Offer $offer, $idOffer)
     {

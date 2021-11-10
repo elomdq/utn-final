@@ -32,6 +32,8 @@ if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
     {
         $companiesList = $companyDAO->getAll();
     }
+
+    
 }
 
 
@@ -71,18 +73,18 @@ if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
                                     <?php echo $company->getCompanyName(); ?>
                                 </div>
                                 <?php if($_SESSION['userType']==1){ ?>
-                                    <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getUserId(); ?>" class="stretched-link"></a>        
+                                    <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getIdCompany(); ?>" class="stretched-link"></a>        
                                 <?php } ?>
                             </div>
 
                             <?php if($_SESSION['userType'] != 1) { ?>
-                            <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getUserId(); ?>" class="stretched-link"> ver más </a>
+                            <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getIdCompany(); ?>" class="stretched-link"> ver más </a>
                             <?php } ?>
-                            <!-- <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getUserId(); ?>" class="<?php if($_SESSION['userType'] != 1) { echo "stretched-link" ; } ?> "> ver más </a> -->
+                            <!-- <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getIdCompany(); ?>" class="<?php if($_SESSION['userType'] != 1) { echo "stretched-link" ; } ?> "> ver más </a> -->
                            
                             <?php if ($_SESSION['userType'] == 1) { ?>
-                            <a href="<?php echo FRONT_ROOT . "company/editCompany/" . $company->getUserId(); ?>" class="mx-2"><i class="fas fa-pencil-alt fa-2x text-blue-400"></i></a>
-                            <a href=" <?php echo FRONT_ROOT . "company/deleteCompany/" . $company->getUserId(); ?> " class="mx-2"><i class="far fa-trash-alt fa-2x  text-red-400"></i></a>
+                            <a href="<?php echo FRONT_ROOT . "company/editCompany/" . $company->getIdCompany(); ?>" class="mx-2"><i class="fas fa-pencil-alt fa-2x text-blue-400"></i></a>
+                            <a href=" <?php echo FRONT_ROOT . "company/deleteCompany/" . $company->getIdCompany(); ?> " class="mx-2"><i class="far fa-trash-alt fa-2x  text-red-400"></i></a>
                             <?php } ?>
                         </div>
                     </div>
