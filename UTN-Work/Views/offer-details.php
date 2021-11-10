@@ -78,6 +78,9 @@ if($_SESSION['offer'])
                         <?php if(isset($_SESSION['userType']) && $_SESSION['userType']!= 0) { ?>
                             <button class="btn btn-dark botonCentro" type="submit">Ver Postulantes</button>
                         <?php } ?>
+                        <?php if(isset($_SESSION['userType']) && $_SESSION['userType']!= 0) { ?>
+                            <a class="text-decoration-none " href="<?php echo FRONT_ROOT; ?>offer/offerEdit/" > <button class="btn btn-dark botonCentro" type="button">Editar</button> </a>
+                        <?php } ?>
                     </form>
                 </div>
 

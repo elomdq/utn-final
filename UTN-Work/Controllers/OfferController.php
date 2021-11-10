@@ -50,7 +50,7 @@ class OfferController{
         require_once VIEWS_PATH ."validate-session.php";
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php" ;
-        require_once VIEWS_PATH ."company-edit.php";
+        require_once VIEWS_PATH ."offer-edit.php";
         require_once VIEWS_PATH."footer.php";
     }
 
