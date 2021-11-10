@@ -51,13 +51,15 @@ class CompanyController{
                     $companyParameters['active'] = false;
                 }
 
+                echo "Active: ". $companyParameters['active'] . "<br><br>";
+
                 $this->userDAO->add($company->getEmail(), $company->getActive());
 
                 $company->setUserId($this->userDAO->getUserIdByEmail($company->getEmail()));
 
                 $this->companyDAO->Add($company);
 
-                $this->listCompanies();
+                
             } else {
                 $this->addView("Verifique que los campos se encuentren correctamente completos.");
             }
