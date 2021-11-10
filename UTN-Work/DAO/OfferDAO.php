@@ -145,6 +145,12 @@ class OfferDAO implements IOfferDAO{
 
         $resultSet=$this->connection->execute($query);
         
+        echo "Query: ". $query ." <br><br>";
+        echo "ResultSet:";
+        
+        var_dump($resultSet);
+        echo "ResultSet: <br><br>";
+
         $offer = new Offer;
         $offer->setofferId($resultSet[0]['id_jobOffer']);
         $offer->setCompanyId($resultSet[0]['id_company']);

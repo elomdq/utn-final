@@ -45,11 +45,11 @@ class OfferController{
         require_once VIEWS_PATH."footer.php";
     }
 
-    public function editView($message = "")
+    public function editView($offerId, $message = "")
     {
         require_once VIEWS_PATH ."validate-session.php";
         require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php" ;
+        require_once VIEWS_PATH ."nav.php";
         require_once VIEWS_PATH ."offer-edit.php";
         require_once VIEWS_PATH."footer.php";
     }
@@ -122,7 +122,6 @@ class OfferController{
         }
 
         require_once VIEWS_PATH."footer.php";
-        
     }
 
 }

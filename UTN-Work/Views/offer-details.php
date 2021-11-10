@@ -72,14 +72,14 @@ if($_SESSION['offer'])
                                 <button class="btn btn-primary botonCentro " type="button" disabled>Ya estas postulado</button>
                             <?php } else {?>
                                 <button class="btn btn-primary botonCentro" type="submit">Postularse</button>
-                            <?php } ?>        
+                            <?php } ?>
                         <?php } ?>
 
                         <?php if(isset($_SESSION['userType']) && $_SESSION['userType']!= 0) { ?>
-                            <button class="btn btn-dark botonCentro" type="submit">Ver Postulantes</button>
+                            <a class="text-decoration-none " href="<?php echo FRONT_ROOT;?>offer/viewApplicants/" > <button class="btn btn-dark botonCentro" type="button">Ver Postulantes</button></a>
                         <?php } ?>
-                        <?php if(isset($_SESSION['userType']) && $_SESSION['userType']!= 0) { ?>
-                            <a class="text-decoration-none " href="<?php echo FRONT_ROOT; ?>offer/offerEdit/" > <button class="btn btn-dark botonCentro" type="button">Editar</button> </a>
+                        <?php if(isset($_SESSION['userType']) && $_SESSION['userType']== 1) { echo FRONT_ROOT."offer/editView/".$offer->getOfferId();?>
+                            <a class="text-decoration-none " href="<?php echo FRONT_ROOT."offer/editView/".$offer->getOfferId();?>" > <button class="btn btn-dark botonCentro" type="button">Editar</button> </a>
                         <?php } ?>
                     </form>
                 </div>

@@ -4,15 +4,17 @@ namespace Views;
 use DAO\OfferDAO as OfferDAO;
 use Models\Offer as Offer;
 
-$offers = new OfferDAO;
-$offer = $this->offers->getOfferByIdDB($idOffer);
+$offerDAO = new OfferDAO;
+$offer = $offerDAO->getOfferById($idOffer);
+
+var_dump($offer);
 
 ?>
 
 <section id="listado" class="mb-5">
     
     <div class="container">
-        <form action="<?php echo FRONT_ROOT . "Offer/modifyoffer/" ?>" method="POST" class="bg-light-alpha p-5">
+        <form action="<?php echo FRONT_ROOT . "Offer/editOffer/" ?>" method="POST" class="bg-light-alpha p-5">
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">
