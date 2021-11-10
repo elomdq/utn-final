@@ -21,17 +21,15 @@ class CompanyDAO implements ICompanyDAO
     public function add(Company $company)
     {
         try{
-            $query = "INSERT INTO ".$this->tableName." (companyName, id_user, adress, cuit, active, city, email, adress) VALUES(:companyName, :id_user, :adress, :cuit, :active, :city, :email, :adress);";
+            $query = "INSERT INTO ".$this->tableName." (companyName, id_user, adress, cuit, city) VALUES(:companyName, :id_user, :adress, :cuit, :city);";
 
             $parameters = array();
             $parameters['companyName'] = $company->getCompanyName();
             $parameters['id_user'] = $company->getUserId();
             $parameters['adress'] = $company->getAddress();
             $parameters['cuit'] = $company->getCuit();
-            $parameters['active'] = $company->getActive();
             $parameters['city'] = $company->getCity();
-            $parameters['email'] = $company->getEmail();
-            $parameters['adress'] = $company->getAddress();
+            
 
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query, $parameters);

@@ -47,8 +47,8 @@ class JobPositionDAO {
             {
                 $jobPosition = new JobPosition;
                 $jobPosition->setIdjobPosition($jobPositionData['jobPositionId']);
-                $jobPosition->setDescripcion($jobPositionData['description']);
-                $jobPosition->setCareerId($jobPositionData['jobPositionId']);
+                $jobPosition->setDescription($jobPositionData['description']);
+                $jobPosition->setCareerId($jobPositionData['careerId']);
 
                 array_push($this->jobPositions, $jobPosition);
             }
@@ -62,8 +62,8 @@ class JobPositionDAO {
         {
             $jobPosition = new JobPosition;
             $jobPosition->setIdJobPosition($JobPositionData['jobPositionId']);
-            $jobPosition->setDescripcion($JobPositionData['description']);
-            $jobPosition->setCareerId($JobPositionData['jobPositionId']);
+            $jobPosition->setDescription($JobPositionData['description']);
+            $jobPosition->setCareerId($JobPositionData['careerId']);
         
             array_push($puestos, $jobPosition);
         }

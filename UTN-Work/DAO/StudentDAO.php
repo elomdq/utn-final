@@ -124,7 +124,7 @@ class StudentDAO implements IStudentDAO{
         $student->setLastName($resultSet[0]['lastName']);
         $student->setDni($resultSet[0]['dni']);
         $student->setGender($resultSet[0]['gender']);
-        $student->setPhoneNumber($resultSet[0]['id_telephone']);
+        $student->setPhoneNumber($resultSet[0]['phoneNumber']);
         $student->setBirthDate($resultSet[0]['birthDate']);
 
         return $student;

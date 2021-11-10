@@ -105,8 +105,9 @@ class CareerDAO implements ICareerDAO{
 
         foreach($this->connectToApi() as $careerData)
         {
-            if($careerData['careerId'] == $careerId);
+            if($careerData['careerId'] == $careerId)
             {
+                
                 $career = new Career;
                 $career->setIdCareer($careerData['careerId']);
                 $career->setDescription($careerData['description']);
@@ -123,7 +124,7 @@ class CareerDAO implements ICareerDAO{
         foreach($this->connectToApi() as $careerData)
         {
             $career = new Career;
-            $career->setIdCareer($careerData['idCareer']);
+            $career->setIdCareer($careerData['careerId']);
             $career->setDescription($careerData['description']);
             $career->setActive($careerData['active']);
             

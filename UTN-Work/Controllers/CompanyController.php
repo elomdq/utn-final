@@ -2,16 +2,20 @@
 namespace Controllers;
 
 use Models\Company as Company;
+use Models\User as User;
 use DAO\CompanyDAO as CompanyDAO;
+use DAO\UserDAO as UserDAO;
 
 class CompanyController{
 
     private $companyDAO;
+    private $userDAO;
     private $companiesList;
 
     public function __construct()
     {
-        $this->companyDAO = new CompanyDAO;    
+        $this->companyDAO = new CompanyDAO;
+        $this->userDAO = new UserDAO;   
     }
 
     public function addView($message = ""){
@@ -30,6 +34,7 @@ class CompanyController{
             if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['address'], $_POST['cuit'], $_POST['email']))
             {
 
+                
                 $company = new Company;
 
                 $company->setCompanyName($_POST['companyName']);
@@ -41,10 +46,14 @@ class CompanyController{
                 
                 if (isset($_POST['active'])) 
                 {
-                    $company->setActive(true);
+                    $companyParameters['active'] = true;
                 } else {
-                    $company->setActive(false);
+                    $companyParameters['active'] = false;
                 }
+
+                $this->userDAO->add($company->getEmail(), $company->getActive());
+
+                $company->setUserId($this->userDAO->getUserIdByEmail($company->getEmail()));
 
                 $this->companyDAO->Add($company);
 

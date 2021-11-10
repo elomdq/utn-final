@@ -17,12 +17,18 @@ class UserDAO{
     public function getTableName(){ return $this->tableName; }
     public function setTableName($tableName): self { $this->tableName = $tableName; return $this; }
 
-    public function add($parameters) //email, pass, active
+    public function add($email, $active, $pass="123456") //email, pass, active
     {
         try{
         $query = "INSERT INTO ".$this->tableName."(email,pass,active) VALUES(:email, :password, :active);";
 
         $this->connection = Connection::GetInstance();
+
+        $parameters = array();
+        $parameters['email'] = $email;
+        $parameters['password'] = $pass;
+        $parameters['active'] = $active;
+
         
         $this->connection->executeNonQuery($query, $parameters);
 
