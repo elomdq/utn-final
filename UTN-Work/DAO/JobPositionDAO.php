@@ -19,7 +19,7 @@ class JobPositionDAO {
             
             return $arrayJobPositions;
         } catch (Exception $e){
-            throw $e;
+            echo "El problema: ".$e->getMessage();
         }
     }
 

@@ -30,7 +30,8 @@ class CareerDAO implements ICareerDAO{
             $this->connection->executeNonQuery($query, $parameters);
 
         } catch(Exception $e){
-            throw $e;
+            echo "El problema: ".$e->getMessage();
+            throw new Exception('Error!! ',  $e->getMessage());
         }
     }
 
@@ -46,7 +47,8 @@ class CareerDAO implements ICareerDAO{
 
             return $resultSet;
         } catch(Exception $e){
-            throw $e;
+            echo "El problema: ".$e->getMessage();
+            throw new Exception('Error!! ',  $e->getMessage());
         }
     }
 
@@ -136,9 +138,14 @@ class CareerDAO implements ICareerDAO{
 
     private function connectToApi()
     {
-        $this->careerApiConnection = new CareerApiConnection;
-        $arrayCareers = json_decode($this->careerApiConnection->executeCurl(), true);
-        return $arrayCareers;
+        try{
+            $this->careerApiConnection = new CareerApiConnection;
+            $arrayCareers = json_decode($this->careerApiConnection->executeCurl(), true);
+            return $arrayCareers;
+        } catch (Exception $e){
+            echo "El problema: ".$e->getMessage();
+            throw new Exception('Error!! ',  $e->getMessage());
+        }
     }
 
     /*

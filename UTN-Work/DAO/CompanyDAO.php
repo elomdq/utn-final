@@ -7,6 +7,7 @@ use DAO\ICompanyDAO as ICompanyDAO;
 use \Exception as Exception;
 use DAO\Connection as Connection;
 use DAO\UserDAO as UserDAO;
+use \PDOException as PDOException;
 
 class CompanyDAO implements ICompanyDAO
 {
@@ -35,8 +36,10 @@ class CompanyDAO implements ICompanyDAO
 
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query, $parameters);
-        } catch (Exception $e) {
-            throw $e;
+        } catch (Exception $e ) {
+            echo "El problema: ".$e->getMessage();
+        } catch (PDOException $pdo){
+            echo "El problema: ".$pdo->getMessage();
         }
     }
 
@@ -65,7 +68,11 @@ class CompanyDAO implements ICompanyDAO
 
             return $company;
         } catch (Exception $e) {
+            echo "El problema: ".$e->getMessage();
         }
+        catch (PDOException $pdo){
+            echo "El problema: ".$pdo->getMessage();
+            }
     }
 
     public function remove($companyId)
@@ -75,7 +82,10 @@ class CompanyDAO implements ICompanyDAO
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query);
         } catch (Exception $e) {
-            throw $e;
+            echo "El problema: ".$e->getMessage();
+        } catch (PDOException $pdo){
+        echo "El problema: ".$pdo->getMessage();
+        throw $pdo;
         }
     }
 
@@ -110,8 +120,10 @@ class CompanyDAO implements ICompanyDAO
 
             return $companies;
         } catch (Exception $e) {
-            throw $e;
-        }
+            echo "El problema: ".$e->getMessage();
+        }  catch (PDOException $pdo){
+            echo "El problema: ".$pdo->getMessage();
+            }
     }
 
     private function saveData()
@@ -200,11 +212,14 @@ class CompanyDAO implements ICompanyDAO
 
     public function overwriteCompany($company)
     {
-        $query = "UPDATE " . $this->tableName . " SET companyName =\"" .$company->getCompanyName(). "\", adress =\"" . $company->getAddress()."\", cuit = \"". $company->getCuit()."\", phoneNumber = \"". $company->getTelephone()."\", city = \"".$company->getCity()."\" WHERE id_company = " . $company->getIdCompany() . ";" ;
+        try{
+            $query = "UPDATE " . $this->tableName . " SET companyName =\"" .$company->getCompanyName(). "\", adress =\"" . $company->getAddress()."\", cuit = \"". $company->getCuit()."\", phoneNumber = \"". $company->getTelephone()."\", city = \"".$company->getCity()."\" WHERE id_company = " . $company->getIdCompany() . ";" ;
 
-        
-        $this->connection = Connection::GetInstance();
-        $this->connection->executeNonQuery($query);
+            $this->connection = Connection::GetInstance();
+            $this->connection->executeNonQuery($query);
+        } catch (Exception $e){
+            throw new Exception('Error!! ',  $e->getMessage());
+        }
     }
 }
 
