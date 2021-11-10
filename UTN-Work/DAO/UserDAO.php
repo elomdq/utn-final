@@ -1,6 +1,7 @@
 <?php 
 namespace DAO;
 
+use DAO\Connection as Connection;
 use Models\User as User;
 use \Exception as Exception;
 
@@ -17,12 +18,17 @@ class UserDAO{
     public function getTableName(){ return $this->tableName; }
     public function setTableName($tableName): self { $this->tableName = $tableName; return $this; }
 
-    public function add($parameters) //email, pass, active
+    public function add($email, $active, $pass="123456") //email, pass, active
     {
         try{
         $query = "INSERT INTO ".$this->tableName."(email,pass,active) VALUES(:email, :password, :active);";
 
         $this->connection = Connection::GetInstance();
+
+        $parameters = array();
+        $parameters['email'] = $email;
+        $parameters['password'] = $pass;
+        $parameters['active'] = $active;
         
         $this->connection->executeNonQuery($query, $parameters);
 
@@ -49,11 +55,25 @@ class UserDAO{
     }
 
     public function getUserByEmail($email){
-        $query = "SELECT * FROM ".$this->tableName." WHERE email= \"".$email."\";";
+        try{
+            $query = "SELECT * FROM ".$this->tableName." WHERE email= \"".$email."\";";
+            $this->connection = Connection::GetInstance();
+
+            $resultSet=$this->connection->execute($query);
+        
+            return $resultSet;
+        }
+        catch(Exception $e){
+            throw $e;
+        }  
+    }
+
+    public function getUserById($userId){
+        $query = "SELECT * FROM ".$this->tableName." WHERE id_user= \"".$userId."\";";
         $this->connection = Connection::GetInstance();
 
         $resultSet=$this->connection->execute($query);
-        return $resultSet;
+        return $resultSet[0];
     }
 
 }

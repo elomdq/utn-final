@@ -33,8 +33,8 @@ class HomeController{
     {
 
         $userData = $this->userDAO->getUserByEmail($email);
-
-        if($userData[0])
+       
+        if(!empty($userData))
         {
             if($password == $userData[0]['pass'])
             {
@@ -75,6 +75,8 @@ class HomeController{
                 }
 
             }
+        } else{
+            $this->showLoginView();
         }
 
     }
@@ -125,12 +127,12 @@ class HomeController{
                 if(isset($_SESSION['student']))
                     $_SESSION['student']->setPassword($_POST['password']);
 
-            $parameters = array();
+            /*$parameters = array();
             $parameters['email'] = $_SESSION['student']->getEmail();
             $parameters['password'] = $_SESSION['student']->getPassword();
-            $parameters['active'] = $_SESSION['student']->getActive();
+            $parameters['active'] = $_SESSION['student']->getActive();*/
 
-            $this->userDAO->add($parameters);
+            $this->userDAO->add($_SESSION['student']->getEmail(), $_SESSION['student']->getActive(), $_SESSION['student']->getPassword());
 
             $_SESSION['student']->setUserId($this->userDAO->getUserIdByEmail($_SESSION['student']->getEmail()));
 

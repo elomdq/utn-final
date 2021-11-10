@@ -2,6 +2,7 @@
 
 namespace Models;
 
+
 class Offer{
 
     private $offerId;
@@ -14,8 +15,11 @@ class Offer{
     private $careerId;
     private $jobPosition;
 
+    private $applicants;
+
+
     public function showDetails(){
-        
+        $this->applicants = array();
     }
 
     
@@ -45,6 +49,9 @@ class Offer{
 
     public function getCareerId(){ return $this->careerId; }
     public function setCareerId($careerId): self { $this->careerId = $careerId; return $this; }
+
+    public function getApplicants(){ return $this->applicants; }
+    public function setApplicants($applicants): self { $this->applicants = $applicants; return $this; }
 }
 
 ?>

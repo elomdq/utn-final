@@ -14,23 +14,39 @@ class JobPositionDAO {
     private function connectToApi()
     {
         try{
-        $this->connection = new JobApiConnection;
-        $this->jobPositions = json_decode($this->connection->executeCurl(), true);
-    } catch (Exception $e){
-        throw $e;
+            $this->careerApiConnection = new JobApiConnection;
+            $arrayJobPositions = json_decode($this->careerApiConnection->executeCurl(), true);
+            
+            return $arrayJobPositions;
+        } catch (Exception $e){
+            throw $e;
+        }
     }
-        return $this->jobPositions;
+
+    public function getPositionDescriptionById($id){
+        foreach($this->connectToApi() as $careerData)
+        {
+            if($careerData['jobPositionId'] == $id)
+            {
+                return $careerData['description'];
+            }
+        }
     }
 
     public function getjobPositionById($id){
-        $this->retrieveData();
         $jobPosition = null;
-        foreach($this->jobPositions as $obj)
-        {
-            if($obj->getIdjobPosition() == $id)
-                $jobPosition = $obj;
-        }
 
+        foreach($this->connectToApi() as $careerData)
+        {
+            if($careerData['jobPositionId'] == $id)
+            {
+                
+                $jobPosition = new JobPosition;
+                $jobPosition->setCareerId($careerData['careerId']);
+                $jobPosition->setDescription($careerData['description']);
+                $jobPosition->setIdJobPosition($careerData['jobPositionId']);
+            }
+        }
         return $jobPosition;
     }
 
@@ -47,8 +63,8 @@ class JobPositionDAO {
             {
                 $jobPosition = new JobPosition;
                 $jobPosition->setIdjobPosition($jobPositionData['jobPositionId']);
-                $jobPosition->setDescripcion($jobPositionData['description']);
-                $jobPosition->setCareerId($jobPositionData['jobPositionId']);
+                $jobPosition->setDescription($jobPositionData['description']);
+                $jobPosition->setCareerId($jobPositionData['careerId']);
 
                 array_push($this->jobPositions, $jobPosition);
             }
@@ -62,8 +78,8 @@ class JobPositionDAO {
         {
             $jobPosition = new JobPosition;
             $jobPosition->setIdJobPosition($JobPositionData['jobPositionId']);
-            $jobPosition->setDescripcion($JobPositionData['description']);
-            $jobPosition->setCareerId($JobPositionData['jobPositionId']);
+            $jobPosition->setDescription($JobPositionData['description']);
+            $jobPosition->setCareerId($JobPositionData['careerId']);
         
             array_push($puestos, $jobPosition);
         }

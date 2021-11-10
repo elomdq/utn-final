@@ -3,15 +3,18 @@
 namespace Controllers;
 
 use DAO\OfferDAO as OfferDAO;
+use DAO\StudentsXOffersDAO as StudentsXOffers;
 use Models\Offer as Offer;
 
 class OfferController{
 
     private $offersDAO;
+    private $studentsXoffers;
 
     public function __construct()
     {
         $this->offersDAO = new OfferDAO;
+        $this->studentsXoffers = new StudentsXOffers;
     }
 
     public function showOffersList(){
@@ -42,7 +45,7 @@ class OfferController{
         require_once VIEWS_PATH."footer.php";
     }
 
-    public function editView($message = "", $idOffer)
+    public function editView($message = "")
     {
         require_once VIEWS_PATH ."validate-session.php";
         require_once VIEWS_PATH."header.php";
@@ -87,7 +90,8 @@ class OfferController{
             $oferta->setCompanyId($_POST['companyId']);
             $oferta->setPublicationDate($_POST['publicationDate']);
             $oferta->setCareerId($_POST['careerId']);
-                
+            
+           
             if (isset($_POST['active'])) 
             {
                 $oferta->setActive(true);
@@ -103,6 +107,23 @@ class OfferController{
             $this->addView("Incorrecto ingreso de datos.");
         }
     } 
+
+
+    public function applyForOffer(...$values){
+        require_once VIEWS_PATH ."validate-session.php";
+        require_once VIEWS_PATH."header.php";
+        require_once VIEWS_PATH ."nav.php" ;
+        
+        if($_POST)
+        {
+            if($_SESSION['loggedUser']){
+                $this->studentsXoffers->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
+            }
+        }
+
+        require_once VIEWS_PATH."footer.php";
+        
+    }
 
 }
 

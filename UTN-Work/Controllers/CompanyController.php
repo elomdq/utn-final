@@ -2,16 +2,20 @@
 namespace Controllers;
 
 use Models\Company as Company;
+use Models\User as User;
 use DAO\CompanyDAO as CompanyDAO;
+use DAO\UserDAO as UserDAO;
 
 class CompanyController{
 
     private $companyDAO;
+    private $userDAO;
     private $companiesList;
 
     public function __construct()
     {
-        $this->companyDAO = new CompanyDAO;    
+        $this->companyDAO = new CompanyDAO;
+        $this->userDAO = new UserDAO;   
     }
 
     public function addView($message = ""){
@@ -30,12 +34,13 @@ class CompanyController{
             if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['address'], $_POST['cuit'], $_POST['email']))
             {
 
+                
                 $company = new Company;
 
                 $company->setCompanyName($_POST['companyName']);
                 $company->setTelephone($_POST['telephone']);
-                $company->setAddress($_POST['city']);
-                $company->setCity($_POST['address']);
+                $company->setAddress($_POST['address']);
+                $company->setCity($_POST['city']);
                 $company->setCuit($_POST['cuit']);
                 $company->setEmail($_POST['email']);
                 
@@ -46,9 +51,15 @@ class CompanyController{
                     $company->setActive(false);
                 }
 
+                $this->userDAO->add($company->getEmail(), $company->getActive());
+
+                $company->setUserId($this->userDAO->getUserIdByEmail($company->getEmail()));
+
                 $this->companyDAO->Add($company);
 
-                $this->listCompanies();
+                $this->addView();
+
+                
             } else {
                 $this->addView("Verifique que los campos se encuentren correctamente completos.");
             }
@@ -116,17 +127,19 @@ class CompanyController{
         {
             if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['address'], $_POST['cuit'], $_POST['email']))
             {
-            
+
                 $company = new Company;
 
-                $company->setUserId($_POST['userId']);
                 $company->setCompanyName($_POST['companyName']);
                 $company->setTelephone($_POST['telephone']);
                 $company->setAddress($_POST['address']);
                 $company->setCity($_POST['city']);
                 $company->setCuit($_POST['cuit']);
                 $company->setEmail($_POST['email']);
-               
+                
+                $company->setIdCompany($_POST['companyId']);
+                $company->setUserId($_POST['userId']);
+                
                 if (isset($_POST['active'])) 
                 {
                     $company->setActive(true);
@@ -134,9 +147,10 @@ class CompanyController{
                     $company->setActive(false);
                 }
 
+
                 $this->companyDAO->overwriteCompany($company);
                 
-                $this->showCompanyDetails($company->getUserId());
+                $this->showCompanyDetails($company->getIdCompany());
             } else {
                 $this->addView("Verifique que los campos se encuentren correctamente completos.");
             }

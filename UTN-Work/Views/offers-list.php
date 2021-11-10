@@ -19,19 +19,6 @@ else{
     $offerList = $offers->getAll();
 }
 
-/*$offer1 = new Offer;
-
-    $offer1->setOfferId(1);
-    $offer1->setTitle("Propuesta Random");
-    $offer1->setSalary(95000);
-    $offer1->setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis turpis ac purus consectetur tempor. Integer elementum arcu nec nisi interdum, id sagittis dui pellentesque. In efficitur sagittis lectus, semper vestibulum nisi laoreet quis. Nulla vehicula ultricies diam, sit amet dictum purus sodales id.");
-    $offer1->setCompanyId(3);
-    $offer1->setPublicationDate("15-11-2021");
-    $offer1->setCareerId(2);
-    $offer1->setActive(true);
-
-    $offers->add($offer1);*/
-
 ?>
 
 <div class="container">

@@ -1,27 +1,42 @@
 [
     {
-        "idCareer": 1,
-        "description": "Yabox",
-        "active": true
+      "careerId": 1,
+      "description": "Naval engineering",
+      "active": true
     },
     {
-        "idCareer": 2,
-        "description": "Latz",
-        "active": false
+      "careerId": 2,
+      "description": "Fishing engineering",
+      "active": false
     },
     {
-        "idCareer": 3,
-        "description": "Twiyo",
-        "active": false
+      "careerId": 3,
+      "description": "University technician in programming",
+      "active": true
     },
     {
-        "idCareer": 4,
-        "description": "Twiyo",
-        "active": true
+      "careerId": 4,
+      "description": "University technician in computer systems",
+      "active": true
     },
     {
-        "idCareer": 5,
-        "description": "Photobean",
-        "active": true
+      "careerId": 5,
+      "description": "University technician in textile production",
+      "active": true
+    },
+    {
+      "careerId": 6,
+      "description": "University technician in administration",
+      "active": true
+    },
+    {
+      "careerId": 7,
+      "description": "Bachelor in environmental management",
+      "active": false
+    },
+    {
+      "careerId": 8,
+      "description": "University technician in environmental procedures and technologies",
+      "active": true
     }
-]
+  ]
