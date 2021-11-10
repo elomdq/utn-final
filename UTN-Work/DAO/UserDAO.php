@@ -1,6 +1,7 @@
 <?php 
 namespace DAO;
 
+use DAO\Connection as Connection;
 use Models\User as User;
 use \Exception as Exception;
 
@@ -54,11 +55,17 @@ class UserDAO{
     }
 
     public function getUserByEmail($email){
-        $query = "SELECT * FROM ".$this->tableName." WHERE email= \"".$email."\";";
-        $this->connection = Connection::GetInstance();
+        try{
+            $query = "SELECT * FROM ".$this->tableName." WHERE email= \"".$email."\";";
+            $this->connection = Connection::GetInstance();
 
-        $resultSet=$this->connection->execute($query);
-        return $resultSet[0];
+            $resultSet=$this->connection->execute($query);
+        
+            return $resultSet;
+        }
+        catch(Exception $e){
+            throw $e;
+        }  
     }
 
     public function getUserById($userId){

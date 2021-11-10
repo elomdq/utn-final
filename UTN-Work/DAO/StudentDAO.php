@@ -130,6 +130,28 @@ class StudentDAO implements IStudentDAO{
         return $student;
     }
 
+    public function getStudentByStudentId($studentId)
+    {
+        $query = "SELECT * FROM ".$this->tableName." WHERE id_student= \"".$studentId."\";";
+        $this->connection = Connection::GetInstance();
+
+        $resultSet=$this->connection->execute($query);
+        
+        $student = new Student;
+        $student->setStudentId($resultSet[0]['id_student']);
+        $student->setCareerId($resultSet[0]['id_career']);
+        $student->setFileNumber($resultSet[0]['fileNumber']);
+        $student->setFirstName($resultSet[0]['firstName']);
+        $student->setLastName($resultSet[0]['lastName']);
+        $student->setDni($resultSet[0]['dni']);
+        $student->setGender($resultSet[0]['gender']);
+        $student->setPhoneNumber($resultSet[0]['phoneNumber']);
+        $student->setBirthDate($resultSet[0]['birthDate']);
+        $student->setUserId($resultSet[0]['id_user']);
+
+        return $student;
+    }
+
     
 }
 

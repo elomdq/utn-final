@@ -33,8 +33,8 @@ class HomeController{
     {
 
         $userData = $this->userDAO->getUserByEmail($email);
-
-        if($userData[0])
+       
+        if(!empty($userData))
         {
             if($password == $userData[0]['pass'])
             {
@@ -75,6 +75,8 @@ class HomeController{
                 }
 
             }
+        } else{
+            $this->showLoginView();
         }
 
     }

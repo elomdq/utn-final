@@ -51,7 +51,7 @@ class CareerDAO implements ICareerDAO{
     }
 
     private function saveData(){
-        $array_to_encode = array();
+        /*$array_to_encode = array();
 
         foreach($this->careers as $career)
         {
@@ -63,11 +63,11 @@ class CareerDAO implements ICareerDAO{
 
             $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
             file_put_contents($this->filename, $jsonEnconde);
-        }
+        }*/
     }
 
     private function retrieveData(){
-        $this->careers = array();
+        /*$this->careers = array();
 
         if(file_exists($this->filename))
         {
@@ -84,7 +84,7 @@ class CareerDAO implements ICareerDAO{
 
                 array_push($this->careers, $career);
             }
-        }
+        }*/
     }
 
    /* public function getCareerById($id){

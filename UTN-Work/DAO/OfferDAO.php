@@ -3,8 +3,10 @@ namespace DAO;
 
 use Models\Offer as Offer;
 use DAO\IOfferDAO as IOfferDAO;
+
+
 use DAO\Connection as Connection;
-use FFI\Exception as Exception;
+use \Exception as Exception;
 
 class OfferDAO implements IOfferDAO{
 

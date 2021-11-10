@@ -31,7 +31,7 @@ $user = $_SESSION['loggedUser'];
 
                                    <div class="form-group col-12">
                                         <label for="offerTitle">Titulo</label>
-                                        <input id="offerTitle" type="text" name="offerTitle" required class="form-control" placeholder="Nombre de empresa">
+                                        <input id="offerTitle" type="text" name="offerTitle" required class="form-control" placeholder="Titulo para la oferta">
                                    </div>
 
                                    <div class="form-group col-12">

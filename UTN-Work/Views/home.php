@@ -3,11 +3,11 @@
 use Models\Student as Student;
 use DAO\StudentDAO as StudentDAO;
 
-echo "HOME <br>";
+//echo "HOME <br>";
 
 ?>
 
-
+<!--
 <div class="container">
 
     <div class="row">
@@ -27,3 +27,4 @@ echo "HOME <br>";
     </div>
 
 </div>
+-->
