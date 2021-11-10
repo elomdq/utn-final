@@ -83,7 +83,8 @@ class OfferDAO implements IOfferDAO{
             return $offers;
         }
         catch(Exception $e){
-            throw $e;
+            echo "El problema: ".$e->getMessage();
+            throw new Exception('Error!! ',  $e->getMessage());
         }
     }
 
@@ -184,7 +185,7 @@ class OfferDAO implements IOfferDAO{
     
                 $this->connection->executeNonQuery($query, $parameters);
         } catch(Exception $e){
-            throw $e;
+            echo "El problema: ".$e->getMessage();
         }
     }
 }

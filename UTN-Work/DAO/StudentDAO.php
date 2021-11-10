@@ -41,7 +41,8 @@ class StudentDAO implements IStudentDAO{
             $this->connection->executeNonQuery($query, $parameters);
         }
         catch(Exception $e){
-            throw($e);
+            echo "El problema: ".$e->getMessage();
+            throw new Exception('Error!! ',  $e->getMessage());
         }
     }
 
@@ -68,11 +69,10 @@ class StudentDAO implements IStudentDAO{
                 $student->setPhoneNumber($row['phoneNumber']);
             }
             
-
             return $students;
 
         }catch(Exception $e){
-            throw $e;
+            echo "El problema: ".$e->getMessage();
         }
     }
 
@@ -104,55 +104,67 @@ class StudentDAO implements IStudentDAO{
 
     private function connectToApi()
     {
-        $this->studentApiConnection = new StudentApiConnection;
-        $arrayStudents = json_decode($this->studentApiConnection->executeCurl(), true);
-        return $arrayStudents;
+        try{
+            $this->studentApiConnection = new StudentApiConnection;
+            $arrayStudents = json_decode($this->studentApiConnection->executeCurl(), true);
+            return $arrayStudents;
+        } catch(Exception $e){
+            echo "El problema: ".$e->getMessage();
+        }
     }
 
     public function getStudentByUserId($userId)
     {
-        $query = "SELECT * FROM ".$this->tableName." WHERE id_user= \"".$userId."\";";
-        $this->connection = Connection::GetInstance();
+        try{
+            $query = "SELECT * FROM ".$this->tableName." WHERE id_user= \"".$userId."\";";
+            $this->connection = Connection::GetInstance();
+    
+            $resultSet=$this->connection->execute($query);
+            
+            $student = new Student;
+            $student->setStudentId($resultSet[0]['id_student']);
+            $student->setCareerId($resultSet[0]['id_career']);
+            $student->setFileNumber($resultSet[0]['fileNumber']);
+            $student->setFirstName($resultSet[0]['firstName']);
+            $student->setLastName($resultSet[0]['lastName']);
+            $student->setDni($resultSet[0]['dni']);
+            $student->setGender($resultSet[0]['gender']);
+            $student->setPhoneNumber($resultSet[0]['phoneNumber']);
+            $student->setBirthDate($resultSet[0]['birthDate']);
+    
+            return $student;
 
-        $resultSet=$this->connection->execute($query);
-        
-        $student = new Student;
-        $student->setStudentId($resultSet[0]['id_student']);
-        $student->setCareerId($resultSet[0]['id_career']);
-        $student->setFileNumber($resultSet[0]['fileNumber']);
-        $student->setFirstName($resultSet[0]['firstName']);
-        $student->setLastName($resultSet[0]['lastName']);
-        $student->setDni($resultSet[0]['dni']);
-        $student->setGender($resultSet[0]['gender']);
-        $student->setPhoneNumber($resultSet[0]['phoneNumber']);
-        $student->setBirthDate($resultSet[0]['birthDate']);
-
-        return $student;
+        } catch (Exception $e){
+            echo "El problema: ".$e->getMessage();
+        }
     }
 
     public function getStudentByStudentId($studentId)
     {
-        $query = "SELECT * FROM ".$this->tableName." WHERE id_student= \"".$studentId."\";";
-        $this->connection = Connection::GetInstance();
-
-        $resultSet=$this->connection->execute($query);
-        
-        $student = new Student;
-        $student->setStudentId($resultSet[0]['id_student']);
-        $student->setCareerId($resultSet[0]['id_career']);
-        $student->setFileNumber($resultSet[0]['fileNumber']);
-        $student->setFirstName($resultSet[0]['firstName']);
-        $student->setLastName($resultSet[0]['lastName']);
-        $student->setDni($resultSet[0]['dni']);
-        $student->setGender($resultSet[0]['gender']);
-        $student->setPhoneNumber($resultSet[0]['phoneNumber']);
-        $student->setBirthDate($resultSet[0]['birthDate']);
-        $student->setUserId($resultSet[0]['id_user']);
-
-        return $student;
+        try{
+            $query = "SELECT * FROM ".$this->tableName." WHERE id_student= \"".$studentId."\";";
+            $this->connection = Connection::GetInstance();
+    
+            $resultSet=$this->connection->execute($query);
+            
+            $student = new Student;
+            $student->setStudentId($resultSet[0]['id_student']);
+            $student->setCareerId($resultSet[0]['id_career']);
+            $student->setFileNumber($resultSet[0]['fileNumber']);
+            $student->setFirstName($resultSet[0]['firstName']);
+            $student->setLastName($resultSet[0]['lastName']);
+            $student->setDni($resultSet[0]['dni']);
+            $student->setGender($resultSet[0]['gender']);
+            $student->setPhoneNumber($resultSet[0]['phoneNumber']);
+            $student->setBirthDate($resultSet[0]['birthDate']);
+            $student->setUserId($resultSet[0]['id_user']);
+    
+            return $student;
+        } catch (Exception $e){
+            echo "El problema: ".$e->getMessage();
+        }
     }
 
-    
 }
 
 ?>
