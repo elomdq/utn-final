@@ -6,6 +6,8 @@ use Models\Student as Student;
 use DAO\StudentDAO as StudentDAO;
 use DAO\UserDAO as UserDAO;
 use DAO\AdminDAO as AdminDAO;
+use DAO\CompanyDAO as CompanyDAO;
+use Models\User as User;
 
 
 class HomeController{
@@ -13,12 +15,14 @@ class HomeController{
     private $studentDAO;
     private $adminDAO;
     private $userDao;
+    private $companyDao;
 
     public function __construct()
     {
         $this->studentDAO = new StudentDAO;
         $this->userDAO = new userDAO;
         $this->adminDAO = new AdminDAO;
+        $this->companyDao = new CompanyDAO;
     }
 
     public function home(){
@@ -29,7 +33,46 @@ class HomeController{
         require_once(VIEWS_PATH. "footer.php");
     }
 
-    public function login($email, $password, $userType) //0-student 1-admin 2-company
+    public function login($email,$password) {
+        if(!empty($email) && !empty($password)) {
+            $userData = $this->userDAO->getUserByEmail($email);
+
+            if(!empty($userData)) {
+                $user = new User;
+                $user->setUserId($userData[0]['id_user']);
+                $user->setEmail($userData[0]['email']);
+                $user->setPassword($userData[0]['pass']);
+                $user->setActive($userData[0]['active']);
+                $user->setUserType($userData[0]['userType']);
+
+                if($user->getPassword() == $password) {
+                    if($user->getUserType() == 1){
+                        $admin = $this->adminDAO->GetAdminByEmail($email);
+                        $_SESSION["loggedUser"] = $admin;
+                    } elseif($user->getUserType() == 0) {
+                        $student = $this->studentDAO->getStudentByUserId($user->getUserId());
+                        $_SESSION["loggedUser"] = $student;
+                    } else {
+                        $company = $this->companyDao->getCompanyById($user->getUserId());
+                        $_SESSION["loggedUser"] = $company;
+                    }
+                    $_SESSION['userType'] = $user->getUserType();
+                    $this->home();
+                } else {
+                    $this->showLoginView();
+                    echo "Se introdujo mal la password.";
+                }
+            } else {
+                $this->showLoginView();
+                echo "No existe el usuario.";
+            }
+        } else {
+            $this->showLoginView();
+            echo "Algo se rompio y fue feo"; 
+        }
+    }
+
+    public function login2($email, $password, $userType) //0-student 1-admin 2-company
     {
 
         $userData = $this->userDAO->getUserByEmail($email);
