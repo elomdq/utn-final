@@ -7,6 +7,7 @@ CREATE TABLE `users` (
  `email` varchar(50) NOT NULL,
  `pass` varchar(10) NOT NULL,
  `active` tinyint(1) NOT NULL,
+ `userType` tinyint(1) NOT NULL,
  PRIMARY KEY (`id_user`),
  UNIQUE KEY `unq_email` (`email`)
 ) ENGINE=InnoDB;

@@ -46,7 +46,41 @@ class CompanyDAO implements ICompanyDAO
     public function getCompanyById($idCompany)
     {
         try {
+
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_company = " . $idCompany . ";";
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->execute($query);
+
+            $company = new Company;
+            $company->setIdCompany($resultSet[0]['id_company']);
+            $company->setCompanyName($resultSet[0]['companyName']);
+            $company->setTelephone($resultSet[0]['phoneNumber']);
+            $company->setCity($resultSet[0]['city']);
+            $company->setCuit($resultSet[0]['cuit']);
+            $company->setAddress($resultSet[0]['adress']);
+            $company->setUserId($resultSet[0]['id_user']);
+            
+
+            $userRow = $this->userDAO->getUserById($resultSet[0]['id_user']);
+
+            $company->setEmail($userRow['email']);
+            $company->setPassword($userRow['pass']);
+            $company->setActive($userRow['active']);
+
+            return $company;
+        } catch (Exception $e) {
+            echo "El problema: ".$e->getMessage();
+        }
+        catch (PDOException $pdo){
+            echo "El problema: ".$pdo->getMessage();
+            }
+    }
+
+    public function getCompanyByIdUser($idCompany)
+    {
+        try {
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE id_user = " . $idCompany . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
 

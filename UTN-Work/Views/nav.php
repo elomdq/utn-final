@@ -27,6 +27,11 @@
                 </a>
             </li>
 
+            <li class="nav-item mx-1">
+                <a class="nav-link" href="<?php echo FRONT_ROOT . "Home/home"; ?>" id="offers" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Home</span>
+                </a>
+            </li>
             <!--
             <li class="nav-item mx-1">
                 <a class="nav-link" href="<?php echo FRONT_ROOT . "Home/logout"; ?>" id="session" role="button" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +45,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?php echo $_SESSION['loggedUser']->getFirstName() . " " . $_SESSION['loggedUser']->getLastName(); ?></span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?php echo $_SESSION['loggedUser']->getEmail(); ?></span>
                     <!-- <img class="img-profile rounded-circle" src="img/undraw_profile.svg"> -->
                 </a>
                 

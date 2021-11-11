@@ -120,9 +120,7 @@ class OfferController{
                 $this->studentsXoffers->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
             }
         }
-
         require_once VIEWS_PATH."footer.php";
-        
     }
 
 }
