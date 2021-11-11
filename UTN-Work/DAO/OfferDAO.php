@@ -163,28 +163,22 @@ class OfferDAO implements IOfferDAO{
     public function updateOfferById(Offer $offer)
     {
         try{
+                
+                $query = "UPDATE ".$this->tableName." SET 
+                jobPosition=". $offer->getJobPosition()
+                .", career=". $offer->getCareerId()
+                .", id_company=". $offer->getCompanyId()
+                .", title=\"". $offer->getTitle()
+                ."\", active=". $offer->getActive()
+                .", publicationDate=\"". $offer->getPublicationDate()
+                ."\", offerDescription=\"". $offer->getDescription()
+                . "\" WHERE id_jobOffer = ".$offer->getOfferId() .";";
 
-                $query2 =  "UPDATE ".$this->tableName." SET jobPosition = :jobPosition 
-                                                            id_company = :id_company
-                                                            career=:career 
-                                                            title=:title
-                                                            active=:active
-                                                            publicationDate=:publicationDate
-                                                            offerDescription=:offerDescription
-                                                            WHERE id_jobOffer = ". $offer->getOfferId() .";";
-                /*$query = "UPDATE ".$this->tableName." SET jobPosition=, career, title, active, publicationDate, offerDescription) VALUES(:jobPosition, :career, :title, :active, :publicationDate, :offerDescription) WHERE id_jobOffer = \"".$idOffer."\";";*/
-
-                $parameters['jobPosition']=$offer->getJobPosition();
-                $parameters['id_company']=$offer->getCompanyId();
-                $parameters['career']=$offer->getCareerId();
-                $parameters['title']=$offer->getTitle();
-                $parameters['active']=$offer->getActive();
-                $parameters['publicationDate']=$offer->getPublicationDate();
-                $parameters['offerDescription']=$offer->getDescription();
+                //echo "QUERY: " . $query . "<br>";
     
                 $this->connection = Connection::GetInstance();
     
-                $this->connection->executeNonQuery($query2, $parameters);
+                $this->connection->executeNonQuery($query);
         } catch(Exception $e){
             echo "El problema: ".$e->getMessage();
         }

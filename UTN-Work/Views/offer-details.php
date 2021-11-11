@@ -45,13 +45,17 @@ if($_SESSION['offer'])
             <div class="row card-body justify-content-center py-2">
                 <div class="col-10 m-2">
                     <div>
-                        <p class="d-inline fw-bold">Empresa: </p> <?php echo $companyDAO->getCompanyById($offer->getCompanyId())->getCompanyName(); ?>
+                        <p class="d-inline fw-bold">Empresa: <?php echo $companyDAO->getCompanyById($offer->getCompanyId())->getCompanyName(); ?></p> 
                     </div>
                 </div>
                 <div class="col-10 m-2">
                     <div>
-                        <p class="d-inline fw-bold">Puesto: </p> <?php echo $jobPositionDAO->getPositionDescriptionById($offer->getJobPosition()); ?>
+                        <p class="d-inline fw-bold">Puesto: <?php echo $jobPositionDAO->getPositionDescriptionById($offer->getJobPosition()); ?></p> 
                     </div>
+                </div>
+
+                <div class="col-10 m-3">
+                    <p class="d-inline fw-bold">Estado: <?php echo $offer->getActive()? "Activa" : "Dada de Baja"; ?> </p> 
                 </div>
                 
                 <hr class="col-10 m-3">

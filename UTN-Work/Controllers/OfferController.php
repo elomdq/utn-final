@@ -77,6 +77,7 @@ class OfferController{
         if($_POST)
         { 
             $oferta = new Offer;
+            $oferta->setOfferId($_POST['offerId']);
             $oferta->setTitle($_POST['offerTitle']);
             $oferta->setJobPosition($_POST['jobPosition']);
             $oferta->setDescription($_POST['offerDesc']);
@@ -88,9 +89,12 @@ class OfferController{
             {
                 $oferta->setActive(true);
             } else {
-                $oferta->setActive(false);
+                $oferta->setActive(0);
             }
+            
             $this->offersDAO->updateOfferById($oferta);
+
+            $this->showOfferDetails($oferta->getOfferId());
         } else {
                 $this->editView($_POST['offerId'], "Incorrecto ingreso de datos.");
         }
@@ -113,7 +117,7 @@ class OfferController{
             {
                 $oferta->setActive(true);
             } else {
-                $oferta->setActive(false);
+                $oferta->setActive(0);
             }
 
             $this->offersDAO->add($oferta);

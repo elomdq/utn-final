@@ -3,7 +3,7 @@
           <div class="row justify-content-center bg-white">
                <div class="col-8 p-2">
                     <div class="card">
-                         <h5 class="card-header mb-2">Editar Oferta</h5>
+                         <h5 class="card-header mb-2">Editar Oferta</h5> 
 
                          <div class="card-body">
                               <form action="<?php echo FRONT_ROOT?>Offer/editOffer/" method="POST" class="row bg-light-alpha p-3">
@@ -16,7 +16,7 @@
                                    <div class="form-group col-12">
                                         <label>Carrera</label>
                                         <select class="form-select" name="careerId">
-                                            <option selected> <?php echo $this->careerDAO->getCareerById_Api($offer->getCareerId())->getDescription();?> </option>
+                                            <option value="<?php echo $offer->getCareerId();?>" selected> <?php echo $this->careerDAO->getCareerById_Api($offer->getCareerId())->getDescription();?> </option>
                                             <?php foreach ($listaCarreras as $carrera) { ?>
                                                 <option value="<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getDescription(); ?> </option>
                                             <?php } ?>
@@ -26,7 +26,7 @@
                                    <div class="form-group col-12">
                                         <label for="jobPosition">Puesto</label>
                                         <select id="jobPosition" class="form-select" name="jobPosition">
-                                            <option selected><?php echo $this->puestos->getjobPositionById($offer->getJobPosition())->getDescription(); ?></option>
+                                            <option value="<?php echo $offer->getJobPosition();?>" selected><?php echo $this->puestos->getjobPositionById($offer->getJobPosition())->getDescription(); ?></option>
                                              <?php foreach ($listJobsPositions as $puesto) { ?>
                                                   <option value="<?php echo $puesto->getIdJobPosition(); ?>"> <?php echo $puesto->getDescription(); ?> </option>
                                              <?php } ?>
@@ -37,7 +37,7 @@
                                    <div class="form-group col-12">
                                         <label>Empresa</label>
                                         <select class="form-select" name="companyId">
-                                            <option selected><?php echo $this->companyDao->getCompanyById($offer->getCompanyId())->getCompanyName() ; ?></option>
+                                            <option value="<?php echo $offer->getCompanyId(); ?>" selected><?php echo $this->companyDao->getCompanyById($offer->getCompanyId())->getCompanyName() ; ?></option>
                                              <?php foreach ($companyList as $company) { ?>
                                                   <option value="<?php echo $company->getIdCompany();?>"> <?php echo $company->getCompanyName(); ?> </option>
                                              <?php }  ?>
@@ -60,7 +60,7 @@
                                         <div class="form-check">
                                             <?php if($offer->getActive()) { ?>
                                                 <input id="active" type="checkbox" name="active" class="form-check-input" checked>
-                                            <?php } else {?>
+                                            <?php echo $offer->getActive(); } else {?>
                                                 <input id="active" type="checkbox" name="active" class="form-check-input">
                                             <?php }?>
                                                 <label class="form-check-label" for="active">Active</label>
