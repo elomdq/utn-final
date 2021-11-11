@@ -14,6 +14,11 @@ $listJobsPositions = $puestos->getAll();
 $listaCarreras = $careerDAO->getAll_Api();
 $companyList = $companyDao->getAll();
 
+$carriersMap = array();
+foreach($listaCarreras as $value){
+     $carriersMap[$value->getIdCareer()] = $value->getDescription();
+}
+
 $user = $_SESSION['loggedUser'];
 
 ?>
@@ -37,7 +42,7 @@ $user = $_SESSION['loggedUser'];
                                         <label>Carrera</label>
                                         <select class="form-select" name="careerId">
                                              <?php foreach ($listaCarreras as $carrera) { ?>
-                                                  <option value="<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getDescription(); ?> </option>
+                                                  <option value="<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getIdCareer()." - ". $carrera->getDescription(); ?> </option>
                                              <?php }  ?>
                                         </select>
                                    </div>
@@ -46,7 +51,7 @@ $user = $_SESSION['loggedUser'];
                                         <label for="jobPosition">Puesto</label>
                                         <select id="jobPosition" class="form-select" name="jobPosition">
                                              <?php foreach ($listJobsPositions as $puesto) { ?>
-                                                  <option value="<?php echo $puesto->getIdJobPosition(); ?>"> <?php echo $puesto->getDescription(); ?> </option>
+                                                  <option value="<?php echo $puesto->getIdJobPosition(); ?>"> <?php echo $carriersMap[$puesto->getCareerId()] . " - " .$puesto->getDescription(); ?> </option>
                                              <?php } ?>
                                         </select>
                                    </div>

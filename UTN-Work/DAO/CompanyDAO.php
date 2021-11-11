@@ -24,7 +24,7 @@ class CompanyDAO implements ICompanyDAO
     public function add(Company $company)
     {
         try {
-            $query = "INSERT INTO " . $this->tableName . " (companyName, id_user, adress, cuit, city) VALUES(:companyName, :id_user, :adress, :cuit, :city);";
+            $query = "INSERT INTO " . $this->tableName . " (companyName, id_user, adress, cuit, city, phoneNumber) VALUES(:companyName, :id_user, :adress, :cuit, :city, :phoneNumber);";
 
             $parameters = array();
             $parameters['companyName'] = $company->getCompanyName();
@@ -32,6 +32,7 @@ class CompanyDAO implements ICompanyDAO
             $parameters['adress'] = $company->getAddress();
             $parameters['cuit'] = $company->getCuit();
             $parameters['city'] = $company->getCity();
+            $parameters['phoneNumber'] = $company->getTelephone();
 
 
             $this->connection = Connection::GetInstance();
@@ -112,13 +113,13 @@ class CompanyDAO implements ICompanyDAO
     public function remove($companyId)
     {
         try {
-            $query = "UPDATE users set active = 0";
+            $query = "UPDATE users set active = 0 WHERE id_user = " . $companyId . ";";
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query);
         } catch (Exception $e) {
             echo "El problema: ".$e->getMessage();
         } catch (PDOException $pdo){
-        echo "El problema: ".$pdo->getMessage();
+             echo "El problema: ".$pdo->getMessage();
         throw $pdo;
         }
     }

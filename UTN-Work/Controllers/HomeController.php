@@ -47,7 +47,7 @@ class HomeController{
         if(!empty($email) && !empty($password)) {
             
             $userData = $this->userDAO->getUserByEmail($email);
-            echo $userData[0]['userType'] . "<br>";
+            //echo $userData[0]['userType'] . "<br>";
 
             if(!empty($userData)) {
                 

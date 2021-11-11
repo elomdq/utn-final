@@ -14,6 +14,13 @@ if($_SESSION['userType'] == 0)
             array_push($offerList, $offer);
         }
     }
+} else if($_SESSION['userType'] == 2){
+    foreach ($offers->getAll() as $offer) { 
+        if($_SESSION['loggedUser']->getIdCompany() == $offer->getCompanyId() )
+        {
+            array_push($offerList, $offer);
+        }
+    }
 }
 else{
     $offerList = $offers->getAll();
