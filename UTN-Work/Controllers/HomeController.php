@@ -26,11 +26,11 @@ class HomeController{
     }
 
     public function home(){
-        require_once VIEWS_PATH . "validate-session.php";
-        require_once(VIEWS_PATH. "header.php");
-        require_once VIEWS_PATH . "nav.php" ;
-        require_once VIEWS_PATH . "home.php";
-        require_once(VIEWS_PATH. "footer.php");
+        require_once VIEWS_PATH ."validate-session.php";
+        require_once VIEWS_PATH. "header.php";
+        require_once VIEWS_PATH ."nav.php" ;
+        require_once VIEWS_PATH ."home.php";
+        require_once VIEWS_PATH. "footer.php";
     }
 
     public function login($email,$password) {
@@ -133,13 +133,13 @@ class HomeController{
     public function showLoginView()
     {
         require_once(VIEWS_PATH."header.php");
-        require_once VIEWS_PATH . "login.php";
+        require_once VIEWS_PATH ."login.php";
         require_once(VIEWS_PATH."footer.php");
     }
 
     public function checkEmail(){
         require_once(VIEWS_PATH."header.php");
-        require_once VIEWS_PATH . "check-email.php";
+        require_once VIEWS_PATH ."check-email.php";
         require_once(VIEWS_PATH."footer.php");
     }
 

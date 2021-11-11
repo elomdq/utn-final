@@ -26,9 +26,11 @@ class CompanyController{
         require_once VIEWS_PATH . "nav.php";
         require_once VIEWS_PATH . "company-add.php";
         require_once(VIEWS_PATH."footer.php");
-        echo '<script language="javascript">';
-        echo 'alert(<?php echo $message ?>)';
-        echo '</script>';
+        if(!empty($message)){
+            echo '<script language="javascript">';
+            echo 'alert(<?php echo $message ?>)';
+            echo '</script>';
+        }
     }
 
 
