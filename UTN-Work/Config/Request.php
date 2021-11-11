@@ -21,13 +21,13 @@ class Request{
 
         //Obtenemos primero el nombre del controller a usar
         if(empty($urlArray))
-            $this->controller = "Home";            
+            $this->controller = "Views";            
         else
             $this->controller = ucwords(array_shift($urlArray));
 
         //Luego obtenemos el nombre del method elegido
         if(empty($urlArray))
-            $this->method = "showLoginView";
+            $this->method = "login";
         else
             $this->method = array_shift($urlArray);
 
