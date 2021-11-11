@@ -78,7 +78,7 @@ if($_SESSION['offer'])
                         <?php if(isset($_SESSION['userType']) && $_SESSION['userType']!= 0) { ?>
                             <a class="text-decoration-none " href="<?php echo FRONT_ROOT;?>offer/viewApplicants/" > <button class="btn btn-dark botonCentro" type="button">Ver Postulantes</button></a>
                         <?php } ?>
-                        <?php if(isset($_SESSION['userType']) && $_SESSION['userType']== 1) { echo FRONT_ROOT."offer/editView/".$offer->getOfferId();?>
+                        <?php if(isset($_SESSION['userType']) && $_SESSION['userType']== 1) {?>
                             <a class="text-decoration-none " href="<?php echo FRONT_ROOT."offer/editView/".$offer->getOfferId();?>" > <button class="btn btn-dark botonCentro" type="button">Editar</button> </a>
                         <?php } ?>
                     </form>

@@ -145,13 +145,7 @@ class OfferDAO implements IOfferDAO{
         $this->connection = Connection::GetInstance();
 
         $resultSet=$this->connection->execute($query);
-        
-        echo "Query: ". $query ." <br><br>";
-        echo "ResultSet:";
-        
-        var_dump($resultSet);
-        echo "ResultSet: <br><br>";
-
+       
         $offer = new Offer;
         $offer->setofferId($resultSet[0]['id_jobOffer']);
         $offer->setCompanyId($resultSet[0]['id_company']);
@@ -166,18 +160,19 @@ class OfferDAO implements IOfferDAO{
     }
 
 
-    public function updateOfferById(Offer $offer, $idOffer)
+    public function updateOfferById(Offer $offer)
     {
         try{
 
-                $quey2 =  "UPDATE ".$this->tableName." SET jobPosition = :jobPosition 
+                $query2 =  "UPDATE ".$this->tableName." SET jobPosition = :jobPosition 
+                                                            id_company = :id_company
                                                             career=:career 
                                                             title=:title
                                                             active=:active
                                                             publicationDate=:publicationDate
                                                             offerDescription=:offerDescription
-                                                            WHERE id_jobOffer = \"".$idOffer."\";";
-                $query = "UPDATE ".$this->tableName."(jobPosition, career, title, active, publicationDate, offerDescription) VALUES(:jobPosition, :career, :title, :active, :publicationDate, :offerDescription) WHERE id_jobOffer = \"".$idOffer."\";";
+                                                            WHERE id_jobOffer = ". $offer->getOfferId() .";";
+                /*$query = "UPDATE ".$this->tableName." SET jobPosition=, career, title, active, publicationDate, offerDescription) VALUES(:jobPosition, :career, :title, :active, :publicationDate, :offerDescription) WHERE id_jobOffer = \"".$idOffer."\";";*/
 
                 $parameters['jobPosition']=$offer->getJobPosition();
                 $parameters['id_company']=$offer->getCompanyId();
@@ -189,7 +184,7 @@ class OfferDAO implements IOfferDAO{
     
                 $this->connection = Connection::GetInstance();
     
-                $this->connection->executeNonQuery($query, $parameters);
+                $this->connection->executeNonQuery($query2, $parameters);
         } catch(Exception $e){
             echo "El problema: ".$e->getMessage();
         }

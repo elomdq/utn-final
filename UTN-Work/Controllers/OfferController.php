@@ -3,6 +3,10 @@
 namespace Controllers;
 
 use DAO\OfferDAO as OfferDAO;
+use DAO\CareerDAO as CareerDAO;
+use DAO\CompanyDAO as CompanyDAO;
+use DAO\JobPositionDAO as JobPositionDAO;
+
 use DAO\StudentsXOffersDAO as StudentsXOffers;
 use Models\Offer as Offer;
 
@@ -10,11 +14,18 @@ class OfferController{
 
     private $offersDAO;
     private $studentsXoffers;
+    private $puestos;
+    private $careerDAO; 
+    private $companyDao;
+    
 
     public function __construct()
     {
         $this->offersDAO = new OfferDAO;
         $this->studentsXoffers = new StudentsXOffers;
+        $this->puestos = new JobPositionDAO;
+        $this->careerDAO = new CareerDAO;
+        $this->companyDao = new CompanyDAO;
     }
 
     public function showOffersList(){
@@ -47,6 +58,13 @@ class OfferController{
 
     public function editView($offerId, $message = "")
     {
+        $offer = new Offer;
+        $offer = $this->offersDAO->getOfferById($offerId);
+
+        $listJobsPositions = $this->puestos->getAll();
+        $listaCarreras = $this->careerDAO->getAll_Api();
+        $companyList = $this->companyDao->getAll();
+
         require_once VIEWS_PATH ."validate-session.php";
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php";
@@ -54,7 +72,7 @@ class OfferController{
         require_once VIEWS_PATH."footer.php";
     }
 
-    public function editOffer($idOffer)
+    public function editOffer(...$values)
     {
         if($_POST)
         { 
@@ -72,9 +90,9 @@ class OfferController{
             } else {
                 $oferta->setActive(false);
             }
-            $this->offersDAO->updateOfferById($oferta, $idOffer);
-        }   else {
-                $this->editView("Incorrecto ingreso de datos.",$idOffer);
+            $this->offersDAO->updateOfferById($oferta);
+        } else {
+                $this->editView($_POST['offerId'], "Incorrecto ingreso de datos.");
         }
     }
 
@@ -82,7 +100,6 @@ class OfferController{
        
         if($_POST)
         {
-
             $oferta = new Offer;
             $oferta->setTitle($_POST['offerTitle']);
             $oferta->setJobPosition($_POST['jobPosition']);

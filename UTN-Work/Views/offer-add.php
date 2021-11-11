@@ -9,10 +9,9 @@ use DAO\JobPositionDAO as JobPositionDAO;
 $puestos = new JobPositionDAO;
 $careerDAO = new CareerDAO;
 $companyDao = new CompanyDAO;
+
 $listJobsPositions = $puestos->getAll();
-
 $listaCarreras = $careerDAO->getAll_Api();
-
 $companyList = $companyDao->getAll();
 
 $user = $_SESSION['loggedUser'];
@@ -27,7 +26,7 @@ $user = $_SESSION['loggedUser'];
                          <h3 class="card-header mb-2">Agregar Oferta</h3>
 
                          <div class="card-body">
-                              <form action="<?php echo FRONT_ROOT ?>Offer/createOffer/" method="POST" class="row bg-light-alpha p-3">
+                              <form action="<?php echo FRONT_ROOT?>Offer/createOffer/" method="POST" class="row bg-light-alpha p-3">
 
                                    <div class="form-group col-12">
                                         <label for="offerTitle">Titulo</label>
