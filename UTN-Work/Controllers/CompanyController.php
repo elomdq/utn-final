@@ -113,10 +113,14 @@ class CompanyController{
     //acciona el proceso de edicion de una empresa
     public function editCompany($companyId)
     {
+        $company = $this->companyDAO->getCompanyById($companyId);
+
         require_once VIEWS_PATH . "validate-session.php";
         require_once(VIEWS_PATH."header.php");
         //paso la empresa por la variable superglobal SESSION
-        $_SESSION['company'] = $this->companyDAO->getCompanyById($companyId);
+        //$_SESSION['company'] = $this->companyDAO->getCompanyById($companyId);
+
+        
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "company-edit.php";
         require_once(VIEWS_PATH."footer.php");
@@ -140,15 +144,17 @@ class CompanyController{
                 $company->setEmail($_POST['email']);
                 $company->setIdCompany($_POST['companyId']);
                 $company->setUserId($_POST['userId']);
+
+
                 
                 if (isset($_POST['active'])) 
                 {
                     $company->setActive(true);
                 } else {
-                    $company->setActive(false);
+                    $company->setActive(0);
                 }
 
-
+                $this->userDAO->updateActive($company->getUserId(), $company->getActive());
                 $this->companyDAO->overwriteCompany($company);
                 
                 $this->showCompanyDetails($company->getIdCompany());
