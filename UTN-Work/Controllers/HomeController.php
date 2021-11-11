@@ -34,6 +34,7 @@ class HomeController{
     }
 
     public function home(){
+        
         require_once VIEWS_PATH ."validate-session.php";
         require_once VIEWS_PATH. "header.php";
         require_once VIEWS_PATH ."nav.php" ;
@@ -46,35 +47,49 @@ class HomeController{
         if(!empty($email) && !empty($password)) {
             
             $userData = $this->userDAO->getUserByEmail($email);
+            echo $userData[0]['userType'] . "<br>";
 
             if(!empty($userData)) {
                 
-                $user = new User;
-                $user->setUserId($userData[0]['id_user']);
-                $user->setEmail($userData[0]['email']);
-                $user->setPassword($userData[0]['pass']);
-                $user->setActive($userData[0]['active']);
-                $user->setUserType($userData[0]['userType']);
+                if($userData[0]['pass'] == $password) {
 
-                if($user->getPassword() == $password) {
-                    if($user->getUserType() == 1){
-                        $admin = $this->adminDAO->GetAdminByEmail($email);
-                        $_SESSION["loggedUser"] = $admin;
-                    } elseif($user->getUserType() == 0) {
-                        $student = $this->studentDAO->getStudentByUserId($user->getUserId());
-                        $_SESSION["loggedUser"] = $student;
+                    if($userData[0]['active'] == true)
+                    {
+                                           
+                        if($userData[0]['userType'] == 1){
+                            $admin = $this->adminDAO->GetAdminByEmail($email);
+                            $_SESSION["loggedUser"] = $admin;
+                        } else if ($userData[0]['userType'] == 0) {
+                            $student = $this->studentDAO->getStudentByUserId($userData[0]['id_user']);
+                            $_SESSION["loggedUser"] = $student;
+                        } else {
+                            $company = $this->companyDao->getCompanyByIdUser($userData[0]['id_user']);
+                            $_SESSION["loggedUser"] = $company;
+                        }
+
+                        $_SESSION["loggedUser"]->setUserId($userData[0]['id_user']);
+                        $_SESSION["loggedUser"]->setEmail($userData[0]['email']);
+                        $_SESSION["loggedUser"]->setPassword($userData[0]['pass']);
+                        $_SESSION["loggedUser"]->setActive($userData[0]['active']);
+                        $_SESSION["loggedUser"]->setUserType($userData[0]['userType']);
+
+                        $_SESSION['userType'] = $userData[0]['userType'];
+
+                        $this->home();
+
                     } else {
-                        $company = $this->companyDao->getCompanyByIdUser($user->getUserId());
-                        $_SESSION["loggedUser"] = $company;
-                    }
-                    $_SESSION['userType'] = $user->getUserType();
-                    $this->home();
+                        $this->showLoginView();
+                        echo '<script language="javascript">';
+                        echo 'alert("Usuario dado de baja, comuniquese con la UTN.")';
+                        echo '</script>';
+                    } 
                 } else {
                     $this->showLoginView();
                     echo '<script language="javascript">';
                     echo 'alert("Se introdujo mal la password.")';
                     echo '</script>';
                 }
+                
             } else {
                 $this->showLoginView();
                 echo '<script language="javascript">';
