@@ -11,6 +11,8 @@ class CompanyController{
     private $companyDAO;
     private $userDAO;
     private $companiesList;
+    private $userType = 2;
+    private $passDefault = 123456;
 
     public function __construct()
     {
@@ -24,6 +26,9 @@ class CompanyController{
         require_once VIEWS_PATH . "nav.php";
         require_once VIEWS_PATH . "company-add.php";
         require_once(VIEWS_PATH."footer.php");
+        echo '<script language="javascript">';
+        echo 'alert(<?php echo $message ?>)';
+        echo '</script>';
     }
 
 
@@ -32,9 +37,7 @@ class CompanyController{
         if($_POST)
         {
             if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['address'], $_POST['cuit'], $_POST['email']))
-            {
-
-                
+            {  
                 $company = new Company;
 
                 $company->setCompanyName($_POST['companyName']);
@@ -51,7 +54,7 @@ class CompanyController{
                     $company->setActive(false);
                 }
 
-                $this->userDAO->add($company->getEmail(), $company->getActive());
+                $this->userDAO->add($company->getEmail(), $company->getActive(), $this->passDefault, $this->userType);
 
                 $company->setUserId($this->userDAO->getUserIdByEmail($company->getEmail()));
 
@@ -86,7 +89,6 @@ class CompanyController{
 
     private function ValidateInputValues($companyName, $telephone, $city, $address, $cuit, $email){
         $validated = false;
-
         if(isset($companyName) && isset($telephone) && isset($city) && isset($address) && isset($cuit) && isset($email))
             if(!empty($companyName) && !empty($telephone) && !empty($city) && !empty($address) && !empty($cuit) && !empty($email))
                 $validated = true;
@@ -111,10 +113,8 @@ class CompanyController{
     {
         require_once VIEWS_PATH . "validate-session.php";
         require_once(VIEWS_PATH."header.php");
-
         //paso la empresa por la variable superglobal SESSION
         $_SESSION['company'] = $this->companyDAO->getCompanyById($companyId);
-
         require_once VIEWS_PATH . "nav.php" ;
         require_once VIEWS_PATH . "company-edit.php";
         require_once(VIEWS_PATH."footer.php");
@@ -136,7 +136,6 @@ class CompanyController{
                 $company->setCity($_POST['city']);
                 $company->setCuit($_POST['cuit']);
                 $company->setEmail($_POST['email']);
-                
                 $company->setIdCompany($_POST['companyId']);
                 $company->setUserId($_POST['userId']);
                 

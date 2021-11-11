@@ -60,15 +60,21 @@ class HomeController{
                     $this->home();
                 } else {
                     $this->showLoginView();
-                    echo "Se introdujo mal la password.";
+                    echo '<script language="javascript">';
+                    echo 'alert("Se introdujo mal la password.")';
+                    echo '</script>';
                 }
             } else {
                 $this->showLoginView();
-                echo "No existe el usuario.";
+                echo '<script language="javascript">';
+                echo 'alert("No se encontro el email")';
+                echo '</script>';
             }
         } else {
             $this->showLoginView();
-            echo "Algo se rompio y fue feo"; 
+            echo '<script language="javascript">';
+            echo 'alert("Algo se rompio y fue feo")';
+            echo '</script>';
         }
     }
 
@@ -148,6 +154,9 @@ class HomeController{
         } else {
             require_once(VIEWS_PATH."header.php");
             require_once VIEWS_PATH . "check-email.php";
+            echo '<script language="javascript">';
+            echo 'alert("No se encontro el email")';
+            echo '</script>';
             require_once(VIEWS_PATH."footer.php");
         }
     }
@@ -156,7 +165,6 @@ class HomeController{
 
         if($_POST)
         {
-            
             require_once(VIEWS_PATH."header.php");
             require_once VIEWS_PATH . "generate-password.php";
             require_once(VIEWS_PATH."footer.php");
@@ -175,7 +183,7 @@ class HomeController{
             $parameters['password'] = $_SESSION['student']->getPassword();
             $parameters['active'] = $_SESSION['student']->getActive();*/
 
-            $this->userDAO->add($_SESSION['student']->getEmail(), $_SESSION['student']->getActive(), $_SESSION['student']->getPassword());
+            $this->userDAO->add($_SESSION['student']->getEmail(), $_SESSION['student']->getActive(), $_SESSION['student']->getPassword(),$_SESSION['student']->getUserType());
 
             $_SESSION['student']->setUserId($this->userDAO->getUserIdByEmail($_SESSION['student']->getEmail()));
 

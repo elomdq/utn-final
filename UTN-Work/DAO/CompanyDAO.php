@@ -46,7 +46,8 @@ class CompanyDAO implements ICompanyDAO
     public function getCompanyById($idCompany)
     {
         try {
-            $query = "SELECT * FROM " . $this->tableName . " WHERE id_company = " . $idCompany . ";";
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE id_user = " . $idCompany . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
 

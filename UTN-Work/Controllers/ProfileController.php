@@ -25,6 +25,7 @@ class ProfileController{
                 require_once VIEWS_PATH . "admin-profile.php";
                 break;
             case 2:
+                require_once VIEWS_PATH . "company-profile.php";
                 break;
             default:
                 break;

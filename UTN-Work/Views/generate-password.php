@@ -17,6 +17,7 @@ if($_POST)
     $student->setCareerId($_POST['careerId']);
     $student->setEmail($_POST['email']);
     $student->setActive($_POST['active']);
+    $student->setUserType(0);
 
     $_SESSION['student'] = $student;
 }
