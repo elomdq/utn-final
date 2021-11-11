@@ -18,8 +18,7 @@
 
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
-                                    </div>
-                                    
+                                    </div>                                   
                                     <form class="user" action="<?php echo FRONT_ROOT?>Home/login" method="post">
                                         
                                         <div class="form-group">
@@ -27,31 +26,10 @@
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Ingrese su email para iniciar sesión...">
                                         </div>
-
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 id="password" placeholder="Contraseña" name="password">
-                                        </div>
-
-                                        <div class="form-group d-flex justify-content-around py-3">
-
-                                            <div align="center">
-                                                <input type="radio" id="student" name="userType" value="0" class="d-block" required>
-                                                <label for="student" class="">Estudiante</label>
-                                            </div>
-
-                                            <div class="" align="center">
-                                                <input type="radio" id="admin" name="userType" value="1" class="d-block">
-                                                <label for="admin" class="">Administrador</label>     
-                                            </div>
-                                        
-                                            <div align="center">
-                                                <input type="radio" id="company" name="userType" value="2" class="d-block">
-                                                <label for="company" class="">Empresa</label>
-                                            </div>
-                                        
-                                        </div>
-                                        
+                                        </div>                                    
                                         <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
                                        
                                     </form>

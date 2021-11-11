@@ -2,16 +2,16 @@
 
 namespace Models;
 
-abstract class User{
+class User{
 
     private $userId;
     private $email;
     private $password;
     private $active;
+    private $userType;
 
     public function __construct()
     {
-        //self::$idCounter++;
     }  
 
     public function getUserId(){ return $this->userId; }
@@ -25,6 +25,9 @@ abstract class User{
 
     public function getActive(){ return $this->active; }
     public function setActive($active): self { $this->active = $active; return $this; }
+    
+    public function getUserType(){ return $this->userType; }
+    public function setUserType($userType): self { $this->userType = $userType; return $this; }
 
     //public static function getIdCounter(){ return self::$idCounter; }
 }
