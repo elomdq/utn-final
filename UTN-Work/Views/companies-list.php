@@ -84,7 +84,7 @@ if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
                            
                             <?php if ($_SESSION['userType'] == 1) { ?>
                             <a href="<?php echo FRONT_ROOT . "company/editCompany/" . $company->getIdCompany(); ?>" class="mx-2"><i class="fas fa-pencil-alt fa-2x text-blue-400"></i></a>
-                            <a href=" <?php echo FRONT_ROOT . "company/deleteCompany/" . $company->getIdCompany(); ?> " class="mx-2"><i class="far fa-trash-alt fa-2x  text-red-400"></i></a>
+                            <!-- <a href=" <?php echo FRONT_ROOT . "company/deleteCompany/" . $company->getIdCompany(); ?> " class="mx-2"><i class="far fa-trash-alt fa-2x  text-red-400"></i></a> -->
                             <?php } ?>
                         </div>
                     </div>
