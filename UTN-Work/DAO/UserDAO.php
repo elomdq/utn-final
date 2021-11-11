@@ -18,7 +18,7 @@ class UserDAO{
     public function getTableName(){ return $this->tableName; }
     public function setTableName($tableName): self { $this->tableName = $tableName; return $this; }
 
-    public function add($email, $active, $pass="123456", $userType) //email, pass, active
+    public function add($email, $active, $userType, $pass="123456") //email, pass, active
     {
         try{
             $query = "INSERT INTO ".$this->tableName."(email,pass,active,userType) VALUES(:email, :password, :active,:userType);";

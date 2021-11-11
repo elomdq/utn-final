@@ -14,15 +14,23 @@ class HomeController{
 
     private $studentDAO;
     private $adminDAO;
-    private $userDao;
+    private $userDAO;
     private $companyDao;
 
     public function __construct()
     {
         $this->studentDAO = new StudentDAO;
-        $this->userDAO = new userDAO;
+        $this->userDAO = new UserDAO;
         $this->adminDAO = new AdminDAO;
         $this->companyDao = new CompanyDAO;
+    }
+
+
+    public function showLoginView()
+    {
+        require_once(VIEWS_PATH."header.php");
+        require_once VIEWS_PATH ."login.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
     public function home(){
@@ -34,10 +42,13 @@ class HomeController{
     }
 
     public function login($email,$password) {
+
         if(!empty($email) && !empty($password)) {
+            
             $userData = $this->userDAO->getUserByEmail($email);
 
             if(!empty($userData)) {
+                
                 $user = new User;
                 $user->setUserId($userData[0]['id_user']);
                 $user->setEmail($userData[0]['email']);
@@ -78,7 +89,7 @@ class HomeController{
         }
     }
 
-    public function login2($email, $password, $userType) //0-student 1-admin 2-company
+    /*public function login2($email, $password, $userType) //0-student 1-admin 2-company
     {
 
         $userData = $this->userDAO->getUserByEmail($email);
@@ -122,20 +133,11 @@ class HomeController{
                 default:
                     break;
                 }
-
             }
         } else{
             $this->showLoginView();
         }
-
-    }
-
-    public function showLoginView()
-    {
-        require_once(VIEWS_PATH."header.php");
-        require_once VIEWS_PATH ."login.php";
-        require_once(VIEWS_PATH."footer.php");
-    }
+    }*/
 
     public function checkEmail(){
         require_once(VIEWS_PATH."header.php");
@@ -165,6 +167,20 @@ class HomeController{
 
         if($_POST)
         {
+            $student = new Student();
+            $student->setFirstName($_POST['firstName']);
+            $student->setLastName($_POST['lastName']);
+            $student->setDni($_POST['dni']);
+            $student->setBirthDate($_POST['birthDate']);
+            $student->setGender($_POST['gender']);
+            $student->setPhoneNumber($_POST['phoneNumber']);
+            $student->setCareerId($_POST['careerId']);
+            $student->setEmail($_POST['email']);
+            $student->setActive($_POST['active']);
+            $student->setUserType(0);
+
+            $_SESSION['student'] = $student;
+
             require_once(VIEWS_PATH."header.php");
             require_once VIEWS_PATH . "generate-password.php";
             require_once(VIEWS_PATH."footer.php");
@@ -183,7 +199,7 @@ class HomeController{
             $parameters['password'] = $_SESSION['student']->getPassword();
             $parameters['active'] = $_SESSION['student']->getActive();*/
 
-            $this->userDAO->add($_SESSION['student']->getEmail(), $_SESSION['student']->getActive(), $_SESSION['student']->getPassword(),$_SESSION['student']->getUserType());
+            $this->userDAO->add($_SESSION['student']->getEmail(), $_SESSION['student']->getActive(),$_SESSION['student']->getUserType(), $_SESSION['student']->getPassword());
 
             $_SESSION['student']->setUserId($this->userDAO->getUserIdByEmail($_SESSION['student']->getEmail()));
 

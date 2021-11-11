@@ -56,7 +56,7 @@ class CompanyController{
                     $company->setActive(false);
                 }
 
-                $this->userDAO->add($company->getEmail(), $company->getActive(), $this->passDefault, $this->userType);
+                $this->userDAO->add($company->getEmail(), $company->getActive(), $this->userType);
 
                 $company->setUserId($this->userDAO->getUserIdByEmail($company->getEmail()));
 
