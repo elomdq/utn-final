@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Config\SystemFunctions;
 use DAO\OfferDAO as OfferDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\CompanyDAO as CompanyDAO;
@@ -29,31 +30,20 @@ class OfferController{
     }
 
     public function showOffersList(){
-        require_once VIEWS_PATH ."validate-session.php";
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php" ;
-        require_once VIEWS_PATH ."offers-list.php";
-        require_once VIEWS_PATH."footer.php";
+        SystemFunctions::validateSession();
+        ViewsController::offersView();
     }
 
     public function showOfferDetails($offerId){
-        require_once VIEWS_PATH ."validate-session.php";
-        require_once VIEWS_PATH."header.php";
+        SystemFunctions::validateSession();
 
-        //paso la oferta por la variable superglobal SESSION
-        $_SESSION['offer'] = $this->offersDAO->getOfferById($offerId);
-
-        require_once VIEWS_PATH ."nav.php" ;
-        require_once VIEWS_PATH ."offer-details.php";
-        require_once VIEWS_PATH."footer.php";
+        $offer = $this->offersDAO->getOfferById($offerId);
+        ViewsController::offerDetailsView($offer);
     }
 
     public function addView($message = ""){
-        require_once VIEWS_PATH ."validate-session.php";
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php";
-        require_once VIEWS_PATH ."offer-add.php";
-        require_once VIEWS_PATH."footer.php";
+        SystemFunctions::validateSession();
+        ViewsController::addOfferView();
     }
 
     public function editView($offerId, $message = "")
@@ -65,11 +55,8 @@ class OfferController{
         $listaCarreras = $this->careerDAO->getAll_Api();
         $companyList = $this->companyDao->getAll();
 
-        require_once VIEWS_PATH ."validate-session.php";
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php";
-        require_once VIEWS_PATH ."offer-edit.php";
-        require_once VIEWS_PATH."footer.php";
+        SystemFunctions::validateSession();
+        ViewsController::edditOfferView($offer);
     }
 
     public function editOffer(...$values)
@@ -131,9 +118,7 @@ class OfferController{
 
 
     public function applyForOffer(...$values){
-        require_once VIEWS_PATH ."validate-session.php";
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php" ;
+        SystemFunctions::validateSession();
         
         if($_POST)
         {
@@ -141,7 +126,8 @@ class OfferController{
                 $this->studentsXoffers->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
             }
         }
-        require_once VIEWS_PATH."footer.php";
+
+        $this->showOfferDetails($_POST['offerId']);
     }
 
 }
