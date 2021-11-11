@@ -53,7 +53,7 @@ class HomeController{
                         $student = $this->studentDAO->getStudentByUserId($user->getUserId());
                         $_SESSION["loggedUser"] = $student;
                     } else {
-                        $company = $this->companyDao->getCompanyById($user->getUserId());
+                        $company = $this->companyDao->getCompanyByIdUser($user->getUserId());
                         $_SESSION["loggedUser"] = $company;
                     }
                     $_SESSION['userType'] = $user->getUserType();
