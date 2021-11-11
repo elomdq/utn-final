@@ -5,3 +5,29 @@ Peluffo, David
 Rodriguez Ponce, Eloy M.
 Adkins, Scott
 Gates, Bill
+
+Descripción General del Sistema
+
+Perspectiva del producto
+Esta web de Bolsa de Trabajo tendrá su base de datos de usuarios independiente a la de la UTN, pero
+dependerá de las API de la facultad para descargar información.
+Esto tiene como consecuencia que si no podemos conectar con las API de la Facultad, la información no
+será completa.
+
+Las API a utilizar son las siguientes:
+Careers:
+Request URL: https://utn-students-api.herokuapp.com/api/Career
+Job Positions:
+Request URL: https://utn-students-api.herokuapp.com/api/JobPosition
+Students:
+Request URL: https://utn-students-api.herokuapp.com/api/Student'
+Esta información será necesaria para la realización de los registros de estudiantes, la identificación de las
+carreras a través de los id_carrer, y la identificación de las posiciones laborales en función a las
+determinadas carreras.
+
+Objetivos del Sistema
+
+Que los alumnos puedan postularse a propuestas laborales, las cuales estarán relacionadas con las distintas
+carreras que ofrece la UTN de Mar del Plata.
+Los alumnos podrán registrarse e ingresar luego con un email y contraseña.
+Que las empresas que ofertan puestos laborales puedan luego comunicarse con los alumnos postulantes.
