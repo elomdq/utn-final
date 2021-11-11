@@ -8,6 +8,7 @@ use DAO\CompanyDAO as CompanyDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 
 use DAO\StudentsXOffersDAO as StudentsXOffers;
+use Exception;
 use Models\Offer as Offer;
 
 class OfferController{
@@ -153,6 +154,25 @@ class OfferController{
             echo 'alert("Algo salio mal")';
             echo '</script>';
         }
+        
+    }
+
+    public function viewApplicants($offerId){
+        
+            $students = $this->studentsXoffers->getApplicantsByOfferId($offerId);
+            if(!empty($students))
+            {
+                require_once VIEWS_PATH ."validate-session.php";
+                require_once VIEWS_PATH."header.php";
+                require_once VIEWS_PATH ."nav.php";
+                require_once VIEWS_PATH."applicants-list.php";
+                require_once VIEWS_PATH."footer.php";
+            } else {
+                echo '<script language="javascript">';
+            echo 'alert("No hay postulantes")';
+            echo '</script>';
+                $this->showOfferDetails($offerId);
+            }
         
     }
 
