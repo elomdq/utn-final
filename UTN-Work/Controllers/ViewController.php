@@ -5,7 +5,7 @@ use Models\Alert as Alert;
 
 class ViewController{
 
-    public static function loginView(){
+    public static function loginView(Alert $alert = null){
         require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH ."login.php";
         require_once(VIEWS_PATH."footer.php");

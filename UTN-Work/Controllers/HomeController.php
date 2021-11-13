@@ -29,9 +29,9 @@ class HomeController{
     }
 
 
-    public function showLoginView(Alert $alert = NULL)
+    public function showLoginView(Alert $alert = null)
     {
-        ViewController::loginView();
+        ViewController::loginView($alert);
     }
 
     public function showHome(){
@@ -40,7 +40,7 @@ class HomeController{
     }
 
     public function login($email,$password) {
-        $alert = new Alert("","");
+        $alert = new Alert();
 
         if(!empty($email) && !empty($password)) {
             
@@ -53,18 +53,22 @@ class HomeController{
 
                     if($userData[0]['active'] == true)
                     {
-                                           
-                        if($userData[0]['userType'] == 1){
-                            $admin = $this->adminDAO->GetAdminByEmail($email);
-                            $_SESSION["loggedUser"] = $admin;
-                        } else if ($userData[0]['userType'] == 0) {
-                            $student = $this->studentDAO->getStudentByUserId($userData[0]['id_user']);
-                            $_SESSION["loggedUser"] = $student;
-                        } else {
-                            $company = $this->companyDao->getCompanyByIdUser($userData[0]['id_user']);
-                            $_SESSION["loggedUser"] = $company;
+                        switch($userData[0]['userType'])
+                        {
+                            case 0:
+                                $student = $this->studentDAO->getStudentByUserId($userData[0]['id_user']);
+                                $_SESSION["loggedUser"] = $student;
+                                break;
+                            case 1:
+                                $admin = $this->adminDAO->getAdminByUserId($userData[0]['id_user']);
+                                $_SESSION["loggedUser"] = $admin;
+                                break;
+                            case 2:
+                                $company = $this->companyDao->getCompanyByIdUser($userData[0]['id_user']);
+                                $_SESSION["loggedUser"] = $company;
+                                break;
                         }
-
+                       
                         $_SESSION["loggedUser"]->setUserId($userData[0]['id_user']);
                         $_SESSION["loggedUser"]->setEmail($userData[0]['email']);
                         $_SESSION["loggedUser"]->setPassword($userData[0]['pass']);

@@ -4,6 +4,8 @@ namespace DAO;
 use DAO\Connection as Connection;
 use \Exception as Exception;
 
+use Models\Admin as Admin;
+
 class AdminDAO{
 
     private $connection;
@@ -25,7 +27,26 @@ class AdminDAO{
         }
     }
 
+    public function getAdminByUserId($userId){
+        try{
+            $query = "SELECT * FROM ".$this->tableName." WHERE id_user = ".$userId.";";
+            $this->connection = Connection::GetInstance();
+    
+            $resultSet=$this->connection->execute($query);
+    
+            $admin = new Admin;
+
+            $admin->setAdminId($resultSet[0]['id_admin']);
+            $admin->setFirstName($resultSet[0]['firstName']);
+            $admin->setLastName($resultSet[0]['lastName']);
+               
+            return $admin;
+            
+        } catch (Exception $e){
+            throw $e;
+        }
+    }
+
 
 }
-
 ?>

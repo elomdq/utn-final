@@ -21,7 +21,7 @@ class Request{
 
         //Obtenemos primero el nombre del controller a usar
         if(empty($urlArray))
-            $this->controller = "showHome";            
+            $this->controller = "Home";            
         else
             $this->controller = ucwords(array_shift($urlArray));
 

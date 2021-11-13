@@ -31,18 +31,11 @@
             </li>
 
             <li class="nav-item mx-1">
-                <a class="nav-link" href="<?php echo FRONT_ROOT . "Home/home"; ?>" id="offers" role="button" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" href="<?php echo FRONT_ROOT . "Home/showHome"; ?>" id="offers" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Home</span>
                 </a>
             </li>
-            <!--
-            <li class="nav-item mx-1">
-                <a class="nav-link" href="<?php echo FRONT_ROOT . "Home/logout"; ?>" id="session" role="button" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Cerrar Sesión</span>
-                </a>
-            </li>
-            -->
-
+            
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
