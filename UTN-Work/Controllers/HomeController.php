@@ -2,13 +2,13 @@
 
 namespace Controllers;
 
-use Config\SystemFunctions as SystemFunctions;
-
-use Models\Student as Student;
+use Config\SystemFunctions;
 use DAO\StudentDAO as StudentDAO;
 use DAO\UserDAO as UserDAO;
 use DAO\AdminDAO as AdminDAO;
 use DAO\CompanyDAO as CompanyDAO;
+
+use Models\Student as Student;
 use Models\User as User;
 use Models\Alert as Alert;
 
@@ -31,18 +31,12 @@ class HomeController{
 
     public function showLoginView(Alert $alert = NULL)
     {
-        require_once(VIEWS_PATH."header.php");
-        require_once VIEWS_PATH ."login.php";
-        require_once(VIEWS_PATH."footer.php");
+        ViewController::loginView();
     }
 
-    public function home(){
-        
-        require_once VIEWS_PATH ."validate-session.php";
-        require_once VIEWS_PATH. "header.php";
-        require_once VIEWS_PATH ."nav.php" ;
-        require_once VIEWS_PATH ."home.php";
-        require_once VIEWS_PATH. "footer.php";
+    public function showHome(){
+        SystemFunctions::validateSession();
+        ViewController::homeView();
     }
 
     public function login($email,$password) {
@@ -79,7 +73,7 @@ class HomeController{
 
                         $_SESSION['userType'] = $userData[0]['userType'];
 
-                        $this->home();
+                        $this->showHome();
 
                     } else {
                         $alert->setType("danger");
