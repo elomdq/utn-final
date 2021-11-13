@@ -37,10 +37,11 @@ class CompanyDAO implements ICompanyDAO
 
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query, $parameters);
-        } catch (Exception $e ) {
-            echo "El problema: ".$e->getMessage();
-        } catch (PDOException $pdo){
-            echo "El problema: ".$pdo->getMessage();
+        } catch (Exception $e) {
+            throw $e;
+        }
+        catch (PDOException $pdo){
+            throw $pdo;
         }
     }
 
@@ -70,11 +71,11 @@ class CompanyDAO implements ICompanyDAO
 
             return $company;
         } catch (Exception $e) {
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
         catch (PDOException $pdo){
-            echo "El problema: ".$pdo->getMessage();
-            }
+            throw $pdo;
+        }
     }
 
     public function getCompanyByIdUser($idCompany)
@@ -103,11 +104,11 @@ class CompanyDAO implements ICompanyDAO
 
             return $company;
         } catch (Exception $e) {
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
         catch (PDOException $pdo){
-            echo "El problema: ".$pdo->getMessage();
-            }
+            throw $pdo;
+        }
     }
 
     public function remove($companyId)
@@ -117,10 +118,9 @@ class CompanyDAO implements ICompanyDAO
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query);
         } catch (Exception $e) {
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         } catch (PDOException $pdo){
-             echo "El problema: ".$pdo->getMessage();
-        throw $pdo;
+            throw $pdo;
         }
     }
 
@@ -155,95 +155,11 @@ class CompanyDAO implements ICompanyDAO
 
             return $companies;
         } catch (Exception $e) {
-            echo "El problema: ".$e->getMessage();
-        }  catch (PDOException $pdo){
-            echo "El problema: ".$pdo->getMessage();
-            }
-    }
-
-    private function saveData()
-    {
-        /*$array_to_encode = array();
-
-        foreach ($this->companies as $company) {
-            $companyData['companyName'] = $company->getCompanyName();
-            $companyData['telephone'] = $company->getTelephone();
-            $companyData['city'] = $company->getCity();
-            $companyData['address'] = $company->getAddress();
-            $companyData['cuit'] = $company->getCuit();
-            $companyData['email'] = $company->getEmail();
-            $companyData['active'] = $company->getActive();
-            $companyData['userId'] = $company->getUserId();
-
-            array_push($array_to_encode, $companyData);
+            throw $e;
+        } catch (PDOException $pdo){
+            throw $pdo;
         }
-
-        $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
-        file_put_contents($this->filename, $jsonEnconde);*/
     }
-
-    private function getLastId()
-    {
-        /*$this->retrieveAll();
-        $auxList = $this->companies;
-        $lastItem = end($auxList);
-        return $lastItem->getUserId();*/
-    }
-
-    private function retrieveAll()
-    {
-        /*$this->companies = array();
-
-        if (file_exists($this->filename)) {
-            $jsonDecode = file_get_contents($this->filename);
-
-            $array_to_decode = $jsonDecode ? json_decode($jsonDecode, true) : array();
-
-            foreach ($array_to_decode as $companyData) {
-                $company = new Company;
-                $company->setCompanyName($companyData['companyName']);
-                $company->setTelephone($companyData['telephone']);
-                $company->setAddress($companyData['address']);
-                $company->setCity($companyData['city']);
-                $company->setCuit($companyData['cuit']);
-                $company->setEmail($companyData['email']);
-                $company->setUserId($companyData['userId']);
-                $company->setActive($companyData['active']);
-
-                array_push($this->companies, $company);
-            }
-        }*/
-    }
-
-    /*public function getCompanyById($companyId)
-    {
-        $query = "SELECT * FROM ".$this->tableName." WHERE id_company= \"".$companyId."\";";
-        $this->connection = Connection::GetInstance();
-
-        $resultSet=$this->connection->execute($query);
-
-        var_dump($resultSet) . "<br>";
-
-        $company = new Company;
-
-        
-                $company->setUserId($resultSet[0]['id_user']);
-                $company->setIdCompany($resultSet[0]['id_company']);
-                $company->setCompanyName($resultSet[0]['companyName']);
-                $company->setAddress($resultSet[0]['adress']);
-                $company->setCuit($resultSet[0]['cuit']);
-                $company->setCity($resultSet[0]['city']);
-                $company->setTelephone($resultSet[0]['phoneNumber']);
-
-                $userRow = $this->userDAO->getUserById($resultSet[0]['id_user']);
-                
-                $company->setEmail($userRow['email']);
-                $company->setPassword($userRow['pass']);
-                $company->setActive($userRow['active']);
-    
-
-        return $company;
-    }*/
 
     public function overwriteCompany($company)
     {
@@ -253,7 +169,7 @@ class CompanyDAO implements ICompanyDAO
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query);
         } catch (Exception $e){
-            throw new Exception('Error!! ',  $e->getMessage());
+            throw $e;
         }
     }
 }

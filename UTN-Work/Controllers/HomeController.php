@@ -2,12 +2,15 @@
 
 namespace Controllers;
 
+use Config\SystemFunctions as SystemFunctions;
+
 use Models\Student as Student;
 use DAO\StudentDAO as StudentDAO;
 use DAO\UserDAO as UserDAO;
 use DAO\AdminDAO as AdminDAO;
 use DAO\CompanyDAO as CompanyDAO;
 use Models\User as User;
+use Models\Alert as Alert;
 
 
 class HomeController{
@@ -26,7 +29,7 @@ class HomeController{
     }
 
 
-    public function showLoginView()
+    public function showLoginView(Alert $alert = NULL)
     {
         require_once(VIEWS_PATH."header.php");
         require_once VIEWS_PATH ."login.php";
@@ -43,6 +46,7 @@ class HomeController{
     }
 
     public function login($email,$password) {
+        $alert = new Alert("","");
 
         if(!empty($email) && !empty($password)) {
             
@@ -78,81 +82,27 @@ class HomeController{
                         $this->home();
 
                     } else {
-                        $this->showLoginView();
-                        echo '<script language="javascript">';
-                        echo 'alert("Usuario dado de baja, comuniquese con la UTN.")';
-                        echo '</script>';
+                        $alert->setType("danger");
+                        $alert->setMessage("Usuario dado de baja, comuniquese con la UTN.");
+                        $this->showLoginView($alert);
                     } 
                 } else {
-                    $this->showLoginView();
-                    echo '<script language="javascript">';
-                    echo 'alert("Se introdujo mal la password.")';
-                    echo '</script>';
+                    $alert->setType("danger");
+                    $alert->setMessage("Se introdujo mal la password.");
+                    $this->showLoginView($alert);
                 }
                 
             } else {
-                $this->showLoginView();
-                echo '<script language="javascript">';
-                echo 'alert("No se encontro el email")';
-                echo '</script>';
+                $alert->setType("warning");
+                $alert->setMessage("No se encontro el email. Proba con registrarte amigo.");
+                $this->showLoginView($alert);
             }
         } else {
-            $this->showLoginView();
-            echo '<script language="javascript">';
-            echo 'alert("Algo se rompio y fue feo")';
-            echo '</script>';
+            $alert->setType("warning");
+            $alert->setMessage("Falta algun dato.");
+            $this->showLoginView($alert);
         }
     }
-
-    /*public function login2($email, $password, $userType) //0-student 1-admin 2-company
-    {
-
-        $userData = $this->userDAO->getUserByEmail($email);
-       
-        if(!empty($userData))
-        {
-            if($password == $userData[0]['pass'])
-            {
-                switch($userType)
-                {
-                case 0:
-                    $student = $this->studentDAO->getStudentByUserId($userData[0]['id_user']);
-
-                    $student->setUserId($userData[0]['id_user']);
-                    $student->setEmail($userData[0]['email']);
-                    $student->setPassword($userData[0]['pass']);
-                    $student->setActive($userData[0]['active']);
-
-                    if($student != null && $student->getActive() == true )
-                    {
-                        $_SESSION["loggedUser"] = $student;
-                        $_SESSION['userType'] = $userType;
-                        $this->home();
-                    } else
-                        $this->showLoginView();
-                    break;
-                case 1:
-                    $admin = $this->adminDAO->GetAdminByEmail($email);
-
-                    if($admin != null && $admin->getActive() == true )
-                    {
-                        $_SESSION['loggedUser'] = $admin;
-                        $_SESSION['userType'] = $userType;
-                        $this->home();
-                    } else
-                        $this->showLoginView();
-                    break;
-                case 2:
-                    $this->showLoginView();
-                    break;
-                default:
-                    break;
-                }
-            }
-        } else{
-            $this->showLoginView();
-        }
-    }*/
 
     public function checkEmail(){
         require_once(VIEWS_PATH."header.php");
@@ -208,11 +158,6 @@ class HomeController{
             if(isset($_POST['password']))
                 if(isset($_SESSION['student']))
                     $_SESSION['student']->setPassword($_POST['password']);
-
-            /*$parameters = array();
-            $parameters['email'] = $_SESSION['student']->getEmail();
-            $parameters['password'] = $_SESSION['student']->getPassword();
-            $parameters['active'] = $_SESSION['student']->getActive();*/
 
             $this->userDAO->add($_SESSION['student']->getEmail(), $_SESSION['student']->getActive(),$_SESSION['student']->getUserType(), $_SESSION['student']->getPassword());
 

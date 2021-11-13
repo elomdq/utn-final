@@ -4,13 +4,6 @@ namespace Views;
 
 use Models\Company as Company;
 
-$company = null;
-
-if(isset($_SESSION['company'])){
-    $company = $_SESSION['company'];
-    unset($_SESSION['company']);
-}
-
 ?>
 
 <div class="row justify-content-center">

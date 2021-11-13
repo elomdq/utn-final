@@ -64,6 +64,12 @@ if($_SESSION['offer'])
                     <div><?php echo $offer->getDescription(); ?></div>
                 </div>
 
+                <div class="col-10 m-3">
+                    <div>
+                        <p class="d-inline fw-bold">cuantos dias?: <<?php echo $offer->getDueDays(); ?></p>
+                    </div>
+                </div>
+
                 <hr class="col-10 m-3">
                 
                 <div class="col-10 m-3">

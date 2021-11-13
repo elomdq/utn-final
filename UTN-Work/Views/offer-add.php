@@ -56,7 +56,6 @@ $user = $_SESSION['loggedUser'];
                                         </select>
                                    </div>
 
-
                                    <div class="form-group col-12">
                                         <label>Empresa</label>
                                         <select class="form-select" name="companyId">
@@ -66,10 +65,14 @@ $user = $_SESSION['loggedUser'];
                                         </select>
                                    </div>
 
-
                                    <div class="form-group col-12">
                                         <label for="publicationDate">Fecha</label>
                                         <input id="publicationDate" type="date" name="publicationDate" class="form-control" placeholder="Cuit">
+                                   </div>
+
+                                   <div class="form-group col-12">
+                                        <label for="dueDays">cuantos dias?</label>
+                                        <input id="dueDays" type="number" name="dueDays" class="form-control" placeholder="Cuit">
                                    </div>
 
                                    <div class="form-group col-12">

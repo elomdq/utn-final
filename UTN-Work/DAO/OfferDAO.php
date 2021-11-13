@@ -13,9 +13,6 @@ class OfferDAO implements IOfferDAO{
     private $connection;
     private $tableName = 'offers';
 
-    private $offers = array();
-    private $filename;
-
     public function __construct()
     {
     }
@@ -23,7 +20,7 @@ class OfferDAO implements IOfferDAO{
     public function add(Offer $offer) {
 
         try{
-            $query = "INSERT INTO ".$this->tableName."(jobPosition, id_company, career, title, active, publicationDate, offerDescription) VALUES(:jobPosition, :id_company, :career, :title, :active, :publicationDate, :offerDescription);";
+            $query = "INSERT INTO ".$this->tableName."(jobPosition, id_company, career, title, active, publicationDate, offerDescription, dueDays) VALUES(:jobPosition, :id_company, :career, :title, :active, :publicationDate, :offerDescription, :dueDays);";
 
             $parameters['jobPosition']=$offer->getJobPosition();
             $parameters['id_company']=$offer->getCompanyId();
@@ -32,27 +29,14 @@ class OfferDAO implements IOfferDAO{
             $parameters['active']=$offer->getActive();
             $parameters['publicationDate']=$offer->getPublicationDate();
             $parameters['offerDescription']=$offer->getDescription();
+            $parameters['dueDays']=$offer->getDueDays();
 
             $this->connection = Connection::GetInstance();
 
             $this->connection->executeNonQuery($query, $parameters);
         } catch(Exception $e) {
-            throw new Exception('Error en el llamado al DAO al agregar la oferta, ',  $e->getMessage());
+            throw $e;
         }
-    }
-
-    public function remove($offerId) {
-        /*$newList = array();
-        $this->retrieveData();
-
-        foreach($this->offers as $offer)
-        {
-            if($offer->getOfferId != $offerId)
-                array_push($newList, $offer);
-        }
-        
-        $this->offers = $newList;
-        $this->saveData();*/
     }
 
     public function getAll()
@@ -76,6 +60,7 @@ class OfferDAO implements IOfferDAO{
                 $offer->setActive($row['active']);
                 $offer->setPublicationDate($row['publicationDate']);
                 $offer->setDescription($row['offerDescription']);
+                $offer->setDueDays('dueDays');
 
                 array_push($offers, $offer);
             }
@@ -83,61 +68,9 @@ class OfferDAO implements IOfferDAO{
             return $offers;
         }
         catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
-            throw new Exception('Error!! ',  $e->getMessage());
+            throw $e;
         }
     }
-
-    /*private function saveData() {
-        $array_to_encode = array();
-        try {
-            foreach($this->offers as $offer)
-            {
-                $offerData['offerId'] = $offer->getOfferId();
-                $offerData['title'] = $offer->getTitle();
-                $offerData['description'] = $offer->getDescription();
-                $offerData['companyId'] = $offer->getCompanyId();
-                $offerData['salary'] = $offer->getSalary();
-                $offerData['publicationDate'] = $offer->getPublicationDate();
-                $offerData['careerId'] = $offer->getCareerId();
-                $offerData['jobPosition'] = $offer->getCareerId();
-                $offerData['active'] = $offer->getActive();
-
-                array_push($array_to_encode, $offerData);
-
-                $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
-                file_put_contents($this->filename, $jsonEnconde);
-            }
-         } catch(Exception $e) {
-                throw new Exception('Error en el llamado al DAO durante el guardado, ',  $e->getMessage());
-            }
-    }*/
-
-    /*private function retrieveData() {
-        $this->offers = array();
-
-        if(file_exists($this->filename))
-        {
-            $jsonContent = file_get_contents($this->filename);
-
-            $array_to_decode = ($jsonContent)? json_decode($jsonContent, true) : array(); 
-
-            foreach($array_to_decode as $offerData)
-            {
-                $offer = new Offer;
-                $offer->setOfferId($offerData['offerId']);
-                $offer->setTitle($offerData['title']);
-                $offer->setSalary($offerData['salary']);
-                $offer->setDescription($offerData['description']);
-                $offer->setCompanyId($offerData['companyId']);
-                $offer->setPublicationDate($offerData['publicationDate']);
-                $offer->setCareerId($offerData['careerId']);
-                $offer->setActive($offerData['active']);
-
-                array_push($this->offers, $offer);
-            }
-        }
-    }*/
 
     public function getOfferById($offerId)
     {
@@ -155,6 +88,7 @@ class OfferDAO implements IOfferDAO{
         $offer->setTitle($resultSet[0]['title']);
         $offer->setPublicationDate($resultSet[0]['publicationDate']);
         $offer->setDescription($resultSet[0]['offerDescription']);
+        $$offer->setDueDays($resultSet[0]['dueDays']);
 
         return $offer;
     }
@@ -180,7 +114,7 @@ class OfferDAO implements IOfferDAO{
     
                 $this->connection->executeNonQuery($query);
         } catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 }

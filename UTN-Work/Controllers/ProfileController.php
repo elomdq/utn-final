@@ -1,6 +1,10 @@
 <?php 
 namespace Controllers;
 
+use Models\Alert as Alert;
+
+use Config\SystemFunctions as SystemFunctions;
+
 
 class ProfileController{
 

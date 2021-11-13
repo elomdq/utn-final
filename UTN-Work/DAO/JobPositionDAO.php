@@ -19,7 +19,7 @@ class JobPositionDAO {
             
             return $arrayJobPositions;
         } catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 
@@ -50,27 +50,6 @@ class JobPositionDAO {
         return $jobPosition;
     }
 
-    private function retrieveData(){
-        $this->jobPositions = array();
-
-        if(file_exists($this->filename))
-        {
-            $jsonContent = file_get_contents($this->filename);
-
-            $array_to_decode = ($jsonContent)? json_decode($jsonContent, true) : array(); 
-
-            foreach($array_to_decode as $jobPositionData)
-            {
-                $jobPosition = new JobPosition;
-                $jobPosition->setIdjobPosition($jobPositionData['jobPositionId']);
-                $jobPosition->setDescription($jobPositionData['description']);
-                $jobPosition->setCareerId($jobPositionData['careerId']);
-
-                array_push($this->jobPositions, $jobPosition);
-            }
-        }
-    }
-
     public function getAll() {
         $puestos = array();
 
@@ -86,9 +65,6 @@ class JobPositionDAO {
 
         return $puestos;
     }
-
-
-
 
 }
 ?>

@@ -30,8 +30,7 @@ class CareerDAO implements ICareerDAO{
             $this->connection->executeNonQuery($query, $parameters);
 
         } catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
-            throw new Exception('Error!! ',  $e->getMessage());
+            throw $e;
         }
     }
 
@@ -47,59 +46,9 @@ class CareerDAO implements ICareerDAO{
 
             return $resultSet;
         } catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
-            throw new Exception('Error!! ',  $e->getMessage());
+            throw $e;
         }
     }
-
-    private function saveData(){
-        /*$array_to_encode = array();
-
-        foreach($this->careers as $career)
-        {
-            $careerData['idCareer'] = $career->getIdCareer();
-            $careerData['description'] = $career->getDescription();
-            $careerData['active'] = $career->getActive();
-            
-            array_push($array_to_encode, $careerData);
-
-            $jsonEnconde = json_encode($array_to_encode, JSON_PRETTY_PRINT);
-            file_put_contents($this->filename, $jsonEnconde);
-        }*/
-    }
-
-    private function retrieveData(){
-        /*$this->careers = array();
-
-        if(file_exists($this->filename))
-        {
-            $jsonContent = file_get_contents($this->filename);
-
-            $array_to_decode = ($jsonContent)? json_decode($jsonContent, true) : array(); 
-
-            foreach($array_to_decode as $careerData)
-            {
-                $career = new Career;
-                $career->setIdCareer($careerData['idCareer']);
-                $career->setDescription($careerData['description']);
-                $career->setActive($careerData['active']);
-
-                array_push($this->careers, $career);
-            }
-        }*/
-    }
-
-   /* public function getCareerById($id){
-        $this->retrieveData();
-        $career = null;
-        foreach($this->careers as $obj)
-        {
-            if($obj->getIdCareer() == $id)
-                $career = $obj;
-        }
-
-        return $career;
-    }*/
 
     public function getCareerById_Api($careerId)
     {
@@ -116,23 +65,24 @@ class CareerDAO implements ICareerDAO{
                 $career->setActive($careerData['active']);
             }
         }
-
         return $career;
     }
 
     public function getAll_Api(){
         $careers = array();
-
-        foreach($this->connectToApi() as $careerData)
-        {
-            $career = new Career;
-            $career->setIdCareer($careerData['careerId']);
-            $career->setDescription($careerData['description']);
-            $career->setActive($careerData['active']);
-            
-            array_push($careers, $career);
+        try{
+            foreach($this->connectToApi() as $careerData)
+            {
+                $career = new Career;
+                $career->setIdCareer($careerData['careerId']);
+                $career->setDescription($careerData['description']);
+                $career->setActive($careerData['active']);
+                
+                array_push($careers, $career);
+            }
+        }  catch (Exception $e){
+            throw $e;
         }
-
         return $careers;
     }
 
@@ -143,29 +93,9 @@ class CareerDAO implements ICareerDAO{
             $arrayCareers = json_decode($this->careerApiConnection->executeCurl(), true);
             return $arrayCareers;
         } catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
-            throw new Exception('Error!! ',  $e->getMessage());
+            throw $e;
         }
     }
-
-    /*
-    public function downloadDataToJson($apiResponse){
-        
-        //decodifico el json en un array
-        $arrayStudents = json_decode($apiResponse, true);
-
-        foreach($arrayStudents as $careerData)
-        {
-            $career = new Career;
-            $career->setIdCareer($careerData['careerId']);
-            $career->setDescription($careerData['description']);
-            $career->setActive($careerData['active']);
-                
-            array_push($this->careers, $career);
-        }
-
-        $this->saveData();
-    }*/
 
 }
 ?>

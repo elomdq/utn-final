@@ -1,8 +1,11 @@
 <?php 
 namespace Controllers;
 
+use Config\SystemFunctions as SystemFunctions;
+
 use Models\Student as Student;
 use DAO\StudentDAO as StudentDAO;
+use Models\Alert as Alert;
 
 class StudentController{
 
@@ -12,16 +15,6 @@ class StudentController{
     {
         $this->studentDAO = new StudentDAO;
     }
-
-    /*
-    public function showStudentProfile(){
-        require_once(VIEWS_PATH."header.php");
-        require_once VIEWS_PATH . "validate-session.php";
-        require_once VIEWS_PATH . "nav.php" ;
-        require_once VIEWS_PATH . "student-profile.php";
-        require_once(VIEWS_PATH."footer.php");
-    }
-    */
 
 
 }
