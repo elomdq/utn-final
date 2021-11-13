@@ -23,11 +23,11 @@
                                         <div class="form-group">
                                             <input name="email" type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Ingrese su email para iniciar sesión...">
+                                                placeholder="Ingrese su email para iniciar sesión..." required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="password" placeholder="Contraseña" name="password">
+                                                id="password" placeholder="Contraseña" name="password" required>
                                         </div>                                    
 
 

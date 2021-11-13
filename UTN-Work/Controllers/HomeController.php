@@ -86,7 +86,7 @@ class HomeController{
                     } 
                 } else {
                     $alert->setType("danger");
-                    $alert->setMessage("Se introdujo mal la password.");
+                    $alert->setMessage("Contraseña erronea.");
                     $this->showLoginView($alert);
                 }
                 
