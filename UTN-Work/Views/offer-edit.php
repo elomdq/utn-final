@@ -16,9 +16,9 @@
                                    <div class="form-group col-12">
                                         <label>Carrera</label>
                                         <select class="form-select" name="careerId">
-                                            <option value="<?php echo $offer->getCareerId();?>" selected> <?php echo $this->careerDAO->getCareerById_Api($offer->getCareerId())->getDescription();?> </option>
+                                            <option value="<?php echo $offer->getCareerId();?>" selected> <?php echo $this->careerDAO->getCareerById_Api($offer->getCareerId())->getDescription()." - ". $this->careerDAO->getCareerById_Api($offer->getCareerId())->getDescription();?> </option>
                                             <?php foreach ($listaCarreras as $carrera) { ?>
-                                                <option value="<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getDescription(); ?> </option>
+                                                <option value="<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getIdCareer()." - ". $carrera->getDescription(); ?> </option>
                                             <?php } ?>
                                         </select>
                                    </div>
@@ -26,9 +26,9 @@
                                    <div class="form-group col-12">
                                         <label for="jobPosition">Puesto</label>
                                         <select id="jobPosition" class="form-select" name="jobPosition">
-                                            <option value="<?php echo $offer->getJobPosition();?>" selected><?php echo $this->puestos->getjobPositionById($offer->getJobPosition())->getDescription(); ?></option>
+                                            <option value="<?php echo $offer->getJobPosition();?>" selected><?php echo $this->puestos->getjobPositionById($offer->getJobPosition())->getDescription() . " - " . $this->puestos->getjobPositionById($offer->getJobPosition())->getDescription(); ?></option>
                                              <?php foreach ($listJobsPositions as $puesto) { ?>
-                                                  <option value="<?php echo $puesto->getIdJobPosition(); ?>"> <?php echo $puesto->getDescription(); ?> </option>
+                                                  <option value="<?php echo $puesto->getIdJobPosition(); ?>"> <?php echo $carriersMap[$puesto->getCareerId()] . " - " .  $puesto->getDescription(); ?> </option>
                                              <?php } ?>
                                         </select>
                                    </div>
@@ -60,7 +60,7 @@
                                         <div class="form-check">
                                             <?php if($offer->getActive()) { ?>
                                                 <input id="active" type="checkbox" name="active" class="form-check-input" checked>
-                                            <?php echo $offer->getActive(); } else {?>
+                                            <?php } else {?>
                                                 <input id="active" type="checkbox" name="active" class="form-check-input">
                                             <?php }?>
                                                 <label class="form-check-label" for="active">Active</label>

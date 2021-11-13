@@ -15,11 +15,14 @@
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
 
+            
+            <?php if($_SESSION['userType']!=2) {?>
             <li class="nav-item mx-1">
                 <a class="nav-link" href="<?php echo FRONT_ROOT . "Company/listCompanies"; ?>" id="companies" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Empresas</span>
                 </a>
             </li>
+            <?php } ?>
 
             <li class="nav-item mx-1">
                 <a class="nav-link" href="<?php echo FRONT_ROOT . "Offer/showOffersList"; ?>" id="offers" role="button" aria-haspopup="true" aria-expanded="false">

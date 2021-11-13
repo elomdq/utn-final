@@ -8,6 +8,7 @@ use DAO\CompanyDAO as CompanyDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 
 use DAO\StudentsXOffersDAO as StudentsXOffers;
+use Exception;
 use Models\Offer as Offer;
 
 class OfferController{
@@ -64,6 +65,11 @@ class OfferController{
         $listJobsPositions = $this->puestos->getAll();
         $listaCarreras = $this->careerDAO->getAll_Api();
         $companyList = $this->companyDao->getAll();
+
+        $carriersMap = array();
+        foreach($listaCarreras as $value){
+            $carriersMap[$value->getIdCareer()] = $value->getDescription();
+        }
 
         require_once VIEWS_PATH ."validate-session.php";
         require_once VIEWS_PATH."header.php";
@@ -130,18 +136,44 @@ class OfferController{
     } 
 
 
-    public function applyForOffer(...$values){
-        require_once VIEWS_PATH ."validate-session.php";
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php" ;
-        
+    public function applyForOffer(...$values){        
         if($_POST)
         {
             if($_SESSION['loggedUser']){
                 $this->studentsXoffers->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
+                echo '<script language="javascript">';
+                echo 'alert("Ha aplicado a la oferta con éxito.")';
+                echo '</script>';
+
+                $this->showOfferDetails($_POST['offerId']);
             }
+
+            
+        } else{
+            echo '<script language="javascript">';
+            echo 'alert("Algo salio mal")';
+            echo '</script>';
         }
-        require_once VIEWS_PATH."footer.php";
+        
+    }
+
+    public function viewApplicants($offerId){
+        
+            $students = $this->studentsXoffers->getApplicantsByOfferId($offerId);
+            if(!empty($students))
+            {
+                require_once VIEWS_PATH ."validate-session.php";
+                require_once VIEWS_PATH."header.php";
+                require_once VIEWS_PATH ."nav.php";
+                require_once VIEWS_PATH."applicants-list.php";
+                require_once VIEWS_PATH."footer.php";
+            } else {
+                echo '<script language="javascript">';
+            echo 'alert("No hay postulantes")';
+            echo '</script>';
+                $this->showOfferDetails($offerId);
+            }
+        
     }
 
 }

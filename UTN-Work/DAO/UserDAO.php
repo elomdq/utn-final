@@ -42,7 +42,7 @@ class UserDAO{
     public function remove($userId){
         try{
 
-            $query = "UPDATE users set active = 0";
+            $query = "UPDATE users set active = 0 WHERE id_user=" . $userId;
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query);
 
