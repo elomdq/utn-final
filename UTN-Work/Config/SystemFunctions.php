@@ -8,4 +8,4 @@ class SystemFunctions {
         header("location:login.php");
     }
 }
-?>`
+?>
