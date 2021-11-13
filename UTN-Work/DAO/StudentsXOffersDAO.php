@@ -33,7 +33,7 @@ class StudentsXOffersDAO{
             $this->connection->executeNonQuery($query, $parameters);
 
         }catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
         
     }
@@ -60,7 +60,7 @@ class StudentsXOffersDAO{
             return $applicants;
 
         }catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 
@@ -82,7 +82,7 @@ class StudentsXOffersDAO{
 
             return $flag;
         }catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 

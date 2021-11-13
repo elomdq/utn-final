@@ -2,14 +2,16 @@
 
 namespace Controllers;
 
+use Config\SystemFunctions as SystemFunctions;
+
 use DAO\OfferDAO as OfferDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\CompanyDAO as CompanyDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 
 use DAO\StudentsXOffersDAO as StudentsXOffers;
-use Exception;
 use Models\Offer as Offer;
+use Models\Alert as Alert;
 
 class OfferController{
 
@@ -90,6 +92,7 @@ class OfferController{
             $oferta->setCompanyId($_POST['companyId']);
             $oferta->setPublicationDate($_POST['publicationDate']);
             $oferta->setCareerId($_POST['careerId']);
+            $oferta->setDueDays($_POST['dueDays']);
             
             if (isset($_POST['active'])) 
             {
@@ -117,6 +120,7 @@ class OfferController{
             $oferta->setCompanyId($_POST['companyId']);
             $oferta->setPublicationDate($_POST['publicationDate']);
             $oferta->setCareerId($_POST['careerId']);
+            $oferta->setDueDays($_POST['dueDays']);
             
            
             if (isset($_POST['active'])) 

@@ -29,6 +29,10 @@
                                             <input type="password" class="form-control form-control-user"
                                                 id="password" placeholder="Contraseña" name="password">
                                         </div>                                    
+
+
+                                        <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
+
                                         <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
                                        
                                     </form>
