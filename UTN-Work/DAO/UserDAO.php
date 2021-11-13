@@ -93,41 +93,5 @@ class UserDAO{
         }
     }
 
-    public function update($user){
-
-        try{
-            $query = "UPDATE ". $this->tableName . " SET
-            pass=\"". $user->getPassword()
-            ."\", email=\"". $user->getEmail()
-            ."\", active=". $user->getActive()
-            ."\", userType=". $user->getUserType()
-            ." WHERE id_user = ".$user->getUserId() .";";
-
-            $this->connection = Connection::getInstance();
-            $this->connection->executeNonQuery($query);
-        }
-        catch(Exception $e){
-            throw($e);
-        }
-
-    }
-
-    public function updateActive($id_user, $active){
-
-        try{
-            $query = "UPDATE ". $this->tableName . " SET
-             active=". $active
-            ." WHERE id_user = ".$id_user .";";
-
-
-            $this->connection = Connection::getInstance();
-            $this->connection->executeNonQuery($query);
-        }
-        catch(Exception $e){
-            throw($e);
-        }
-
-    }
-
 }
 ?>

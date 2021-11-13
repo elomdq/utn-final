@@ -1,6 +1,7 @@
 <?php 
 namespace Views;
 
+use Models\Offer as Offer;
 use DAO\OfferDAO as OfferDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 use DAO\StudentsXOffersDAO as StudentsXOffers;
@@ -12,7 +13,6 @@ $companyDAO = new CompanyDAO;
 $offerDAO = new OfferDAO;
 $studentsXoffersDAO = new StudentsXOffers;
 
-/*
 $offer = null;
 
 //cheque si tengo la oferta en el session y la paso a una variable para despues destruirla
@@ -22,7 +22,7 @@ if($_SESSION['offer'])
     $offer->setApplicants($studentsXoffersDAO->getApplicantsByOfferId($offer->getOfferId()));
     unset($_SESSION['offer']);
 }
-*/
+
 //if($offer) echo $offer->getTitle();
 
 ?>

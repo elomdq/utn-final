@@ -2,8 +2,6 @@
 
 namespace Controllers;
 
-use Config\SystemFunctions;
-use Controllers\ViewsController as ViewsController;
 use Models\Student as Student;
 use DAO\StudentDAO as StudentDAO;
 use DAO\UserDAO as UserDAO;
@@ -27,9 +25,21 @@ class HomeController{
         $this->companyDao = new CompanyDAO;
     }
 
+
+    public function showLoginView()
+    {
+        require_once(VIEWS_PATH."header.php");
+        require_once VIEWS_PATH ."login.php";
+        require_once(VIEWS_PATH."footer.php");
+    }
+
     public function home(){
-        SystemFunctions::validateSession();
-        ViewsController::homeView();
+        
+        require_once VIEWS_PATH ."validate-session.php";
+        require_once VIEWS_PATH. "header.php";
+        require_once VIEWS_PATH ."nav.php" ;
+        require_once VIEWS_PATH ."home.php";
+        require_once VIEWS_PATH. "footer.php";
     }
 
     public function login($email,$password) {
@@ -68,37 +78,29 @@ class HomeController{
                         $this->home();
 
                     } else {
-                        ViewsController::header();
-                        ViewsController::loginView();
+                        $this->showLoginView();
                         echo '<script language="javascript">';
                         echo 'alert("Usuario dado de baja, comuniquese con la UTN.")';
                         echo '</script>';
-                        ViewsController::footer();
                     } 
                 } else {
-                    ViewsController::header();
-                    ViewsController::loginView();
+                    $this->showLoginView();
                     echo '<script language="javascript">';
                     echo 'alert("Se introdujo mal la password.")';
                     echo '</script>';
-                    ViewsController::footer();
                 }
                 
             } else {
-                ViewsController::header();
-                ViewsController::loginView();
+                $this->showLoginView();
                 echo '<script language="javascript">';
                 echo 'alert("No se encontro el email")';
                 echo '</script>';
-                ViewsController::footer();
             }
         } else {
-            ViewsController::header();
-            ViewsController::loginView();
+            $this->showLoginView();
             echo '<script language="javascript">';
             echo 'alert("Algo se rompio y fue feo")';
             echo '</script>';
-            ViewsController::footer();
         }
     }
 
@@ -127,12 +129,10 @@ class HomeController{
                         $_SESSION['userType'] = $userType;
                         $this->home();
                     } else
-                    ViewsController::header();    
-                    ViewsController::loginView();
+                        $this->showLoginView();
                     break;
                 case 1:
                     $admin = $this->adminDAO->GetAdminByEmail($email);
-                    ViewsController::footer();
 
                     if($admin != null && $admin->getActive() == true )
                     {
@@ -140,30 +140,24 @@ class HomeController{
                         $_SESSION['userType'] = $userType;
                         $this->home();
                     } else
-                    ViewsController::header();    
-                    ViewsController::loginView();
+                        $this->showLoginView();
                     break;
                 case 2:
-                    ViewsController::header();
-                    ViewsController::footer();
-                    ViewsController::loginView();
+                    $this->showLoginView();
                     break;
                 default:
                     break;
-                    ViewsController::footer();
                 }
             }
         } else{
-            ViewsController::header();
-            ViewsController::loginView();
-            }
+            $this->showLoginView();
+        }
     }*/
 
-    
     public function checkEmail(){
-        ViewsController::header();
-        ViewsController::validateEmailView();
-        ViewsController::footer();
+        require_once(VIEWS_PATH."header.php");
+        require_once VIEWS_PATH ."check-email.php";
+        require_once(VIEWS_PATH."footer.php");
     }
 
     public function confirmData($email){
@@ -171,16 +165,16 @@ class HomeController{
 
         if($student != null && $student->getActive() == true )
         {
-            ViewsController::header();
-            ViewsController::confirmStudentFormView($student);;
-            ViewsController::footer();
+            require_once(VIEWS_PATH."header.php");
+            require_once VIEWS_PATH . "confirm-data.php";
+            require_once(VIEWS_PATH."footer.php");
         } else {
-            ViewsController::header();
-            ViewsController::validateEmailView();
+            require_once(VIEWS_PATH."header.php");
+            require_once VIEWS_PATH . "check-email.php";
             echo '<script language="javascript">';
             echo 'alert("No se encontro el email")';
             echo '</script>';
-            ViewsController::footer();
+            require_once(VIEWS_PATH."footer.php");
         }
     }
 
@@ -202,9 +196,9 @@ class HomeController{
 
             $_SESSION['student'] = $student;
 
-            ViewsController::header();
-            ViewsController::generatePasswordView();
-            ViewsController::footer();
+            require_once(VIEWS_PATH."header.php");
+            require_once VIEWS_PATH . "generate-password.php";
+            require_once(VIEWS_PATH."footer.php");
         }
     }
 
@@ -215,6 +209,11 @@ class HomeController{
                 if(isset($_SESSION['student']))
                     $_SESSION['student']->setPassword($_POST['password']);
 
+            /*$parameters = array();
+            $parameters['email'] = $_SESSION['student']->getEmail();
+            $parameters['password'] = $_SESSION['student']->getPassword();
+            $parameters['active'] = $_SESSION['student']->getActive();*/
+
             $this->userDAO->add($_SESSION['student']->getEmail(), $_SESSION['student']->getActive(),$_SESSION['student']->getUserType(), $_SESSION['student']->getPassword());
 
             $_SESSION['student']->setUserId($this->userDAO->getUserIdByEmail($_SESSION['student']->getEmail()));
@@ -223,20 +222,14 @@ class HomeController{
 
             unset($_SESSION['student']);
 
-            ViewsController::header();
-            ViewsController::loginView();
-            echo '<script language="javascript">';
-            echo 'alert("Se realizo el registro con exito!")';
-            echo '</script>';
-            ViewsController::footer();
-            }
+            $this->showLoginView();
+        }
     }
+
 
     public function logout(){
         unset($_SESSION['loggedUser']); //no usar destroy ya que puedo tener cosas en el session que quiero guardar o persistir todavia
-        ViewsController::header();
-        ViewsController::loginView();
-        ViewsController::footer();
+        $this->showLoginView();
     }
 
 }
