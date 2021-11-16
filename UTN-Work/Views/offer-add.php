@@ -95,7 +95,7 @@ $user = $_SESSION['loggedUser'];
                          </div>
                     </div>
 
-                    <label style="color: red;"><?php if (isset($message)) echo $message; ?> </label>
+                    <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
 
                </div>
           </div>
