@@ -72,6 +72,13 @@
                         Agregar Oferta
                         </a>
                     <?php } ?>
+
+                    <?php if($_SESSION['userType'] == 1) {?>
+                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Mail/sendEmail/eloymrp@gmail.com/Saludo/Hola"; ?>">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Enviar Email
+                        </a>
+                    <?php } ?>
                     
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?php echo FRONT_ROOT . "home/logout"; ?>" >
