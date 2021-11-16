@@ -7,7 +7,7 @@ use DAO\StudentDAO as StudentDAO;
 use DAO\UserDAO as UserDAO;
 use DAO\AdminDAO as AdminDAO;
 use DAO\CompanyDAO as CompanyDAO;
-
+use Exception;
 use Models\Student as Student;
 use Models\User as User;
 use Models\Alert as Alert;
@@ -45,7 +45,6 @@ class HomeController{
         if(!empty($email) && !empty($password)) {
             
             $userData = $this->userDAO->getUserByEmail($email);
-            //echo $userData[0]['userType'] . "<br>";
 
             if(!empty($userData)) {
                 
@@ -103,9 +102,9 @@ class HomeController{
     }
 
     public function checkEmail(){
-        require_once(VIEWS_PATH."header.php");
-        require_once VIEWS_PATH ."check-email.php";
-        require_once(VIEWS_PATH."footer.php");
+        require_once VIEWS_PATH."header.php";
+        require_once VIEWS_PATH."check-email.php";
+        require_once VIEWS_PATH."footer.php";
     }
 
     public function confirmData($email){
@@ -114,7 +113,7 @@ class HomeController{
         if($student != null && $student->getActive() == true )
         {
             require_once(VIEWS_PATH."header.php");
-            require_once VIEWS_PATH . "confirm-data.php";
+            require_once VIEWS_PATH ."confirm-data.php";
             require_once(VIEWS_PATH."footer.php");
         } else {
             require_once(VIEWS_PATH."header.php");
@@ -151,22 +150,36 @@ class HomeController{
     }
 
     public function register(...$values){
-        if($_POST)
-        {
-            if(isset($_POST['password']))
-                if(isset($_SESSION['student']))
-                    $_SESSION['student']->setPassword($_POST['password']);
+        try{
+            $alert = new Alert();
+            if($_POST)
+            {
+                if(isset($_POST['password']))
+                    if(isset($_SESSION['student']))
+                        $_SESSION['student']->setPassword($_POST['password']);
+    
+                $this->userDAO->add($_SESSION['student']->getEmail(), $_SESSION['student']->getActive(),$_SESSION['student']->getUserType(), $_SESSION['student']->getPassword());
+    
+                $_SESSION['student']->setUserId($this->userDAO->getUserIdByEmail($_SESSION['student']->getEmail()));
+    
+                $this->studentDAO->add($_SESSION['student']);
+    
+                unset($_SESSION['student']);
 
-            $this->userDAO->add($_SESSION['student']->getEmail(), $_SESSION['student']->getActive(),$_SESSION['student']->getUserType(), $_SESSION['student']->getPassword());
-
-            $_SESSION['student']->setUserId($this->userDAO->getUserIdByEmail($_SESSION['student']->getEmail()));
-
-            $this->studentDAO->add($_SESSION['student']);
-
-            unset($_SESSION['student']);
-
-            $this->showLoginView();
+                $alert->setType('success');
+                $alert->setMessage("Se registro con exito.");
+                $this->showLoginView($alert);
+            } else {
+                $alert->setType('danger');
+                $alert->setMessage("Algo fallo en el envio de datos. Intentelo nuevamente");
+                $this->showLoginView($alert);
+            }
+        } catch (Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
+            $this->showLoginView($alert);
         }
+
     }
 
 

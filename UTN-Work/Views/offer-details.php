@@ -94,7 +94,7 @@ if($_SESSION['offer'])
                     </form>
                 </div>
 
-                
+                <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
                 
             </div>
 
