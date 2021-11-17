@@ -80,7 +80,7 @@ class OfferDAO implements IOfferDAO{
         $resultSet=$this->connection->execute($query);
        
         $offer = new Offer;
-        $offer->setofferId($resultSet[0]['id_jobOffer']);
+        $offer->setOfferId($resultSet[0]['id_jobOffer']);
         $offer->setCompanyId($resultSet[0]['id_company']);
         $offer->setJobPosition($resultSet[0]['jobPosition']);
         $offer->setCareerId($resultSet[0]['career']);
@@ -88,7 +88,7 @@ class OfferDAO implements IOfferDAO{
         $offer->setTitle($resultSet[0]['title']);
         $offer->setPublicationDate($resultSet[0]['publicationDate']);
         $offer->setDescription($resultSet[0]['offerDescription']);
-        $$offer->setDueDays($resultSet[0]['dueDays']);
+        $offer->setDueDays($resultSet[0]['dueDays']);
 
         return $offer;
     }
@@ -105,6 +105,7 @@ class OfferDAO implements IOfferDAO{
                 .", title=\"". $offer->getTitle()
                 ."\", active=". $offer->getActive()
                 .", publicationDate=\"". $offer->getPublicationDate()
+                .", dueDays=". $offer->getDueDays()
                 ."\", offerDescription=\"". $offer->getDescription()
                 . "\" WHERE id_jobOffer = ".$offer->getOfferId() .";";
 

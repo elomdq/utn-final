@@ -55,7 +55,7 @@ class Offer{
     public function setApplicants($applicants): self { $this->applicants = $applicants; return $this; }
 
     public function getDueDays(){ return $this->dueDays; }
-    public function setDueDays($dueDays): self { $this->applicants = $dueDays; return $this; }
+    public function setDueDays($dueDays): self { $this->dueDays = $dueDays; return $this; }
 }
 
 ?>

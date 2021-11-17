@@ -18,22 +18,45 @@ class OfferController{
 
     private $offersDAO;
     private $studentsXoffers;
-    private $puestos;
+    private $jobPositionsDAO;
     private $careerDAO; 
-    private $companyDao;
+    private $companyDAO;
     
 
     public function __construct()
     {
         $this->offersDAO = new OfferDAO;
         $this->studentsXoffers = new StudentsXOffers;
-        $this->puestos = new JobPositionDAO;
+        $this->jobPositionsDAO = new JobPositionDAO;
         $this->careerDAO = new CareerDAO;
-        $this->companyDao = new CompanyDAO;
+        $this->companyDAO = new CompanyDAO;
     }
 
     public function showOffersList(Alert $alert = null){
         SystemFunctions::validateSession();
+
+        $offerList = array();
+
+        if($_SESSION['userType'] == 0)
+        {
+            foreach ($this->offersDAO->getAll() as $offer) { 
+                if($offer->getCareerId() == $_SESSION['loggedUser']->getCareerId())
+                {
+                    array_push($offerList, $offer);
+                }
+            }
+        } else if($_SESSION['userType'] == 2){
+            foreach ($this->offersDAO->getAll() as $offer) { 
+                if($_SESSION['loggedUser']->getIdCompany() == $offer->getCompanyId() )
+                {
+                    array_push($offerList, $offer);
+                }
+            }
+        }
+        else{
+            $offerList = $this->offersDAO->getAll();
+        }
+
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php" ;
         require_once VIEWS_PATH ."offers-list.php";
@@ -42,9 +65,10 @@ class OfferController{
 
     public function showOfferDetails($offerId, Alert $alert = null){
         SystemFunctions::validateSession();
+
+        $offer = $this->offersDAO->getOfferById($offerId);
+
         require_once VIEWS_PATH."header.php";
-        //paso la oferta por la variable superglobal SESSION
-        $_SESSION['offer'] = $this->offersDAO->getOfferById($offerId);
         require_once VIEWS_PATH ."nav.php" ;
         require_once VIEWS_PATH ."offer-details.php";
         require_once VIEWS_PATH."footer.php";
@@ -62,9 +86,9 @@ class OfferController{
     {
         $offer = new Offer;
         $offer = $this->offersDAO->getOfferById($offerId);
-        $listJobsPositions = $this->puestos->getAll();
+        $listJobsPositions = $this->jobPositionsDAO->getAll();
         $listaCarreras = $this->careerDAO->getAll_Api();
-        $companyList = $this->companyDao->getAll();
+        $companyList = $this->companyDAO->getAll();
         $carriersMap = array();
         foreach($listaCarreras as $value){
             $carriersMap[$value->getIdCareer()] = $value->getDescription();
@@ -103,18 +127,16 @@ class OfferController{
                 $this->offersDAO->updateOfferById($oferta);
 
                 $alert->setType('success');
-                $alert->setMessage("Se edito con exito.");
+                $alert->setMessage("La oferta se edito con exito.");
                 $this->showOfferDetails($oferta->getOfferId(), $alert);
             } else {
                 $alert->setType('danger');
-                $alert->setMessage("Incorrecto ingreso de datos.");
+                $alert->setMessage("Hubo una falla con el envio de los datos.");
                 $this->editView($_POST['offerId'], $alert);
             }
         } catch (Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
-        } finally {
-            $this->editView($_POST['offerId'], $alert);
         }
         
     }
@@ -144,7 +166,7 @@ class OfferController{
                 $this->offersDAO->add($oferta);
 
                 $alert->setType('success');
-                $alert->setMessage("Se edito con exito.");
+                $alert->setMessage("La oferta se creo con exito.");
 
                 $this->showOffersList($alert);
         

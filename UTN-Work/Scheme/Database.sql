@@ -22,7 +22,7 @@ CREATE TABLE `admins` (
  CONSTRAINT `fk_userAdmin` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;
 
-INSERT INTO `users`(email, pass, active) VALUES('admin@admin', '123456', 1);
+INSERT INTO `users`(email, pass, active, 0) VALUES('admin@admin', '123456', 1, 0);
 INSERT INTO `admins`(id_user) VALUES(1);
 
 /*
@@ -105,8 +105,8 @@ CREATE TABLE `images` (
  `id_offer` int(11) NOT NULL,
  `url` varchar(100) NOT NULL,
  PRIMARY KEY (`id_images`),
- KEY `fk_jobOffer` (`id_offer`),
- CONSTRAINT `fk_jobOffer` FOREIGN KEY (`id_offer`) REFERENCES `offers` (`id_jobOffer`)
+ KEY `fk_jobOffer_images` (`id_offer`),
+ CONSTRAINT `fk_jobOffer_images` FOREIGN KEY (`id_offer`) REFERENCES `offers` (`id_jobOffer`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `curriculums` (
