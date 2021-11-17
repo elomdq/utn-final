@@ -10,6 +10,7 @@ use DAO\CompanyDAO as CompanyDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 
 use DAO\StudentsXOffersDAO as StudentsXOffers;
+use Exception;
 use Models\Offer as Offer;
 use Models\Alert as Alert;
 
@@ -17,63 +18,96 @@ class OfferController{
 
     private $offersDAO;
     private $studentsXoffers;
-    private $puestos;
+    private $jobPositionsDAO;
     private $careerDAO; 
-    private $companyDao;
+    private $companyDAO;
     
 
     public function __construct()
     {
         $this->offersDAO = new OfferDAO;
         $this->studentsXoffers = new StudentsXOffers;
-        $this->puestos = new JobPositionDAO;
+        $this->jobPositionsDAO = new JobPositionDAO;
         $this->careerDAO = new CareerDAO;
-        $this->companyDao = new CompanyDAO;
+        $this->companyDAO = new CompanyDAO;
     }
 
     public function showOffersList(){
-        require_once VIEWS_PATH ."validate-session.php";
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php" ;
-        require_once VIEWS_PATH ."offers-list.php";
-        require_once VIEWS_PATH."footer.php";
+        SystemFunctions::validateSession();
+
+        $alert = new Alert;
+
+        try{
+            $offerList = array();
+
+            //filtrado de ofertas
+            if($_SESSION['userType'] == 0)
+            {
+                foreach ($this->offersDAO->getAll() as $offer) { 
+                    if($offer->getCareerId() == $_SESSION['loggedUser']->getCareerId())
+                    {
+                        array_push($offerList, $offer);
+                    }
+                }
+            } else if($_SESSION['userType'] == 2){
+                foreach ($this->offersDAO->getAll() as $offer) { 
+                    if($_SESSION['loggedUser']->getIdCompany() == $offer->getCompanyId() )
+                    {
+                        array_push($offerList, $offer);
+                    }
+                }
+            }
+            else{
+                $offerList = $this->offersDAO->getAll();
+            }
+
+            require_once VIEWS_PATH."header.php";
+            require_once VIEWS_PATH ."nav.php" ;
+            require_once VIEWS_PATH ."offers-list.php";
+            require_once VIEWS_PATH."footer.php";
+        }
+        catch(Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
+        }
+        
     }
 
-    public function showOfferDetails($offerId){
-        require_once VIEWS_PATH ."validate-session.php";
+    public function showOfferDetails($offerId, Alert $alert = null){
+        SystemFunctions::validateSession();
+
+        $offer = $this->offersDAO->getOfferById($offerId);
+
         require_once VIEWS_PATH."header.php";
-
-        //paso la oferta por la variable superglobal SESSION
-        $_SESSION['offer'] = $this->offersDAO->getOfferById($offerId);
-
         require_once VIEWS_PATH ."nav.php" ;
         require_once VIEWS_PATH ."offer-details.php";
         require_once VIEWS_PATH."footer.php";
     }
 
-    public function addView($message = ""){
-        require_once VIEWS_PATH ."validate-session.php";
+    public function addView(Alert $alert = null){
+        SystemFunctions::validateSession();
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php";
         require_once VIEWS_PATH ."offer-add.php";
         require_once VIEWS_PATH."footer.php";
     }
 
-    public function editView($offerId, $message = "")
+    public function editView($offerId, Alert $alert = null)
     {
-        $offer = new Offer;
+        SystemFunctions::validateSession();
+        
         $offer = $this->offersDAO->getOfferById($offerId);
 
-        $listJobsPositions = $this->puestos->getAll();
+        $listJobsPositions = $this->jobPositionsDAO->getAll();
         $listaCarreras = $this->careerDAO->getAll_Api();
-        $companyList = $this->companyDao->getAll();
-
+        $companyList = $this->companyDAO->getAll();
+        
         $carriersMap = array();
         foreach($listaCarreras as $value){
             $carriersMap[$value->getIdCareer()] = $value->getDescription();
         }
 
-        require_once VIEWS_PATH ."validate-session.php";
+        
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php";
         require_once VIEWS_PATH ."offer-edit.php";
@@ -82,102 +116,131 @@ class OfferController{
 
     public function editOffer(...$values)
     {
-        if($_POST)
-        { 
-            $oferta = new Offer;
-            $oferta->setOfferId($_POST['offerId']);
-            $oferta->setTitle($_POST['offerTitle']);
-            $oferta->setJobPosition($_POST['jobPosition']);
-            $oferta->setDescription($_POST['offerDesc']);
-            $oferta->setCompanyId($_POST['companyId']);
-            $oferta->setPublicationDate($_POST['publicationDate']);
-            $oferta->setCareerId($_POST['careerId']);
-            $oferta->setDueDays($_POST['dueDays']);
+        $alert = new Alert();
+        try{
+            if($_POST)
+            { 
+                $oferta = new Offer;
+                $oferta->setOfferId($_POST['offerId']);
+                $oferta->setTitle($_POST['offerTitle']);
+                $oferta->setJobPosition($_POST['jobPosition']);
+                $oferta->setDescription($_POST['offerDesc']);
+                $oferta->setCompanyId($_POST['companyId']);
+                $oferta->setPublicationDate($_POST['publicationDate']);
+                $oferta->setCareerId($_POST['careerId']);
+                $oferta->setDueDays($_POST['dueDays']);
             
-            if (isset($_POST['active'])) 
-            {
-                $oferta->setActive(true);
-            } else {
-                $oferta->setActive(0);
-            }
+                if (isset($_POST['active'])) 
+                {
+                    $oferta->setActive(true);
+                } else {
+                    $oferta->setActive(0);
+                }
             
-            $this->offersDAO->updateOfferById($oferta);
+                $this->offersDAO->updateOfferById($oferta);
 
-            $this->showOfferDetails($oferta->getOfferId());
-        } else {
-                $this->editView($_POST['offerId'], "Incorrecto ingreso de datos.");
+                $alert->setType('success');
+                $alert->setMessage("La oferta se edito con exito.");
+                $this->showOfferDetails($oferta->getOfferId(), $alert);
+            } else {
+                $alert->setType('danger');
+                $alert->setMessage("Hubo una falla con el envio de los datos.");
+                $this->editView($_POST['offerId'], $alert);
+            }
+        } catch (Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
         }
+        
     }
 
     public function createOffer(...$values)  {
-       
-        if($_POST)
-        {
-            $oferta = new Offer;
-            $oferta->setTitle($_POST['offerTitle']);
-            $oferta->setJobPosition($_POST['jobPosition']);
-            $oferta->setDescription($_POST['offerDesc']);
-            $oferta->setCompanyId($_POST['companyId']);
-            $oferta->setPublicationDate($_POST['publicationDate']);
-            $oferta->setCareerId($_POST['careerId']);
-            $oferta->setDueDays($_POST['dueDays']);
+        try{
+            $alert = new Alert();
+            if($_POST)
+            {   
+                $oferta = new Offer;
+                $oferta->setTitle($_POST['offerTitle']);
+                $oferta->setJobPosition($_POST['jobPosition']);
+                $oferta->setDescription($_POST['offerDesc']);
+                $oferta->setCompanyId($_POST['companyId']);
+                $oferta->setPublicationDate($_POST['publicationDate']);
+                $oferta->setCareerId($_POST['careerId']);
+                $oferta->setDueDays($_POST['dueDays']);
             
            
-            if (isset($_POST['active'])) 
-            {
-                $oferta->setActive(true);
-            } else {
-                $oferta->setActive(0);
-            }
+                if (isset($_POST['active'])) 
+                {
+                    $oferta->setActive(true);
+                } else {
+                    $oferta->setActive(0);
+                }
 
-            $this->offersDAO->add($oferta);
+                $this->offersDAO->add($oferta);
 
-            $this->showOffersList();
+                $alert->setType('success');
+                $alert->setMessage("La oferta se creo con exito.");
+
+                $this->showOffersList($alert);
         
-        } else {
-            $this->addView("Incorrecto ingreso de datos.");
+            } else {
+                $alert->setType('danger');
+                $alert->setMessage("Incorrecto ingreso de datos.");
+                $this->addView($alert);
+            }
+        } catch (Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
+            $this->addView($alert);
         }
     } 
 
 
-    public function applyForOffer(...$values){        
-        if($_POST)
-        {
-            if($_SESSION['loggedUser']){
-                $this->studentsXoffers->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
-                echo '<script language="javascript">';
-                echo 'alert("Ha aplicado a la oferta con éxito.")';
-                echo '</script>';
-
-                $this->showOfferDetails($_POST['offerId']);
+    public function applyForOffer(...$values){      
+        try{
+            $alert = new Alert();
+            if($_POST)
+            {
+                if($_SESSION['loggedUser']){
+                    $this->studentsXoffers->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
+                    $alert->setType('success');
+                    $alert->setMessage("Se aplico con exito.");
+                    $this->showOfferDetails($_POST['offerId'],$alert);
+                }
+            } else{
+                $alert->setType('warning');
+                $alert->setMessage("Algo ocurrio en el envio de datos, intente nuevamente");
+                $this->showOffersList($alert);
             }
-
-            
-        } else{
-            echo '<script language="javascript">';
-            echo 'alert("Algo salio mal")';
-            echo '</script>';
+        } catch(Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
+            $this->showOffersList($alert);
         }
-        
     }
 
     public function viewApplicants($offerId){
-        
+        SystemFunctions::validateSession();
+        try{
+            $alert = new Alert();
             $students = $this->studentsXoffers->getApplicantsByOfferId($offerId);
             if(!empty($students))
             {
-                require_once VIEWS_PATH ."validate-session.php";
                 require_once VIEWS_PATH."header.php";
                 require_once VIEWS_PATH ."nav.php";
                 require_once VIEWS_PATH."applicants-list.php";
                 require_once VIEWS_PATH."footer.php";
             } else {
-                echo '<script language="javascript">';
-            echo 'alert("No hay postulantes")';
-            echo '</script>';
-                $this->showOfferDetails($offerId);
+                $alert->setType('warning');
+                $alert->setMessage("No hay postulantes");
+                $this->showOfferDetails($offerId,$alert);
             }
-        
+
+        }catch (Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
+            $this->showOfferDetails($offerId,$alert);
+        }
     }
 
 }

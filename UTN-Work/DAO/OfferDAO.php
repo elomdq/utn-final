@@ -74,23 +74,28 @@ class OfferDAO implements IOfferDAO{
 
     public function getOfferById($offerId)
     {
-        $query = "SELECT * FROM ".$this->tableName." WHERE id_jobOffer= \"".$offerId."\";";
-        $this->connection = Connection::GetInstance();
+        try{
+            $query = "SELECT * FROM ".$this->tableName." WHERE id_jobOffer= \"".$offerId."\";";
+            $this->connection = Connection::GetInstance();
 
-        $resultSet=$this->connection->execute($query);
+            $resultSet=$this->connection->execute($query);
        
-        $offer = new Offer;
-        $offer->setofferId($resultSet[0]['id_jobOffer']);
-        $offer->setCompanyId($resultSet[0]['id_company']);
-        $offer->setJobPosition($resultSet[0]['jobPosition']);
-        $offer->setCareerId($resultSet[0]['career']);
-        $offer->setActive($resultSet[0]['active']);
-        $offer->setTitle($resultSet[0]['title']);
-        $offer->setPublicationDate($resultSet[0]['publicationDate']);
-        $offer->setDescription($resultSet[0]['offerDescription']);
-        $$offer->setDueDays($resultSet[0]['dueDays']);
+            $offer = new Offer;
+            $offer->setOfferId($resultSet[0]['id_jobOffer']);
+            $offer->setCompanyId($resultSet[0]['id_company']);
+            $offer->setJobPosition($resultSet[0]['jobPosition']);
+            $offer->setCareerId($resultSet[0]['career']);
+            $offer->setActive($resultSet[0]['active']);
+            $offer->setTitle($resultSet[0]['title']);
+            $offer->setPublicationDate($resultSet[0]['publicationDate']);
+            $offer->setDescription($resultSet[0]['offerDescription']);
+            $offer->setDueDays($resultSet[0]['dueDays']);
 
-        return $offer;
+            return $offer;
+        }
+        catch(Exception $e){
+            throw $e;
+        }  
     }
 
 
@@ -105,7 +110,8 @@ class OfferDAO implements IOfferDAO{
                 .", title=\"". $offer->getTitle()
                 ."\", active=". $offer->getActive()
                 .", publicationDate=\"". $offer->getPublicationDate()
-                ."\", offerDescription=\"". $offer->getDescription()
+                ."\", dueDays=". $offer->getDueDays()
+                .", offerDescription=\"". $offer->getDescription()
                 . "\" WHERE id_jobOffer = ".$offer->getOfferId() .";";
 
                 //echo "QUERY: " . $query . "<br>";

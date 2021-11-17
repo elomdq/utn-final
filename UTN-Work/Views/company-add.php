@@ -50,7 +50,7 @@
                     <div class="wrapper">
                         <button  type="submit" class="btn btn-dark botonCentro">Agregar</button>
                     </div>
-                    <label style="color: red;"><?php if(isset($message)) echo $message; ?> </label>
+                    <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
                </form>
           </div>
      </section>

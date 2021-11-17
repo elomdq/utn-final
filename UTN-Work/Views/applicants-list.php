@@ -22,7 +22,7 @@
                                  <h6 class="d-inline">Email: </h6> <h6 class="m-0"><?php echo $student->getEmail(); ?></h6>
                                 </div>
                             </div>
-
+                            <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
                         </div>
                     </div>
                 </div>

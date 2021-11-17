@@ -67,12 +67,12 @@ $user = $_SESSION['loggedUser'];
 
                                    <div class="form-group col-12">
                                         <label for="publicationDate">Fecha</label>
-                                        <input id="publicationDate" type="date" name="publicationDate" class="form-control" placeholder="Cuit">
+                                        <input id="publicationDate" type="date" name="publicationDate" class="form-control" value="<?php echo date("Y-m-d") ?>">
                                    </div>
 
                                    <div class="form-group col-12">
-                                        <label for="dueDays">cuantos dias?</label>
-                                        <input id="dueDays" type="number" name="dueDays" class="form-control" placeholder="Cuit">
+                                        <label for="dueDays">Oferta abierta por cuantos dias?</label>
+                                        <input id="dueDays" type="number" name="dueDays" class="form-control" placeholder="Cantidad de dias" min="0" max="20">
                                    </div>
 
                                    <div class="form-group col-12">
@@ -95,7 +95,7 @@ $user = $_SESSION['loggedUser'];
                          </div>
                     </div>
 
-                    <label style="color: red;"><?php if (isset($message)) echo $message; ?> </label>
+                    <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
 
                </div>
           </div>
