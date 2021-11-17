@@ -33,13 +33,6 @@ class OfferController{
     }
 
     public function showOffersList(){
-<<<<<<< HEAD
-        require_once VIEWS_PATH ."validate-session.php";
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php" ;
-        require_once VIEWS_PATH ."offers-list.php";
-        require_once VIEWS_PATH. "footer.php";
-=======
         SystemFunctions::validateSession();
 
         $alert = new Alert;
@@ -78,7 +71,6 @@ class OfferController{
             $alert->setMessage($e->getMessage());
         }
         
->>>>>>> dd7b5b1ec204c594eab7950b227319369caef2b7
     }
 
     public function showOfferDetails($offerId, Alert $alert = null){
@@ -193,7 +185,7 @@ class OfferController{
         
             } else {
                 $alert->setType('danger');
-                $alert->setMessage("Incorrecto ingreso de datos.");
+                $alert->setMessage("Hubo un problema con el envio de datos.");
                 $this->addView($alert);
             }
         } catch (Exception $e){

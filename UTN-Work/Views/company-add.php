@@ -2,6 +2,9 @@
      <section id="listado" class="mb-5">
           <div class="container">
                <h2 class="mb-4">Agregar Empresa</h2>
+
+               <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
+
                <form action="<?php echo FRONT_ROOT ?>Company/createCompany/" method="POST" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-3">
@@ -50,7 +53,7 @@
                     <div class="wrapper">
                         <button  type="submit" class="btn btn-dark botonCentro">Agregar</button>
                     </div>
-                    <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
+                    
                </form>
           </div>
      </section>
