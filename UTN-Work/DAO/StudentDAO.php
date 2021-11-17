@@ -41,8 +41,7 @@ class StudentDAO implements IStudentDAO{
             $this->connection->executeNonQuery($query, $parameters);
         }
         catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
-            throw new Exception('Error!! ',  $e->getMessage());
+            throw $e;
         }
     }
 
@@ -72,7 +71,7 @@ class StudentDAO implements IStudentDAO{
             return $students;
 
         }catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 
@@ -109,7 +108,7 @@ class StudentDAO implements IStudentDAO{
             $arrayStudents = json_decode($this->studentApiConnection->executeCurl(), true);
             return $arrayStudents;
         } catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 
@@ -135,7 +134,7 @@ class StudentDAO implements IStudentDAO{
             return $student;
 
         } catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 
@@ -161,7 +160,7 @@ class StudentDAO implements IStudentDAO{
     
             return $student;
         } catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 

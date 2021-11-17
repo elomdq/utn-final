@@ -23,12 +23,16 @@
                                         <div class="form-group">
                                             <input name="email" type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Ingrese su email para iniciar sesión...">
+                                                placeholder="Ingrese su email para iniciar sesión..." required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="password" placeholder="Contraseña" name="password">
+                                                id="password" placeholder="Contraseña" name="password" required>
                                         </div>                                    
+
+
+                                        <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
+
                                         <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
                                        
                                     </form>

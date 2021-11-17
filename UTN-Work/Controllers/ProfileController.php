@@ -1,6 +1,10 @@
 <?php 
 namespace Controllers;
 
+use Models\Alert as Alert;
+
+use Config\SystemFunctions as SystemFunctions;
+
 
 class ProfileController{
 
@@ -12,10 +16,9 @@ class ProfileController{
     }
 
     public function showProfile(){
-        require_once VIEWS_PATH . "validate-session.php";
+        SystemFunctions::validateSession();
         require_once(VIEWS_PATH . "header.php");
         require_once VIEWS_PATH . "nav.php" ;
-
         switch($_SESSION['userType'])
         {
             case 0:
@@ -32,10 +35,6 @@ class ProfileController{
         }
         require_once(VIEWS_PATH."footer.php");
     }
-
-
-
 }
-
 
 ?>

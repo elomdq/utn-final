@@ -26,7 +26,7 @@
                                    <div class="form-group col-12">
                                         <label for="jobPosition">Puesto</label>
                                         <select id="jobPosition" class="form-select" name="jobPosition">
-                                            <option value="<?php echo $offer->getJobPosition();?>" selected><?php echo $this->puestos->getjobPositionById($offer->getJobPosition())->getDescription() . " - " . $this->puestos->getjobPositionById($offer->getJobPosition())->getDescription(); ?></option>
+                                            <option value="<?php echo $offer->getJobPosition();?>" selected><?php echo $this->jobPositionsDAO->getjobPositionById($offer->getJobPosition())->getDescription() . " - " . $this->jobPositionsDAO->getjobPositionById($offer->getJobPosition())->getDescription(); ?></option>
                                              <?php foreach ($listJobsPositions as $puesto) { ?>
                                                   <option value="<?php echo $puesto->getIdJobPosition(); ?>"> <?php echo $carriersMap[$puesto->getCareerId()] . " - " .  $puesto->getDescription(); ?> </option>
                                              <?php } ?>
@@ -37,7 +37,7 @@
                                    <div class="form-group col-12">
                                         <label>Empresa</label>
                                         <select class="form-select" name="companyId">
-                                            <option value="<?php echo $offer->getCompanyId(); ?>" selected><?php echo $this->companyDao->getCompanyById($offer->getCompanyId())->getCompanyName() ; ?></option>
+                                            <option value="<?php echo $offer->getCompanyId(); ?>" selected><?php echo $this->companyDAO->getCompanyById($offer->getCompanyId())->getCompanyName() ; ?></option>
                                              <?php foreach ($companyList as $company) { ?>
                                                   <option value="<?php echo $company->getIdCompany();?>"> <?php echo $company->getCompanyName(); ?> </option>
                                              <?php }  ?>
@@ -53,6 +53,11 @@
                                    <div class="form-group col-12">
                                         <label for="offerDesc">Descripcion</label>
                                         <textarea id="offerDesc" name="offerDesc" class="form-control" rows="6"><?php echo $offer->getDescription(); ?></textarea>
+                                   </div>
+
+                                   <div class="form-group col-12">
+                                        <label for="dueDays">Oferta abierta por cuantos dias?</label>
+                                        <input id="dueDays" type="number" name="dueDays" class="form-control" placeholder="Cantidad de dias: " min="0" max="100" value="<?php echo $offer->getDueDays();?>">
                                    </div>
 
                                    <div class="form-group col-12">
@@ -76,7 +81,7 @@
                          </div>
                     </div>
 
-                    <label style="color: red;"><?php if (isset($message)) echo $message; ?> </label>
+                    <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
 
                </div>
           </div>

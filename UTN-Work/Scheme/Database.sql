@@ -22,7 +22,7 @@ CREATE TABLE `admins` (
  CONSTRAINT `fk_userAdmin` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;
 
-INSERT INTO `users`(email, pass, active) VALUES('admin@admin', '123456', 1);
+INSERT INTO `users`(email, pass, active, 0) VALUES('admin@admin', '123456', 1, 0);
 INSERT INTO `admins`(id_user) VALUES(1);
 
 /*
@@ -63,6 +63,7 @@ CREATE TABLE `offers` (
  `title` varchar(50) NOT NULL,
  `active` tinyint(1) NOT NULL,
  `publicationDate` date NOT NULL,
+ `dueDays` int(11) NOT NULL,
  `offerDescription` varchar(5000) DEFAULT NULL,
  PRIMARY KEY (`id_jobOffer`),
  KEY `fk_company` (`id_company`),
@@ -96,5 +97,23 @@ CREATE TABLE `students_x_offers` (
  KEY `fk_jobOffer` (`id_offer`),
  KEY `fk_student` (`id_student`),
  CONSTRAINT `fk_jobOffer` FOREIGN KEY (`id_offer`) REFERENCES `offers` (`id_jobOffer`),
+ CONSTRAINT `fk_student` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `images` (
+ `id_images` int(11) NOT NULL AUTO_INCREMENT,
+ `id_offer` int(11) NOT NULL,
+ `url` varchar(100) NOT NULL,
+ PRIMARY KEY (`id_images`),
+ KEY `fk_jobOffer_images` (`id_offer`),
+ CONSTRAINT `fk_jobOffer_images` FOREIGN KEY (`id_offer`) REFERENCES `offers` (`id_jobOffer`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `curriculums` (
+ `id_curriculum` int(11) NOT NULL AUTO_INCREMENT,
+ `id_student` int(11) NOT NULL,
+ `url` varchar(100) NOT NULL,
+ PRIMARY KEY (`id_curriculum`),
+ KEY `fk_student` (`id_student`),
  CONSTRAINT `fk_student` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
 ) ENGINE=InnoDB;

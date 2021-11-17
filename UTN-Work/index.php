@@ -10,6 +10,9 @@
 	use Config\Autoload as Autoload;
 	use Config\Router 	as Router;
 	use Config\Request 	as Request;
+
+	use Config\SystemFunctions as SystemFunctions;
+	use Controllers\ViewController as ViewController;
 		
 	Autoload::start();
 

@@ -1,32 +1,6 @@
-<?php 
-namespace Views;
 
-use Models\Offer as Offer;
-use DAO\OfferDAO as OfferDAO;
-use DAO\JobPositionDAO as JobPositionDAO;
-use DAO\StudentsXOffersDAO as StudentsXOffers;
-use DAO\CompanyDAO as CompanyDAO;
-
-
-$jobPositionDAO = new JobPositionDAO;
-$companyDAO = new CompanyDAO;
-$offerDAO = new OfferDAO;
-$studentsXoffersDAO = new StudentsXOffers;
-
-$offer = null;
-
-//cheque si tengo la oferta en el session y la paso a una variable para despues destruirla
-if($_SESSION['offer'])
-{
-    $offer = $_SESSION['offer'];
-    $offer->setApplicants($studentsXoffersDAO->getApplicantsByOfferId($offer->getOfferId()));
-    unset($_SESSION['offer']);
-}
-
-//if($offer) echo $offer->getTitle();
-
-?>
-
+<div class="container">
+<div class="alert alert-<?php if($alert!=null) echo $alert->getType();?> col-6 mx-auto" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
 
 <div class="row justify-content-center">
     <div class="col-6">
@@ -45,12 +19,12 @@ if($_SESSION['offer'])
             <div class="row card-body justify-content-center py-2">
                 <div class="col-10 m-2">
                     <div>
-                        <p class="d-inline fw-bold">Empresa: <?php echo $companyDAO->getCompanyById($offer->getCompanyId())->getCompanyName(); ?></p> 
+                        <p class="d-inline fw-bold">Empresa: <?php echo $this->companyDAO->getCompanyById($offer->getCompanyId())->getCompanyName(); ?></p> 
                     </div>
                 </div>
                 <div class="col-10 m-2">
                     <div>
-                        <p class="d-inline fw-bold">Puesto: <?php echo $jobPositionDAO->getPositionDescriptionById($offer->getJobPosition()); ?></p> 
+                        <p class="d-inline fw-bold">Puesto: <?php echo $this->jobPositionsDAO->getPositionDescriptionById($offer->getJobPosition()); ?></p> 
                     </div>
                 </div>
 
@@ -64,6 +38,12 @@ if($_SESSION['offer'])
                     <div><?php echo $offer->getDescription(); ?></div>
                 </div>
 
+                <div class="col-10 m-3">
+                    <div>
+                        <p class="d-inline fw-bold">Fecha limite de oferta: <?php echo $offer->getDueDays(); ?></p>
+                    </div>
+                </div>
+
                 <hr class="col-10 m-3">
                 
                 <div class="col-10 m-3">
@@ -72,7 +52,7 @@ if($_SESSION['offer'])
                         
                         <?php if(isset($_SESSION['userType']) && $_SESSION['userType']== 0) { 
                             ?>
-                            <?php if( $studentsXoffersDAO->isStudentInOffer($_SESSION['loggedUser']->getStudentId(), $offer->getOfferId()) ) { ?>
+                            <?php if( $this->studentsXoffersDAO->isStudentInOffer($_SESSION['loggedUser']->getStudentId(), $offer->getOfferId()) ) { ?>
                                 <button class="btn btn-primary botonCentro " type="button" disabled>Ya estas postulado</button>
                             <?php } else {?>
                                 <button class="btn btn-primary botonCentro" type="submit">Postularse</button>
@@ -94,4 +74,5 @@ if($_SESSION['offer'])
 
         </div>
     </div>
+</div>
 </div>

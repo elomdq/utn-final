@@ -4,13 +4,6 @@ namespace Views;
 
 use Models\Company as Company;
 
-$company = null;
-
-if(isset($_SESSION['company'])){
-    $company = $_SESSION['company'];
-    unset($_SESSION['company']);
-}
-
 ?>
 
 <div class="row justify-content-center">
@@ -65,4 +58,5 @@ if(isset($_SESSION['company'])){
 
         </div>
     </div>
+    <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
 </div>

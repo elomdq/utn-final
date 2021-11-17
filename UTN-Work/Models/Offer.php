@@ -12,6 +12,7 @@ class Offer{
     private $salary;
     private $active;
     private $publicationDate;
+    private $dueDays;
     private $careerId;
     private $jobPosition;
 
@@ -52,6 +53,9 @@ class Offer{
 
     public function getApplicants(){ return $this->applicants; }
     public function setApplicants($applicants): self { $this->applicants = $applicants; return $this; }
+
+    public function getDueDays(){ return $this->dueDays; }
+    public function setDueDays($dueDays): self { $this->dueDays = $dueDays; return $this; }
 }
 
 ?>
