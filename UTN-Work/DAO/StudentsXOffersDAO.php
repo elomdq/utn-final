@@ -25,17 +25,11 @@ class StudentsXOffersDAO{
     public function add(Offer $offer, Student $student)
     {
         try{
-            $query = "INSERT INTO ".$this->tableName. "(id_offer, id_student, id_curriculum) VALUES(:id_offer, :id_student, :id_curriculum) ";
+            $query = "INSERT INTO ".$this->tableName. "(id_offer, id_student) VALUES(:id_offer, :id_student) ";
 
             $parameters = array();
             $parameters['id_offer'] = $offer->getOfferId();
             $parameters['id_student'] = $student->getStudentId();
-
-            $idCurriculum = $this->curriculumDAO->getCurriculumIdByOwnerId($parameters['id_student']);
-            
-            if($idCurriculum != 0){
-                $parameters['id_curriculum'] = $idCurriculum;
-            }
 
             $this->connection = Connection::getInstance();
             $this->connection->executeNonQuery($query, $parameters);
