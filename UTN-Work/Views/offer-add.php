@@ -31,7 +31,7 @@ $user = $_SESSION['loggedUser'];
                          <h3 class="card-header mb-2">Agregar Oferta</h3>
 
                          <div class="card-body">
-                              <form action="<?php echo FRONT_ROOT?>Offer/createOffer/" method="POST" class="row bg-light-alpha p-3">
+                              <form action="<?php echo FRONT_ROOT?>Offer/createOffer/" method="POST" class="row bg-light-alpha p-3" enctype="multipart/form-data">
 
                                    <div class="form-group col-12">
                                         <label for="offerTitle">Titulo</label>
@@ -88,6 +88,13 @@ $user = $_SESSION['loggedUser'];
                                         </div>
 
                                    </div>
+
+                                   <div class="col-lg-3">
+                                        <div class="form-group">
+                                             <label for="fileToUpload">Flyer:</label>
+                                             <input type="file" id="fileToUpload" name="fileToUpload" max-file-size="6000" accept="image/png, image/gif, image/jpeg">
+                                        </div>
+                                   </div>   
                                    
                                    <input type="submit" class="btn btn-primary btn-user btn-block" value="Confirmar">
 

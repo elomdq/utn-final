@@ -9,7 +9,8 @@ define("VIEWS_PATH", "Views/");
 define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "css/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
 define("VENDOR_PATH", FRONT_ROOT.VIEWS_PATH . "vendor/");
-define("UPLOADS_PATH","Uploads/");
+define("UPLOADS_PATH_CV","Uploads/CV/");
+define("UPLOADS_PATH_IMG","Uploads/IMG/");
 
 
 define("DB_HOST", "localhost");

@@ -8,11 +8,13 @@ use DAO\OfferDAO as OfferDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\CompanyDAO as CompanyDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
+use DAO\imageDAO as imageDAO;
 
 use DAO\StudentsXOffersDAO as StudentsXOffers;
 use Exception;
 use Models\Offer as Offer;
 use Models\Alert as Alert;
+use Models\File as Archivo;
 
 class OfferController{
 
@@ -21,6 +23,7 @@ class OfferController{
     private $jobPositionsDAO;
     private $careerDAO; 
     private $companyDAO;
+    private $imageDAO;
     
 
     public function __construct()
@@ -30,13 +33,11 @@ class OfferController{
         $this->jobPositionsDAO = new JobPositionDAO;
         $this->careerDAO = new CareerDAO;
         $this->companyDAO = new CompanyDAO;
+        $this->imageDAO = new imageDAO;
     }
 
-    public function showOffersList(){
+    public function showOffersList(Alert $alert = null){
         SystemFunctions::validateSession();
-
-        $alert = new Alert;
-
         try{
             $offerList = array();
 
@@ -77,6 +78,7 @@ class OfferController{
         SystemFunctions::validateSession();
 
         $offer = $this->offersDAO->getOfferById($offerId);
+        $flyer = $this->imageDAO->getURLByOwnerId($offerId);
 
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php" ;
@@ -101,6 +103,7 @@ class OfferController{
         $listJobsPositions = $this->jobPositionsDAO->getAll();
         $listaCarreras = $this->careerDAO->getAll_Api();
         $companyList = $this->companyDAO->getAll();
+        $flyerOffer = $this->imageDAO->getURLByOwnerId($offerId);
         
         $carriersMap = array();
         foreach($listaCarreras as $value){
@@ -178,6 +181,19 @@ class OfferController{
 
                 $this->offersDAO->add($oferta);
 
+                if($_FILES)
+                {
+                    $target_dir = UPLOADS_PATH_IMG;
+                    $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+                    $archivo = new Archivo();
+                    $archivo->setUrl($target_file);
+                    $archivo->setIdOwner($this->offersDAO->getIdJobOfferByTitle($oferta->getTitle()));
+
+                    $this->uploadFile($target_file, $alert);
+        
+                    $this->imageDAO->add($archivo);
+                }
+
                 $alert->setType('success');
                 $alert->setMessage("La oferta se creo con exito.");
 
@@ -241,6 +257,18 @@ class OfferController{
             $alert->setMessage($e->getMessage());
             $this->showOfferDetails($offerId,$alert);
         }
+    }
+
+    private function uploadFile($target_file, Alert $alert){
+
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            $alert->setMessage("Archivo subido con exito");
+            $alert->setType("success");
+          } else {
+            $alert->setMessage("Error al subir el archivo");
+            $alert->setType("danger");
+          }
+        return $alert;
     }
 
 }
