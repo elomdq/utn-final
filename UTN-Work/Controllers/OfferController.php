@@ -34,7 +34,7 @@ class OfferController{
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php" ;
         require_once VIEWS_PATH ."offers-list.php";
-        require_once VIEWS_PATH."footer.php";
+        require_once VIEWS_PATH. "footer.php";
     }
 
     public function showOfferDetails($offerId){
