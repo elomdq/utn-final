@@ -32,35 +32,45 @@ class OfferController{
         $this->companyDAO = new CompanyDAO;
     }
 
-    public function showOffersList(Alert $alert = null){
+    public function showOffersList(){
         SystemFunctions::validateSession();
 
-        $offerList = array();
+        $alert = new Alert;
 
-        if($_SESSION['userType'] == 0)
-        {
-            foreach ($this->offersDAO->getAll() as $offer) { 
-                if($offer->getCareerId() == $_SESSION['loggedUser']->getCareerId())
-                {
-                    array_push($offerList, $offer);
+        try{
+            $offerList = array();
+
+            //filtrado de ofertas
+            if($_SESSION['userType'] == 0)
+            {
+                foreach ($this->offersDAO->getAll() as $offer) { 
+                    if($offer->getCareerId() == $_SESSION['loggedUser']->getCareerId())
+                    {
+                        array_push($offerList, $offer);
+                    }
+                }
+            } else if($_SESSION['userType'] == 2){
+                foreach ($this->offersDAO->getAll() as $offer) { 
+                    if($_SESSION['loggedUser']->getIdCompany() == $offer->getCompanyId() )
+                    {
+                        array_push($offerList, $offer);
+                    }
                 }
             }
-        } else if($_SESSION['userType'] == 2){
-            foreach ($this->offersDAO->getAll() as $offer) { 
-                if($_SESSION['loggedUser']->getIdCompany() == $offer->getCompanyId() )
-                {
-                    array_push($offerList, $offer);
-                }
+            else{
+                $offerList = $this->offersDAO->getAll();
             }
-        }
-        else{
-            $offerList = $this->offersDAO->getAll();
-        }
 
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php" ;
-        require_once VIEWS_PATH ."offers-list.php";
-        require_once VIEWS_PATH."footer.php";
+            require_once VIEWS_PATH."header.php";
+            require_once VIEWS_PATH ."nav.php" ;
+            require_once VIEWS_PATH ."offers-list.php";
+            require_once VIEWS_PATH."footer.php";
+        }
+        catch(Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
+        }
+        
     }
 
     public function showOfferDetails($offerId, Alert $alert = null){
@@ -84,17 +94,20 @@ class OfferController{
 
     public function editView($offerId, Alert $alert = null)
     {
-        $offer = new Offer;
+        SystemFunctions::validateSession();
+        
         $offer = $this->offersDAO->getOfferById($offerId);
+
         $listJobsPositions = $this->jobPositionsDAO->getAll();
         $listaCarreras = $this->careerDAO->getAll_Api();
         $companyList = $this->companyDAO->getAll();
+        
         $carriersMap = array();
         foreach($listaCarreras as $value){
             $carriersMap[$value->getIdCareer()] = $value->getDescription();
         }
 
-        SystemFunctions::validateSession();
+        
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php";
         require_once VIEWS_PATH ."offer-edit.php";
