@@ -114,6 +114,5 @@ CREATE TABLE `curriculums` (
  `id_student` int(11) NOT NULL,
  `url` varchar(100) NOT NULL,
  PRIMARY KEY (`id_curriculum`),
- KEY `fk_student` (`id_student`),
- CONSTRAINT `fk_student` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
+ FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
 ) ENGINE=InnoDB;
