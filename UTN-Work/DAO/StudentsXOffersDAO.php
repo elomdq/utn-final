@@ -7,6 +7,7 @@ use Models\Offer as Offer;
 use DAO\Connection as Connection;
 use DAO\OfferDAO as OfferDAO;
 use DAO\StudentDAO as StudentDAO;
+use DAO\CurriculumDAO as CurriculumDAO;
 
 use \Exception as Exception;
 
@@ -14,20 +15,27 @@ class StudentsXOffersDAO{
 
     private $connection;
     private $tableName = "students_x_offers";
+    private $curriculumDAO;
 
     public function __construct()
     {
-        
+        $this->curriculumDAO = new CurriculumDAO;
     }
 
     public function add(Offer $offer, Student $student)
     {
         try{
-            $query = "INSERT INTO ".$this->tableName. "(id_offer, id_student) VALUES(:id_offer, :id_student) ";
+            $query = "INSERT INTO ".$this->tableName. "(id_offer, id_student, id_curriculum) VALUES(:id_offer, :id_student, :id_curriculum) ";
 
             $parameters = array();
             $parameters['id_offer'] = $offer->getOfferId();
             $parameters['id_student'] = $student->getStudentId();
+
+            $idCurriculum = $this->curriculumDAO->getCurriculumIdByOwnerId($parameters['id_student']);
+            
+            if($idCurriculum != 0){
+                $parameters['id_curriculum'] = $idCurriculum;
+            }
 
             $this->connection = Connection::getInstance();
             $this->connection->executeNonQuery($query, $parameters);

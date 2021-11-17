@@ -93,11 +93,14 @@ CREATE TABLE `students_x_offers` (
  `id_student_x_offer` int(11) NOT NULL AUTO_INCREMENT,
  `id_offer` int(11) NOT NULL,
  `id_student` int(11) NOT NULL,
+ `id_curriculum` int(11) NOT NULL,
  PRIMARY KEY (`id_student_x_offer`),
  KEY `fk_jobOffer` (`id_offer`),
  KEY `fk_student` (`id_student`),
+ KEY `fk_curriculum` (`id_curriculum`),
  CONSTRAINT `fk_jobOffer` FOREIGN KEY (`id_offer`) REFERENCES `offers` (`id_jobOffer`),
- CONSTRAINT `fk_student` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
+ CONSTRAINT `fk_student` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`),
+ FOREIGN KEY (`id_curriculum`) REFERENCES `curriculums` (`id_curriculum`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `images` (
