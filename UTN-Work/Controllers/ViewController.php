@@ -25,6 +25,17 @@ class ViewController{
         require_once VIEWS_PATH."footer.php";
     }
 
+    public static function erroConnectionView(Alert $alert = null)
+    {
+        require_once VIEWS_PATH."header.php";
+        if(isset($_SESSION['loggedUser']))
+        {
+            require_once VIEWS_PATH ."nav.php";
+        }
+        require_once VIEWS_PATH. "error-connection.php";
+        require_once VIEWS_PATH."footer.php";
+    }
+
 }
 
 ?>

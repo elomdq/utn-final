@@ -45,7 +45,8 @@ class StudentController{
         catch(Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
-            $ViewController->homeView($alert);
+            //$ViewController->homeView($alert);
+            ViewController::erroConnectionView($alert);
         }
     }
 }
