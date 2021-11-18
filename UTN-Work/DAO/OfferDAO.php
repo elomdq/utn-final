@@ -128,7 +128,7 @@ class OfferDAO implements IOfferDAO{
     public function disableOffer($offerId)
     {
         try{
-            $query = "UPDATE " .$this->tableName. " SET active = 0 WHERE id_offer = " . $offerId. ";";
+            $query = "UPDATE " .$this->tableName. " SET active = 0 WHERE id_jobOffer = " . $offerId. ";";
 
             $this->connection = Connection::GetInstance();
     

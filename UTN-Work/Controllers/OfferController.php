@@ -307,13 +307,24 @@ class OfferController{
     }
 
     public function closeOffer($offerId){
-        $this->offersDAO->disableOffer($offerId);
+        try{
+            $this->offersDAO->disableOffer($offerId);
         
-        $mailController = new MailController;
-        $mailController->sendThanksEmails($this->studentsXoffersDAO->getApplicantsByOfferId($offerId), $this->offersDAO->getOfferById($offerId)->getTitle());
+            $mailController = new MailController;
+            $mailController->sendThanksEmails(/*$this->studentsXoffersDAO->getApplicantsByOfferId($offerId)*/ ["eloymrp@gmail.com","eloymrp@gmail.com"] , $this->offersDAO->getOfferById($offerId)->getTitle());
+          
+            $alert = new Alert;
+            $alert->setType("success");
+            $alert->setMessage("Oferta cerrado con exito.");
+
+            $this->showOfferDetails($offerId, $alert);
+        }catch(Exception $e){
+            $alert->setType("danger");
+            $alert->setMessage("Algo salio mal. Error: " . $e->getMessage());
+        }
     }
 
-    
+
     private function uploadFile($target_file, Alert $alert){
 
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
