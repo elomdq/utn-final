@@ -79,13 +79,6 @@ class OfferController{
 
         $offer = $this->offersDAO->getOfferById($offerId);
         $flyer = $this->imageDAO->getURLByOwnerId($offerId);
-        $postulado = 0;
-
-        if($_SESSION['userType']== 0){
-            if( $this->studentsXoffers->isStudentInOffer($_SESSION['loggedUser']->getStudentId(), $offer->getOfferId()) ){
-                $postulado = 1;
-            }
-        }
 
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php" ;
