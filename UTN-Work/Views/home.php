@@ -1,12 +1,3 @@
-<?php
-
-use Models\Student as Student;
-use DAO\StudentDAO as StudentDAO;
-
-//echo "HOME <br>";
-?>
-
-
 <div class="row justify-content-center">
     <div class="col-5">
         <div class="card shadow mb-4">
