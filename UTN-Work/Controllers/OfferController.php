@@ -8,16 +8,20 @@ use DAO\OfferDAO as OfferDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\CompanyDAO as CompanyDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
+use DAO\StudentsXOffersDAO as StudentsXOffersDAO;
 
-use DAO\StudentsXOffersDAO as StudentsXOffers;
 use Exception;
+
 use Models\Offer as Offer;
 use Models\Alert as Alert;
+
+use Controllers\MailController as MailController;
+use DAO\StudentDAO;
 
 class OfferController{
 
     private $offersDAO;
-    private $studentsXoffers;
+    private $studentsXoffersDAO;
     private $jobPositionsDAO;
     private $careerDAO; 
     private $companyDAO;
@@ -26,7 +30,7 @@ class OfferController{
     public function __construct()
     {
         $this->offersDAO = new OfferDAO;
-        $this->studentsXoffers = new StudentsXOffers;
+        $this->studentsXoffersDAO = new StudentsXOffersDAO;
         $this->jobPositionsDAO = new JobPositionDAO;
         $this->careerDAO = new CareerDAO;
         $this->companyDAO = new CompanyDAO;
@@ -202,7 +206,7 @@ class OfferController{
             if($_POST)
             {
                 if($_SESSION['loggedUser']){
-                    $this->studentsXoffers->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
+                    $this->studentsXoffersDAO->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
                     $alert->setType('success');
                     $alert->setMessage("Se aplico con exito.");
                     $this->showOfferDetails($_POST['offerId'],$alert);
@@ -219,11 +223,13 @@ class OfferController{
         }
     }
 
-    public function viewApplicants($offerId){
+    public function viewApplicants($offerId, $alert = null){
         SystemFunctions::validateSession();
         try{
-            $alert = new Alert();
-            $students = $this->studentsXoffers->getApplicantsByOfferId($offerId);
+            if($alert == null)
+                $alert = new Alert();
+            
+            $students = $this->studentsXoffersDAO->getApplicantsByOfferId($offerId);
             if(!empty($students))
             {
                 require_once VIEWS_PATH."header.php";
@@ -241,6 +247,40 @@ class OfferController{
             $alert->setMessage($e->getMessage());
             $this->showOfferDetails($offerId,$alert);
         }
+    }
+
+    public function declineApplicant($offerId, $studentId){
+        SystemFunctions::validateSession();
+        try
+        {
+            $alert = new Alert();
+            $students = $this->studentsXoffersDAO->getApplicantsByOfferId($offerId);
+            $this->studentsXoffersDAO->remove($offerId, $studentId);
+
+            $studentDAO = new StudentDAO;
+
+            $mailController = new MailController;
+            $mailController->sendDeclineEmail(/*$studentDAO->getStudentByStudentId($studentId)->getEmail()*/ "davidjupg@gmail.com", $this->offersDAO->getOfferById($offerId)->getTitle());
+
+            $alert->setType('success');
+            $alert->setMessage("Postulacion declinada con exito.");
+            
+            $this->viewApplicants($offerId,$alert);
+            
+        } catch(Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage("Hubo problemas para declinar esa");
+            $this->viewApplicants($offerId,$alert);
+        }
+        
+    }
+
+
+    public function closeOffer($offerId){
+        $this->offersDAO->disableOffer($offerId);
+        
+        $mailController = new MailController;
+        $mailController->sendThanksEmails($this->studentsXoffersDAO->getApplicantsByOfferId($offerId), $this->offersDAO->getOfferById($offerId)->getTitle());
     }
 
 }

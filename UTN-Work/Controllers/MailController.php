@@ -33,10 +33,37 @@ class MailController{
     }
 
     public function sendEmail($email, $subject, $message){
-        $headers = "From: admin@gmail.com" . "\r\n" .
-        "CC: anymail@example.com";
+        $headers = "From: carlos@gmail.com" . "\r\n";
+
         mail($email, $subject, $message);
     }
+
+    public function sendThanksEmails($emailList, $offerTitle){
+        $message = wordwrap("La publicacion de la oferta laboral" . $offerTitle . " a cerrado. Muchas gracias por su postulación. La empresa se estará comunicando a su tiempo. Saludos", 70) ;
+        
+        foreach($emailList as $email){
+            $this->sendEmail($email, "Oferta cerrada", $message);
+        }
+    }
+
+    public function sendDeclineEmail($email, $offerTitle){
+        $message = wordwrap("Tu postulación a la oferta laboral" . $offerTitle . " a sido declinada.", 70);
+
+        $this->sendEmail($email, "Postulacion a oferta \"".$offerTitle."\" declinada", $message);
+    }
+
 }
 
+
+/*
+$user = $userController->GetUserById((int) $parameters["userId"]);
+$to_email = $user->getEmail();
+$subject = APPLY_DELETE_EMAIL_SUBJECT;
+$body = APPLY_DELETE_EMAIL;
+$headers = APPLY_DELETE_EMAIL_HEADER;
+
+mail($to_email, $subject, $body, $headers);
+*/
+
 ?>
+

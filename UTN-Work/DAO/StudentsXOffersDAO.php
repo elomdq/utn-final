@@ -86,6 +86,18 @@ class StudentsXOffersDAO{
         }
     }
 
+    public function remove($offerId, $studentId){
+        try{
+            $query = "DELETE FROM ".$this->tableName." WHERE id_offer = ". $offerId . " AND id_student=" . $studentId . ";";
+
+            $this->connection = Connection::getInstance();
+            $this->connection->executeNonQuery($query);
+        }
+        catch(Exception $e){
+            throw $e;
+        }
+    }
+
 }
 
 ?>

@@ -7,8 +7,8 @@ class Alert{
     private $message;
 
     function __construct($type ="",$message = ""){
-     $this->setType($type);
-     $this->setMessage($message); 
+        $this->setType($type);
+        $this->setMessage($message); 
     }
 
     public function getType()
