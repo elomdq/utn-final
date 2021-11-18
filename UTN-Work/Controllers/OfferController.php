@@ -4,6 +4,8 @@ namespace Controllers;
 
 use Config\SystemFunctions as SystemFunctions;
 
+use FPDF as FPDF;
+
 use DAO\OfferDAO as OfferDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\CompanyDAO as CompanyDAO;
@@ -270,6 +272,42 @@ class OfferController{
           }
         return $alert;
     }
+
+    public function CreatePDF($idOffer): void
+        {
+            $jobOffer = $this->offersDAO->getOfferById($idOffer);
+            ob_end_clean(); //clears
+            $pdf=new FPDF();
+
+            $pdf->AddPage();
+            $pdf->SetFont('Arial', 'B', 20);
+            $pdf->Cell(60,20,$jobOffer->getTitle());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 16);
+            $pdf->Cell(60,20,"Ciudad: ");
+            $pdf->SetFont('Arial', '', 16);
+            $pdf->Cell(60,20,$jobOffer->getCompanyId());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 14);
+            $pdf->Cell(60,20,"Puesto Laboral: ");
+            $pdf->SetFont('Arial', '', 14);
+            $pdf->Cell(60,20,$jobOffer->getJobPosition());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(60,20,"Postulados: ");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(60,20,$jobOffer->getApplicants());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(60,20,$jobOffer->getDescription());
+
+
+            $pdf->Output();
+        }
 
 }
 
