@@ -124,6 +124,23 @@ class OfferDAO implements IOfferDAO{
         }
     }
 
+
+    public function disableOffer($offerId)
+    {
+        try{
+            $query = "UPDATE " .$this->tableName. " SET active = 0 WHERE id_jobOffer = " . $offerId. ";";
+
+            $this->connection = Connection::GetInstance();
+    
+            $this->connection->executeNonQuery($query);
+        }
+        catch(Exception $e){
+            throw $e;
+        }
+
+    }
+
+    
     public function getIdJobOfferByTitle($title){
         try{
             $query = "SELECT (id_jobOffer) FROM ".$this->tableName." WHERE title= \"".$title."\";";

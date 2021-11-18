@@ -57,6 +57,10 @@
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Estado Academico
                     </a>
+                    <a class="dropdown-item" href="<?php echo FRONT_ROOT . "File/addView"; ?>">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Subir CV
+                    </a>
                     <?php } ?>
 
                     <?php if($_SESSION['userType'] == 1) {?>
@@ -66,27 +70,31 @@
                         </a>
                     <?php } ?>
 
-                    <?php if($_SESSION['userType'] == 1) {?>
+                    <?php if($_SESSION['userType'] != 0) {?>
                         <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Offer/addView"; ?>">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Agregar Oferta
                         </a>
                     <?php } ?>
 
-                    <?php if($_SESSION['userType'] == 0) {?>
-                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "File/addView"; ?>">
+                    <!--
+                    <?php if($_SESSION['userType'] != 1) {?>
+                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Mail/sendEmail/eloymrp@gmail.com/Saludo/Hola"; ?>">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Subir CV
+                        Enviar Email
                         </a>
                     <?php } ?>
+                    -->
 
+                    <!--
                     <?php if($_SESSION['userType'] == 2) {?>
                         <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Offer/addViewCompany"?>">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Agregar Oferta
                         </a>
                     <?php } ?>
-                    
+                    -->
+
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?php echo FRONT_ROOT . "home/logout"; ?>" >
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

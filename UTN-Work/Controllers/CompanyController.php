@@ -35,43 +35,54 @@ class CompanyController{
 
     public function createCompany(...$values)  {
        
-        if($_POST)
-        {
-            if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['address'], $_POST['cuit'], $_POST['email']))
-            {  
-                $company = new Company;
+        try{
+            $alert = new Alert();
+            if($_POST)
+            {
+                if($this->ValidateInputValues($_POST['companyName'], $_POST['telephone'], $_POST['city'], $_POST['address'], $_POST['cuit'], $_POST['email']))
+                {  
+                    $company = new Company;
 
-                $company->setCompanyName($_POST['companyName']);
-                $company->setTelephone($_POST['telephone']);
-                $company->setAddress($_POST['address']);
-                $company->setCity($_POST['city']);
-                $company->setCuit($_POST['cuit']);
-                $company->setEmail($_POST['email']);
+                    $company->setCompanyName($_POST['companyName']);
+                    $company->setTelephone($_POST['telephone']);
+                    $company->setAddress($_POST['address']);
+                    $company->setCity($_POST['city']);
+                    $company->setCuit($_POST['cuit']);
+                    $company->setEmail($_POST['email']);
                 
-                if (isset($_POST['active'])) 
-                {
-                    $company->setActive(true);
+                    if (isset($_POST['active'])) 
+                    {
+                        $company->setActive(true);
+                    } else {
+                        $company->setActive(false);
+                    }
+
+                    $this->userDAO->add($company->getEmail(), $company->getActive(), $this->userType, $this->passDefault);
+
+                    $company->setUserId($this->userDAO->getUserIdByEmail($company->getEmail()));
+
+                    $this->companyDAO->Add($company);
+
+                    $alert->setType('success');
+                    $alert->setMessage("La empresa se creo con exito.");
+
+                    $this->addView($alert);
                 } else {
-                    $company->setActive(false);
+                    $alert->setType("danger");
+                    $alert->setMessage("danger", "Verifique que los campos se encuentren correctamente completos.");
+                    $this->addView($alert);
                 }
-
-                $this->userDAO->add($company->getEmail(), $company->getActive(), $this->userType, $this->passDefault);
-
-                $company->setUserId($this->userDAO->getUserIdByEmail($company->getEmail()));
-
-                $this->companyDAO->Add($company);
-
-                $this->addView();
-
-                
             } else {
-                $alert = new Alert ("danger", "Verifique que los campos se encuentren correctamente completos.");
+                $alert->setType("danger");
+                $alert->setMessage("Hubo un fallo con el envío del formulario");
                 $this->addView($alert);
             }
-        } else {
-            $alert = new Alert ("danger", "Incorrecto ingreso de datos.");
+        } catch(Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
             $this->addView($alert);
         }
+        
     } 
 
     public function deleteCompany($companyId)
@@ -91,39 +102,43 @@ class CompanyController{
     }
 
 
-    public function listCompanies(Alert $alert = null){
+    public function listCompanies(){
         SystemFunctions::validateSession();
 
-        $companiesList = array();
+        $alert = new Alert;
 
-        if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
-        {
-            foreach($this->companyDAO->getAll() as $company)
-            {
-                if(stristr($company->getCompanyName(), $_GET['searchKey']))
-                {
-                    array_push($companiesList, $company); 
-                }
-            }
-        
-            unset($_SESSION['searchKey']);
-        } else {
-            if($_SESSION['userType'] != 1)
+        try{
+            $companiesList = array();
+
+            if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
             {
                 foreach($this->companyDAO->getAll() as $company){
-                    if($company->getActive()){
-                        array_push($companiesList, $company);
+                    if(stristr($company->getCompanyName(), $_GET['searchKey'])){
+                        array_push($companiesList, $company); 
                     }
                 }
-            } else{
-                $companiesList = $this->companyDAO->getAll();
-            }  
-        }
+                unset($_SESSION['searchKey']);
+            } else {
+                if($_SESSION['userType'] != 1) {
+                    foreach($this->companyDAO->getAll() as $company){
+                        if($company->getActive()){
+                            array_push($companiesList, $company);
+                        }
+                    }
+                } else{
+                    $companiesList = $this->companyDAO->getAll();
+                }  
+            }
 
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH . "nav.php";
-        require_once VIEWS_PATH."companies-list.php";
-        require_once VIEWS_PATH."footer.php";
+            require_once VIEWS_PATH."header.php";
+            require_once VIEWS_PATH . "nav.php";
+            require_once VIEWS_PATH."companies-list.php";
+            require_once VIEWS_PATH."footer.php";
+
+        } catch(Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
+        }
     }
 
     private function ValidateInputValues($companyName, $telephone, $city, $address, $cuit, $email){

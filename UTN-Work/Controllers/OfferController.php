@@ -10,18 +10,22 @@ use DAO\OfferDAO as OfferDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\CompanyDAO as CompanyDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
+use DAO\StudentsXOffersDAO as StudentsXOffersDAO;
 use DAO\imageDAO as imageDAO;
 
-use DAO\StudentsXOffersDAO as StudentsXOffers;
 use Exception;
+
 use Models\Offer as Offer;
 use Models\Alert as Alert;
 use Models\File as Archivo;
 
+use Controllers\MailController as MailController;
+use DAO\StudentDAO;
+
 class OfferController{
 
     private $offersDAO;
-    private $studentsXoffers;
+    private $studentsXoffersDAO;
     private $jobPositionsDAO;
     private $careerDAO; 
     private $companyDAO;
@@ -31,7 +35,7 @@ class OfferController{
     public function __construct()
     {
         $this->offersDAO = new OfferDAO;
-        $this->studentsXoffers = new StudentsXOffers;
+        $this->studentsXoffersDAO = new StudentsXOffersDAO;
         $this->jobPositionsDAO = new JobPositionDAO;
         $this->careerDAO = new CareerDAO;
         $this->companyDAO = new CompanyDAO;
@@ -90,6 +94,19 @@ class OfferController{
 
     public function addView(Alert $alert = null){
         SystemFunctions::validateSession();
+
+
+        $listJobsPositions = $this->jobPositionsDAO->getAll();
+        $listaCarreras = $this->careerDAO->getAll_Api();
+        $companyList = $this->companyDAO->getAll();
+
+        $carriersMap = array();
+        foreach($listaCarreras as $value){
+            $carriersMap[$value->getIdCareer()] = $value->getDescription();
+        }
+
+        $user = $_SESSION['loggedUser'];
+
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php";
         require_once VIEWS_PATH ."offer-add.php";
@@ -191,10 +208,11 @@ class OfferController{
 
                 $this->offersDAO->add($oferta);
 
-                if($_FILES)
+                if($_FILES &&  $_FILES["fileToUpload"]["name"] != "")
                 {
                     $target_dir = UPLOADS_PATH_IMG;
                     $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+
                     $archivo = new Archivo();
                     $archivo->setUrl($target_file);
                     $archivo->setIdOwner($this->offersDAO->getIdJobOfferByTitle($oferta->getTitle()));
@@ -211,7 +229,7 @@ class OfferController{
         
             } else {
                 $alert->setType('danger');
-                $alert->setMessage("Incorrecto ingreso de datos.");
+                $alert->setMessage("Hubo un problema con el envio de datos.");
                 $this->addView($alert);
             }
         } catch (Exception $e){
@@ -222,22 +240,17 @@ class OfferController{
     } 
 
 
-    public function applyForOffer(...$values){      
+    public function applyForOffer($offerId){      
+        SystemFunctions::validateSession();
+        
         try{
             $alert = new Alert();
-            if($_POST)
-            {
-                if($_SESSION['loggedUser']){
-                    $this->studentsXoffers->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
+            
+                    $this->studentsXoffersDAO->add($this->offersDAO->getOfferById($offerId), $_SESSION['loggedUser']); 
                     $alert->setType('success');
                     $alert->setMessage("Se aplico con exito.");
-                    $this->showOfferDetails($_POST['offerId'],$alert);
-                }
-            } else{
-                $alert->setType('warning');
-                $alert->setMessage("Algo ocurrio en el envio de datos, intente nuevamente");
-                $this->showOffersList($alert);
-            }
+                    $this->showOfferDetails($offerId,$alert);
+            
         } catch(Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
@@ -245,11 +258,13 @@ class OfferController{
         }
     }
 
-    public function viewApplicants($offerId){
+    public function viewApplicants($offerId, $alert = null){
         SystemFunctions::validateSession();
         try{
-            $alert = new Alert();
-            $students = $this->studentsXoffers->getApplicantsByOfferId($offerId);
+            if($alert == null)
+                $alert = new Alert();
+            
+            $students = $this->studentsXoffersDAO->getApplicantsByOfferId($offerId);
             if(!empty($students))
             {
                 require_once VIEWS_PATH."header.php";
@@ -257,17 +272,67 @@ class OfferController{
                 require_once VIEWS_PATH."applicants-list.php";
                 require_once VIEWS_PATH."footer.php";
             } else {
-                $alert->setType('warning');
-                $alert->setMessage("No hay postulantes");
-                $this->showOfferDetails($offerId,$alert);
+                if($alert->getMessage() != null)
+                {
+                    $this->showOfferDetails($offerId,$alert);
+                } else {
+                    $alert->setType('warning');
+                    $alert->setMessage($alert->getMessage() . "No hay postulantes");
+                    $this->showOfferDetails($offerId,$alert);
+                }
             }
-
         }catch (Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
             $this->showOfferDetails($offerId,$alert);
         }
     }
+
+
+    public function declineApplicant($offerId, $studentId){
+        SystemFunctions::validateSession();
+        try
+        {
+            $alert = new Alert();
+            $students = $this->studentsXoffersDAO->getApplicantsByOfferId($offerId);
+            $this->studentsXoffersDAO->remove($offerId, $studentId);
+
+            $studentDAO = new StudentDAO;
+
+            $mailController = new MailController;
+            $mailController->sendDeclineEmail(/*$studentDAO->getStudentByStudentId($studentId)->getEmail()*/ "eloymrp@gmail.com", $this->offersDAO->getOfferById($offerId)->getTitle());
+
+            $alert->setType('success');
+            $alert->setMessage("Postulacion declinada con exito.");
+            
+            $this->viewApplicants($offerId,$alert);
+            
+        } catch(Exception $e){
+            $alert->setType('danger');
+            $alert->setMessage("Hubo problemas para declinar esa");
+            $this->viewApplicants($offerId,$alert);
+        }
+        
+    }
+
+    public function closeOffer($offerId){
+        try{
+            $this->offersDAO->disableOffer($offerId);
+        
+            $mailController = new MailController;
+            $mailController->sendThanksEmails(/*$this->studentsXoffersDAO->getApplicantsByOfferId($offerId)*/ ["eloymrp@gmail.com","eloymrp@gmail.com"] , $this->offersDAO->getOfferById($offerId)->getTitle());
+          
+            $alert = new Alert;
+            $alert->setType("success");
+            $alert->setMessage("Oferta cerrado con exito.");
+
+            $this->showOfferDetails($offerId, $alert);
+        }catch(Exception $e){
+            $alert->setType("danger");
+            $alert->setMessage("Algo salio mal. Error: " . $e->getMessage());
+        }
+    }
+
 
     private function uploadFile($target_file, Alert $alert){
 
@@ -285,7 +350,7 @@ class OfferController{
         {
             $jobOffer = $this->offersDAO->getOfferById($idOffer);
             $companyName = $this->companyDAO->getCompanyById($jobOffer->getCompanyId());
-            $students = $this->studentsXoffers->getApplicantsByOfferId($idOffer);
+            $students = $this->studentsXoffersDAO->getApplicantsByOfferId($idOffer);
             $justNames = array();
             foreach ($students as $student) {
                 array_push($justNames,$student->getFirstName() ." " . $student->getLastName());

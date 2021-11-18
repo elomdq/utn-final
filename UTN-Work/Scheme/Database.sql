@@ -22,7 +22,7 @@ CREATE TABLE `admins` (
  CONSTRAINT `fk_userAdmin` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;
 
-INSERT INTO `users`(email, pass, active, 0) VALUES('admin@admin', '123456', 1, 0);
+INSERT INTO `users`(email, pass, active, userType) VALUES('admin@admin', '123456', 1, 1);
 INSERT INTO `admins`(id_user) VALUES(1);
 
 /*
@@ -114,5 +114,6 @@ CREATE TABLE `curriculums` (
  `id_student` int(11) NOT NULL,
  `url` varchar(100) NOT NULL,
  PRIMARY KEY (`id_curriculum`),
- FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
+ KEY `fk_student_cv` (`id_student`),
+ CONSTRAINT `fk_student_cv` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
 ) ENGINE=InnoDB;
