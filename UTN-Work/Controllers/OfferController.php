@@ -276,6 +276,15 @@ class OfferController{
     public function CreatePDF($idOffer): void
         {
             $jobOffer = $this->offersDAO->getOfferById($idOffer);
+            $companyName = $this->companyDAO->getCompanyById($jobOffer->getCompanyId());
+            $students = $this->studentsXoffers->getApplicantsByOfferId($idOffer);
+            $justNames = array();
+            foreach ($students as $student) {
+                array_push($justNames,$student->getFirstName() ." " . $student->getLastName());
+            }
+            $stringNombres = implode("-", $justNames);
+
+            $jobPosition = $this->jobPositionsDAO->getjobPositionById($jobOffer->getJobPosition());
             ob_end_clean(); //clears
             $pdf=new FPDF();
 
@@ -285,23 +294,25 @@ class OfferController{
             $pdf->Ln(20);
 
             $pdf->SetFont('Arial', 'B', 16);
-            $pdf->Cell(60,20,"Ciudad: ");
+            $pdf->Cell(60,20,"Empresa: ");
             $pdf->SetFont('Arial', '', 16);
-            $pdf->Cell(60,20,$jobOffer->getCompanyId());
+            $pdf->Cell(60,20,$companyName->getCompanyName());
             $pdf->Ln(20);
 
             $pdf->SetFont('Arial', 'B', 14);
             $pdf->Cell(60,20,"Puesto Laboral: ");
             $pdf->SetFont('Arial', '', 14);
-            $pdf->Cell(60,20,$jobOffer->getJobPosition());
+            $pdf->Cell(60,20,$jobPosition->getDescription());
             $pdf->Ln(20);
 
             $pdf->SetFont('Arial', 'B', 12);
             $pdf->Cell(60,20,"Postulados: ");
             $pdf->SetFont('Arial', '', 12);
-            $pdf->Cell(60,20,$jobOffer->getApplicants());
+            $pdf->Cell(60,20,$stringNombres);
             $pdf->Ln(20);
 
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(60,20,"Descripcion: ");
             $pdf->SetFont('Arial', '', 12);
             $pdf->Cell(60,20,$jobOffer->getDescription());
 
