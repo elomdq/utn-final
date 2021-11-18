@@ -29,10 +29,13 @@ class imageDAO{
     public function getURLByOwnerId($idOwner)
     {
         try {
-            $query = "SELECT * FROM " . $this->tableName . " WHERE id_owner = " . $idOwner . ";";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE id_offer = " . $idOwner . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
-            $url = $resultSet[0]['url'];
+            $url = "";
+            if(!empty($resultSet)){
+                $url = $resultSet[0]['url'];
+            }
             return $url;
         } catch (Exception $e) {
             throw $e;
@@ -45,7 +48,10 @@ class imageDAO{
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_image = " . $idImage . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
-            $url = $resultSet[0]['url'];
+            $url = "";
+            if(!empty($resultSet)){
+                $url = $resultSet[0]['url'];
+            }
             return $url;
         } catch (Exception $e) {
             throw $e;

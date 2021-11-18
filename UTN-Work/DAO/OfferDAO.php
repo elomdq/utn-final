@@ -123,5 +123,19 @@ class OfferDAO implements IOfferDAO{
             throw $e;
         }
     }
+
+    public function getIdJobOfferByTitle($title){
+        try{
+            $query = "SELECT (id_jobOffer) FROM ".$this->tableName." WHERE title= \"".$title."\";";
+            $this->connection = Connection::GetInstance();
+    
+            $resultSet=$this->connection->execute($query);
+    
+            return $resultSet[0]['id_jobOffer'];
+        } catch (Exception $e){
+            throw $e;
+        }
+
+    }
 }
 ?>

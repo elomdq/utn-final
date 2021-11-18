@@ -37,7 +37,7 @@ class FileController{
         try{
             if($_FILES)
             {
-                $target_dir = UPLOADS_PATH;
+                $target_dir = UPLOADS_PATH_CV;
                 $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
                 $uploadOk = 1;
                 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
