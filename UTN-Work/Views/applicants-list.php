@@ -35,12 +35,12 @@
                                 </div>
                             </div>
                             <?php } ?>
-                        
-
-                            <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
             <!-- </a> -->
         <?php } ?>
+    </div>
+</div>

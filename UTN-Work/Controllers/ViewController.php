@@ -11,7 +11,7 @@ class ViewController{
         require_once(VIEWS_PATH."footer.php");
     }
 
-    public static function homeView(){
+    public static function homeView(Alert $alert = null){
         require_once VIEWS_PATH. "header.php";
         require_once VIEWS_PATH ."nav.php" ;
         require_once VIEWS_PATH ."home.php";

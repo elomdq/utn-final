@@ -65,7 +65,29 @@ class StudentsXOffersDAO{
             throw $e;
         }
     }
+    
+    public function getOffersListByStudentId($studentId){
+        try{
+            $query = "SELECT * FROM ". $this->tableName . " WHERE id_student = " . $studentId . ";";
 
+            $this->connection = Connection::getInstance();
+            $resultSet = $this->connection->execute($query);
+
+            $offers = array();
+            $offerDAO = new offerDAO;
+
+            foreach($resultSet as $row)
+            {
+                $offer = $offerDAO->getOfferById($row['id_offer']);
+                array_push($offers, $offer);
+            }
+
+            return $offers;
+
+        }catch(Exception $e){
+            throw $e;
+        }
+    }
 
     public function isStudentInOffer($studentId, $offerId){
         
