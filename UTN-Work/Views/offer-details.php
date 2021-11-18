@@ -1,4 +1,3 @@
-
 <div class="container">
 <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?> col-6 mx-auto" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
 
@@ -60,7 +59,7 @@
                         
                         <?php if(isset($_SESSION['userType']) && $_SESSION['userType']== 0) { 
                             ?>
-                            <?php if( $this->studentsXoffersDAO->isStudentInOffer($_SESSION['loggedUser']->getStudentId(), $offer->getOfferId()) ) { ?>
+                            <?php if($postulado == 1 ) { ?>
                                 <button class="btn btn-primary botonCentro " type="button" disabled>Ya estas postulado</button>
                             <?php } else {?>
                                 <button class="btn btn-primary botonCentro" type="submit">Postularse</button>
