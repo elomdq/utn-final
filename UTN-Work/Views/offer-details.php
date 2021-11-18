@@ -40,7 +40,7 @@
 
                 <div class="col-10 m-3">
                     <div>
-                        <p class="d-inline fw-bold">Fecha limite de oferta: <?php echo $offer->getDueDays(); ?></p>
+                        <p class="d-inline fw-bold">Dias abiertos para postularse: <?php echo $offer->getDueDays();?></p>
                     </div>
                 </div>
 
