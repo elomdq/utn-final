@@ -4,15 +4,19 @@ namespace Controllers;
 
 use Config\SystemFunctions as SystemFunctions;
 
+use FPDF as FPDF;
+
 use DAO\OfferDAO as OfferDAO;
 use DAO\CareerDAO as CareerDAO;
 use DAO\CompanyDAO as CompanyDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
+use DAO\imageDAO as imageDAO;
 
 use DAO\StudentsXOffersDAO as StudentsXOffers;
 use Exception;
 use Models\Offer as Offer;
 use Models\Alert as Alert;
+use Models\File as Archivo;
 
 class OfferController{
 
@@ -21,6 +25,7 @@ class OfferController{
     private $jobPositionsDAO;
     private $careerDAO; 
     private $companyDAO;
+    private $imageDAO;
     
 
     public function __construct()
@@ -30,13 +35,11 @@ class OfferController{
         $this->jobPositionsDAO = new JobPositionDAO;
         $this->careerDAO = new CareerDAO;
         $this->companyDAO = new CompanyDAO;
+        $this->imageDAO = new imageDAO;
     }
 
-    public function showOffersList(){
+    public function showOffersList(Alert $alert = null){
         SystemFunctions::validateSession();
-
-        $alert = new Alert;
-
         try{
             $offerList = array();
 
@@ -77,6 +80,7 @@ class OfferController{
         SystemFunctions::validateSession();
 
         $offer = $this->offersDAO->getOfferById($offerId);
+        $flyer = $this->imageDAO->getURLByOwnerId($offerId);
 
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php" ;
@@ -92,6 +96,14 @@ class OfferController{
         require_once VIEWS_PATH."footer.php";
     }
 
+    public function addViewCompany(Alert $alert = null){
+        SystemFunctions::validateSession();
+        require_once VIEWS_PATH."header.php";
+        require_once VIEWS_PATH ."nav.php";
+        require_once VIEWS_PATH ."offer-add-company.php";
+        require_once VIEWS_PATH."footer.php";
+    }
+
     public function editView($offerId, Alert $alert = null)
     {
         SystemFunctions::validateSession();
@@ -101,6 +113,7 @@ class OfferController{
         $listJobsPositions = $this->jobPositionsDAO->getAll();
         $listaCarreras = $this->careerDAO->getAll_Api();
         $companyList = $this->companyDAO->getAll();
+        $flyerOffer = $this->imageDAO->getURLByOwnerId($offerId);
         
         $carriersMap = array();
         foreach($listaCarreras as $value){
@@ -178,6 +191,19 @@ class OfferController{
 
                 $this->offersDAO->add($oferta);
 
+                if($_FILES)
+                {
+                    $target_dir = UPLOADS_PATH_IMG;
+                    $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+                    $archivo = new Archivo();
+                    $archivo->setUrl($target_file);
+                    $archivo->setIdOwner($this->offersDAO->getIdJobOfferByTitle($oferta->getTitle()));
+
+                    $this->uploadFile($target_file, $alert);
+        
+                    $this->imageDAO->add($archivo);
+                }
+
                 $alert->setType('success');
                 $alert->setMessage("La oferta se creo con exito.");
 
@@ -242,6 +268,72 @@ class OfferController{
             $this->showOfferDetails($offerId,$alert);
         }
     }
+
+    private function uploadFile($target_file, Alert $alert){
+
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            $alert->setMessage("Archivo subido con exito");
+            $alert->setType("success");
+          } else {
+            $alert->setMessage("Error al subir el archivo");
+            $alert->setType("danger");
+          }
+        return $alert;
+    }
+
+    public function CreatePDF($idOffer): void
+        {
+            $jobOffer = $this->offersDAO->getOfferById($idOffer);
+            $companyName = $this->companyDAO->getCompanyById($jobOffer->getCompanyId());
+            $students = $this->studentsXoffers->getApplicantsByOfferId($idOffer);
+            $justNames = array();
+            foreach ($students as $student) {
+                array_push($justNames,$student->getFirstName() ." " . $student->getLastName());
+            }
+            $stringNombres = implode("-", $justNames);
+
+            $jobPosition = $this->jobPositionsDAO->getjobPositionById($jobOffer->getJobPosition());
+
+            ob_end_clean(); //clears
+            $pdf=new FPDF();
+
+            $pdf->AddPage();
+            $pdf->SetFont('Arial', 'B', 20);
+            $pdf->Cell(60,20,$jobOffer->getTitle());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 16);
+            $pdf->Cell(60,20,"Empresa: ");
+            $pdf->SetFont('Arial', '', 16);
+            $pdf->Cell(60,20,$companyName->getCompanyName());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 14);
+            $pdf->Cell(60,20,"Puesto Laboral: ");
+            $pdf->SetFont('Arial', '', 14);
+            $pdf->Cell(60,20,$jobPosition->getDescription());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(60,20,"Postulados: ");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(60,20,$stringNombres);
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(60,20,"Descripcion: ");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(60,20,$jobOffer->getDescription());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(60,20,"Fecha: ");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(60,20,$jobOffer->getPublicationDate());
+
+
+            $pdf->Output();
+        }
 
 }
 

@@ -87,17 +87,21 @@ class Connection{
     private function bindParameters($parameters = array(), $queryType = QueryType::Query)
     {
         $i = 0;
-
-        foreach ($parameters as $parameterName => $value) {
-            $i++;
-
-            if ($queryType == QueryType::Query)
-            {
-                $this->pdoStatement->bindParam(":" . $parameterName, $parameters[$parameterName]); //si pongo directo el $value no lo toma
+        try{
+            foreach ($parameters as $parameterName => $value) {
+                $i++;
+    
+                if ($queryType == QueryType::Query)
+                {
+                    $this->pdoStatement->bindParam(":" . $parameterName, $parameters[$parameterName]); //si pongo directo el $value no lo toma
+                }
+                else
+                    $this->pdoStatement->bindParam($i, $parameters[$parameterName]);
             }
-            else
-                $this->pdoStatement->bindParam($i, $parameters[$parameterName]);
+        } catch (Exception $e){
+            throw $e;
         }
+
     }
 }
 

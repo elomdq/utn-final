@@ -7,6 +7,7 @@ use Models\Offer as Offer;
 use DAO\Connection as Connection;
 use DAO\OfferDAO as OfferDAO;
 use DAO\StudentDAO as StudentDAO;
+use DAO\CurriculumDAO as CurriculumDAO;
 
 use \Exception as Exception;
 
@@ -14,10 +15,11 @@ class StudentsXOffersDAO{
 
     private $connection;
     private $tableName = "students_x_offers";
+    private $curriculumDAO;
 
     public function __construct()
     {
-        
+        $this->curriculumDAO = new CurriculumDAO;
     }
 
     public function add(Offer $offer, Student $student)
