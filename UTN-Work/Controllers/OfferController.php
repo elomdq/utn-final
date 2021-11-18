@@ -293,6 +293,7 @@ class OfferController{
             $stringNombres = implode("-", $justNames);
 
             $jobPosition = $this->jobPositionsDAO->getjobPositionById($jobOffer->getJobPosition());
+
             ob_end_clean(); //clears
             $pdf=new FPDF();
 
@@ -323,6 +324,12 @@ class OfferController{
             $pdf->Cell(60,20,"Descripcion: ");
             $pdf->SetFont('Arial', '', 12);
             $pdf->Cell(60,20,$jobOffer->getDescription());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(60,20,"Fecha: ");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(60,20,$jobOffer->getPublicationDate());
 
 
             $pdf->Output();
