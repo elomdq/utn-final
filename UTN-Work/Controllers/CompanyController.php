@@ -80,7 +80,8 @@ class CompanyController{
         } catch(Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
-            $this->addView($alert);
+            //$this->addView($alert);
+            ViewController::erroConnectionView($alert);
         }
         
     } 
@@ -138,6 +139,7 @@ class CompanyController{
         } catch(Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
+            ViewController::erroConnectionView($alert);
         }
     }
 

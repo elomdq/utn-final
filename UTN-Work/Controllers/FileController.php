@@ -65,7 +65,8 @@ class FileController{
         } catch(Exception $e){
             $alert->setMessage($e->getMessage());
             $alert->settype("danger");
-            $this->addView($alert);
+            //$this->addView($alert);
+            ViewController::erroConnectionView($alert);
         }
     }
 

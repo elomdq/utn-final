@@ -74,8 +74,10 @@ class OfferController{
             require_once VIEWS_PATH."footer.php";
         }
         catch(Exception $e){
+            $alert = new Alert;
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
+            ViewController::erroConnectionView($alert);
         }
         
     }
@@ -95,7 +97,7 @@ class OfferController{
     public function addView(Alert $alert = null){
         SystemFunctions::validateSession();
 
-
+        try{
         $listJobsPositions = $this->jobPositionsDAO->getAll();
         $listaCarreras = $this->careerDAO->getAll_Api();
         $companyList = $this->companyDAO->getAll();
@@ -111,14 +113,12 @@ class OfferController{
         require_once VIEWS_PATH ."nav.php";
         require_once VIEWS_PATH ."offer-add.php";
         require_once VIEWS_PATH."footer.php";
-    }
-
-    public function addViewCompany(Alert $alert = null){
-        SystemFunctions::validateSession();
-        require_once VIEWS_PATH."header.php";
-        require_once VIEWS_PATH ."nav.php";
-        require_once VIEWS_PATH ."offer-add-company.php";
-        require_once VIEWS_PATH."footer.php";
+        } catch(Exception $e){
+            $alert = new Alert;
+            $alert->setType('danger');
+            $alert->setMessage($e->getMessage());
+            ViewController::erroConnectionView($alert);
+        }
     }
 
     public function editView($offerId, Alert $alert = null)
@@ -180,6 +180,7 @@ class OfferController{
         } catch (Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
+            ViewController::erroConnectionView($alert);
         }
         
     }
@@ -235,7 +236,8 @@ class OfferController{
         } catch (Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
-            $this->addView($alert);
+            //$this->addView($alert);
+            ViewController::erroConnectionView($alert);
         }
     } 
 
@@ -254,7 +256,8 @@ class OfferController{
         } catch(Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
-            $this->showOffersList($alert);
+            //$this->showOffersList($alert);
+            ViewController::erroConnectionView($alert);
         }
     }
 
@@ -284,7 +287,8 @@ class OfferController{
         }catch (Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
-            $this->showOfferDetails($offerId,$alert);
+            //$this->showOfferDetails($offerId,$alert);
+            ViewController::erroConnectionView($alert);
         }
     }
 

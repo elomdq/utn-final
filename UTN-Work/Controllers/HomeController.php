@@ -40,6 +40,7 @@ class HomeController{
     }
 
     public function login($email,$password) {
+        try{
         $alert = new Alert();
 
         if(!empty($email) && !empty($password)) {
@@ -99,6 +100,12 @@ class HomeController{
             $alert->setMessage("Falta algun dato.");
             $this->showLoginView($alert);
         }
+    } catch(Exception $e){
+        $alert->setType("danger");
+        $alert->setMessage($e->getMessage());
+        ViewController::erroConnectionView($alert);
+    }
+
     }
 
     public function checkEmail(){
@@ -177,7 +184,8 @@ class HomeController{
         } catch (Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
-            $this->showLoginView($alert);
+            //$this->showLoginView($alert);
+            ViewController::erroConnectionView($alert);
         }
 
     }
