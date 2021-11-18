@@ -96,6 +96,14 @@ class OfferController{
         require_once VIEWS_PATH."footer.php";
     }
 
+    public function addViewCompany(Alert $alert = null){
+        SystemFunctions::validateSession();
+        require_once VIEWS_PATH."header.php";
+        require_once VIEWS_PATH ."nav.php";
+        require_once VIEWS_PATH ."offer-add-company.php";
+        require_once VIEWS_PATH."footer.php";
+    }
+
     public function editView($offerId, Alert $alert = null)
     {
         SystemFunctions::validateSession();
@@ -285,6 +293,7 @@ class OfferController{
             $stringNombres = implode("-", $justNames);
 
             $jobPosition = $this->jobPositionsDAO->getjobPositionById($jobOffer->getJobPosition());
+
             ob_end_clean(); //clears
             $pdf=new FPDF();
 
@@ -315,6 +324,12 @@ class OfferController{
             $pdf->Cell(60,20,"Descripcion: ");
             $pdf->SetFont('Arial', '', 12);
             $pdf->Cell(60,20,$jobOffer->getDescription());
+            $pdf->Ln(20);
+
+            $pdf->SetFont('Arial', 'B', 12);
+            $pdf->Cell(60,20,"Fecha: ");
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(60,20,$jobOffer->getPublicationDate());
 
 
             $pdf->Output();
