@@ -58,9 +58,9 @@ class UserDAO{
             $query = "SELECT (id_user) FROM ".$this->tableName." WHERE email= \"".$email."\";";
             $this->connection = Connection::GetInstance();
     
-            $resultSet=$this->connection->execute($query); //me devuelve array con rows
+            $resultSet=$this->connection->execute($query);
     
-            return $resultSet[0]['id_user']; //como email es constraint unique devuelvo la posicion 0 ya que solo hay una fila
+            return $resultSet[0]['id_user'];
         } catch (Exception $e){
             throw $e;
         }

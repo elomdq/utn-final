@@ -96,6 +96,14 @@ class OfferController{
         require_once VIEWS_PATH."footer.php";
     }
 
+    public function addViewCompany(Alert $alert = null){
+        SystemFunctions::validateSession();
+        require_once VIEWS_PATH."header.php";
+        require_once VIEWS_PATH ."nav.php";
+        require_once VIEWS_PATH ."offer-add-company.php";
+        require_once VIEWS_PATH."footer.php";
+    }
+
     public function editView($offerId, Alert $alert = null)
     {
         SystemFunctions::validateSession();

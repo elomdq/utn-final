@@ -169,9 +169,9 @@ class StudentDAO implements IStudentDAO{
             $query = "SELECT (id_student) FROM ".$this->tableName." WHERE id_user= \"".$idUser."\";";
             $this->connection = Connection::GetInstance();
     
-            $resultSet=$this->connection->execute($query); //me devuelve array con rows
+            $resultSet=$this->connection->execute($query);
     
-            return $resultSet[0]['id_student']; //como email es constraint unique devuelvo la posicion 0 ya que solo hay una fila
+            return $resultSet[0]['id_student'];
         } catch (Exception $e){
             throw $e;
         }
