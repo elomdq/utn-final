@@ -44,7 +44,6 @@
                                         </select>
                                    </div>
 
-
                                    <div class="form-group col-12">
                                         <label for="publicationDate">Fecha</label>
                                         <input id="publicationDate" type="date" name="publicationDate" class="form-control" value="<?php echo $offer->getPublicationDate(); ?>">
@@ -71,6 +70,11 @@
                                                 <label class="form-check-label" for="active">Active</label>
                                         </div>
 
+                                   </div>
+
+                                   <div class="form-group col-12">
+                                        <label for="file">Archivo</label>
+                                        <input id="file" type="text" name="file" class="form-control" value="<?php echo $flyerOffer;?>">
                                    </div>
 
                                    <input type="hidden" class="" name="offerId" value="<?php echo $offer->getOfferId();?>">

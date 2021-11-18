@@ -32,7 +32,26 @@ class CurriculumDAO{
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_owner = " . $idOwner . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
-            $url = $resultSet[0]['url'];
+            $url = "";
+            if(!empty($resultSet)){
+                $url = $resultSet[0]['url'];
+            }
+            return $url;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function getCurriculumIdByOwnerId($idOwner)
+    {
+        try {
+            $query = "SELECT (id_curriculum) FROM " . $this->tableName . " WHERE id_student = " . $idOwner . ";";
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->execute($query);
+            $url = "";
+            if(!empty($resultSet)){
+                $url = $resultSet[0]['id_curriculum'];
+            }
             return $url;
         } catch (Exception $e) {
             throw $e;
@@ -45,12 +64,16 @@ class CurriculumDAO{
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_curriculum = " . $idCurriculum . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
-            $url = $resultSet[0]['url'];
+            $url = "";
+            if(!empty($resultSet)){
+                $url = $resultSet[0]['url'];
+            }
             return $url;
         } catch (Exception $e) {
             throw $e;
         }
     }
+    
 
     public function deleteURLByCurriculumId($idCurriculum)
     {

@@ -1,7 +1,6 @@
 <div class="container">
 
 <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?> col-8 mx-auto" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
-    <!-- Content Row -->
     <div class="row justify-content-center">
 
         <?php foreach ($offerList as $offer) { ?>
@@ -21,11 +20,6 @@
                                 </div>
 
                             </div>
-                            
-                            <!--<div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                            </div> -->
-
                         </div>
                         <a href="<?php echo FRONT_ROOT . "offer/showOfferDetails/" . $offer->getOfferId(); ?>" class="stretched-link"> ver más </a>
                     </div>

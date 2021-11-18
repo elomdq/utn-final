@@ -79,6 +79,21 @@
                         Enviar Email
                         </a>
                     <?php } ?>
+
+
+                    <?php if($_SESSION['userType'] == 0) {?>
+                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "File/addView"; ?>">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Subir CV
+                        </a>
+                    <?php } ?>
+
+                    <?php if($_SESSION['userType'] == 2) {?>
+                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Offer/addViewCompany"?>">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Agregar Oferta
+                        </a>
+                    <?php } ?>
                     
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?php echo FRONT_ROOT . "home/logout"; ?>" >
