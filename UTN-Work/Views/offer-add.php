@@ -59,8 +59,16 @@ $user = $_SESSION['loggedUser'];
                                    <div class="form-group col-12">
                                         <label>Empresa</label>
                                         <select class="form-select" name="companyId">
+                                        <?php if($_SESSION['userType'] == 1){ ?>
+                                        
                                              <?php foreach ($companyList as $company) { ?>
                                                   <option value="<?php echo $company->getIdCompany();?>"> <?php echo $company->getCompanyName(); ?> </option>
+                                             <?php }
+                                        
+                                        } else { ?> 
+                                             
+                                             <option value="<?php echo $offer->getCompanyId(); ?>" selected><?php echo $this->companyDAO->getCompanyById($offer->getCompanyId())->getCompanyName() ; ?></option>
+                                             
                                              <?php }  ?>
                                         </select>
                                    </div>

@@ -195,10 +195,11 @@ class OfferController{
 
                 $this->offersDAO->add($oferta);
 
-                if($_FILES)
+                if($_FILES &&  $_FILES["fileToUpload"]["name"] != "")
                 {
                     $target_dir = UPLOADS_PATH_IMG;
                     $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+
                     $archivo = new Archivo();
                     $archivo->setUrl($target_file);
                     $archivo->setIdOwner($this->offersDAO->getIdJobOfferByTitle($oferta->getTitle()));
@@ -226,22 +227,17 @@ class OfferController{
     } 
 
 
-    public function applyForOffer(...$values){      
+    public function applyForOffer($offerId){      
+        SystemFunctions::validateSession();
+        
         try{
             $alert = new Alert();
-            if($_POST)
-            {
-                if($_SESSION['loggedUser']){
-                    $this->studentsXoffersDAO->add($this->offersDAO->getOfferById($_POST['offerId']), $_SESSION['loggedUser']);
+            
+                    $this->studentsXoffersDAO->add($this->offersDAO->getOfferById($offerId), $_SESSION['loggedUser']); 
                     $alert->setType('success');
                     $alert->setMessage("Se aplico con exito.");
-                    $this->showOfferDetails($_POST['offerId'],$alert);
-                }
-            } else{
-                $alert->setType('warning');
-                $alert->setMessage("Algo ocurrio en el envio de datos, intente nuevamente");
-                $this->showOffersList($alert);
-            }
+                    $this->showOfferDetails($offerId,$alert);
+            
         } catch(Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
@@ -341,7 +337,7 @@ class OfferController{
         {
             $jobOffer = $this->offersDAO->getOfferById($idOffer);
             $companyName = $this->companyDAO->getCompanyById($jobOffer->getCompanyId());
-            $students = $this->studentsXoffers->getApplicantsByOfferId($idOffer);
+            $students = $this->studentsXoffersDAO->getApplicantsByOfferId($idOffer);
             $justNames = array();
             foreach ($students as $student) {
                 array_push($justNames,$student->getFirstName() ." " . $student->getLastName());

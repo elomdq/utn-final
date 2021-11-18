@@ -32,7 +32,7 @@ class imageDAO{
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_offer = " . $idOwner . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
-            $url = "";
+            $url = null;
             if(!empty($resultSet)){
                 $url = $resultSet[0]['url'];
             }

@@ -47,7 +47,7 @@
                 <?php if(!empty($flyer)) { ?>
                     <div class="col-10 m-3">
                         <div>
-                            <img src="<?php echo FRONT_ROOT.$flyer; ?>" alt="No Flyer :(" width="450" height="600">    
+                            <img class="col-12" src="<?php echo FRONT_ROOT.$flyer; ?>" alt="No Flyer :(" width="">    
                         </div>
                     </div>
                 <?php } ?>
@@ -60,11 +60,13 @@
                         
                         <?php if(isset($_SESSION['userType']) && $_SESSION['userType']== 0) { 
                             ?>
-                            <?php if( $this->studentsXoffers->isStudentInOffer($_SESSION['loggedUser']->getStudentId(), $offer->getOfferId()) ) { ?>
+                            <a class="text-decoration-none " href="<?php echo FRONT_ROOT."offer/applyForOffer/".$offer->getOfferId();?>" >
+                            <?php if( $this->studentsXoffersDAO->isStudentInOffer($_SESSION['loggedUser']->getStudentId(), $offer->getOfferId()) ) { ?>
                                 <button class="btn btn-primary botonCentro " type="button" disabled>Ya estas postulado</button>
                             <?php } else {?>
                                 <button class="btn btn-primary botonCentro" type="submit">Postularse</button>
                             <?php } ?>
+                            </a>
                         <?php } ?>
 
                         <?php if(isset($_SESSION['userType']) && $_SESSION['userType']!= 0) { ?>
