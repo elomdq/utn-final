@@ -1,30 +1,8 @@
-<?php
-
-namespace Views;
-
-use DAO\CareerDAO as CareerDAO;
-use DAO\CompanyDAO as CompanyDAO;
-use DAO\JobPositionDAO as JobPositionDAO;
-
-$puestos = new JobPositionDAO;
-$careerDAO = new CareerDAO;
-$companyDao = new CompanyDAO;
-
-$listJobsPositions = $puestos->getAll();
-$listaCarreras = $careerDAO->getAll_Api();
-$companyList = $companyDao->getAll();
-
-$carriersMap = array();
-foreach($listaCarreras as $value){
-     $carriersMap[$value->getIdCareer()] = $value->getDescription();
-}
-
-$user = $_SESSION['loggedUser'];
-
-?>
-
 <section id="jobOffer-form" class="mb-5">
      <div class="container">
+
+     <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
+
           <div class="row justify-content-center bg-white">
                <div class="col-8 p-2">
                     <div class="card">
@@ -110,7 +88,7 @@ $user = $_SESSION['loggedUser'];
                          </div>
                     </div>
 
-                    <div class="alert alert-<?php if($alert!=null) echo $alert->getType();?>" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
+                    
 
                </div>
           </div>

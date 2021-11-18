@@ -94,6 +94,19 @@ class OfferController{
 
     public function addView(Alert $alert = null){
         SystemFunctions::validateSession();
+
+
+        $listJobsPositions = $this->jobPositionsDAO->getAll();
+        $listaCarreras = $this->careerDAO->getAll_Api();
+        $companyList = $this->companyDAO->getAll();
+
+        $carriersMap = array();
+        foreach($listaCarreras as $value){
+            $carriersMap[$value->getIdCareer()] = $value->getDescription();
+        }
+
+        $user = $_SESSION['loggedUser'];
+
         require_once VIEWS_PATH."header.php";
         require_once VIEWS_PATH ."nav.php";
         require_once VIEWS_PATH ."offer-add.php";

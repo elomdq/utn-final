@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 namespace Views;
 
@@ -104,3 +104,5 @@ foreach($listaCarreras as $value){
           </div>
      </div>
 </section>
+
+-->
