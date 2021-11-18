@@ -34,7 +34,7 @@ class HomeController{
         ViewController::loginView($alert);
     }
 
-    public function showHome(){
+    public function showHome(Alert $alert = null){
         SystemFunctions::validateSession();
         ViewController::homeView();
     }

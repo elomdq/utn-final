@@ -57,6 +57,10 @@
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Estado Academico
                     </a>
+                    <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Student/historicOfferApplications/" . $_SESSION['loggedUser']->getStudentId(); ?>">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Historial de Postulaciones
+                    </a>
                     <a class="dropdown-item" href="<?php echo FRONT_ROOT . "File/addView"; ?>">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Subir CV
