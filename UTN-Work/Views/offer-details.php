@@ -44,13 +44,13 @@
                     </div>
                 </div>
 
-                <div class="col-10 m-3">
-                    <div>
-                        <img src="<?php echo FRONT_ROOT.$flyer; ?>" alt=" " width="500" height="600">    
+                <?php if(!empty($flyer)) { ?>
+                    <div class="col-10 m-3">
+                        <div>
+                            <img src="<?php echo FRONT_ROOT.$flyer; ?>" alt="No Flyer :(" width="500" height="600">    
+                        </div>
                     </div>
-                </div>
-
-                
+                <?php } ?>
 
                 <hr class="col-10 m-3">
                 
