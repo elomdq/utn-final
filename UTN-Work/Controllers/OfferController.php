@@ -237,11 +237,15 @@ class OfferController{
                 require_once VIEWS_PATH."applicants-list.php";
                 require_once VIEWS_PATH."footer.php";
             } else {
-                $alert->setType('warning');
-                $alert->setMessage("No hay postulantes");
-                $this->showOfferDetails($offerId,$alert);
+                if($alert->getMessage() != null)
+                {
+                    $this->showOfferDetails($offerId,$alert);
+                } else {
+                    $alert->setType('warning');
+                    $alert->setMessage($alert->getMessage() . "No hay postulantes");
+                    $this->showOfferDetails($offerId,$alert);
+                }
             }
-
         }catch (Exception $e){
             $alert->setType('danger');
             $alert->setMessage($e->getMessage());
@@ -260,7 +264,7 @@ class OfferController{
             $studentDAO = new StudentDAO;
 
             $mailController = new MailController;
-            $mailController->sendDeclineEmail(/*$studentDAO->getStudentByStudentId($studentId)->getEmail()*/ "davidjupg@gmail.com", $this->offersDAO->getOfferById($offerId)->getTitle());
+            $mailController->sendDeclineEmail(/*$studentDAO->getStudentByStudentId($studentId)->getEmail()*/ "eloymrp@gmail.com", $this->offersDAO->getOfferById($offerId)->getTitle());
 
             $alert->setType('success');
             $alert->setMessage("Postulacion declinada con exito.");
