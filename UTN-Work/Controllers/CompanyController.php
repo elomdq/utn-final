@@ -7,12 +7,17 @@ use \Exception as Exception;
 
 use Models\Company as Company;
 use Models\User as User;
+use Models\Alert as Alert;
+use Models\File as Archivo;
+
 use DAO\CompanyDAO as CompanyDAO;
 use DAO\UserDAO as UserDAO;
-use Models\Alert as Alert;
+use DAO\ProfilePictureDAO as ProfilePictureDAO;
+
 
 class CompanyController{
 
+    private $profilePictureDAO;
     private $companyDAO;
     private $userDAO;
     private $userType = 2;
@@ -22,6 +27,7 @@ class CompanyController{
     {
         $this->companyDAO = new CompanyDAO;
         $this->userDAO = new UserDAO;   
+        $this->profilePictureDAO = new ProfilePictureDAO;
     }
 
     public function addView(Alert $alert = null){
@@ -62,6 +68,20 @@ class CompanyController{
                     $company->setUserId($this->userDAO->getUserIdByEmail($company->getEmail()));
 
                     $this->companyDAO->Add($company);
+
+                    if($_FILES &&  $_FILES["fileToUpload"]["name"] != "")
+                    {
+                    $target_dir = UPLOADS_PATH_PROFILE_PICTURE;
+                    $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+
+                    $archivo = new Archivo();
+                    $archivo->setUrl($target_file);
+                    $archivo->setIdOwner($this->userDAO->getUserIdByEmail($company->getEmail()));
+
+                    $this->profilePictureDAO->uploadFile($target_file);
+        
+                    $this->profilePictureDAO->add($archivo);
+                    }
 
                     $alert->setType('success');
                     $alert->setMessage("La empresa se creo con exito.");

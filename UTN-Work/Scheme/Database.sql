@@ -117,3 +117,12 @@ CREATE TABLE `curriculums` (
  KEY `fk_student_cv` (`id_student`),
  CONSTRAINT `fk_student_cv` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
 ) ENGINE=InnoDB;
+
+CREATE TABLE `profile_pictures` (
+ `id_profile` int(11) NOT NULL AUTO_INCREMENT,
+ `id_user` int(11) NOT NULL,
+ `url` varchar(100) NOT NULL,
+ PRIMARY KEY (`id_profile`),
+ KEY `fk_user_picture` (`id_user`),
+ CONSTRAINT `fk_user_picture` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
+) ENGINE=InnoDB;

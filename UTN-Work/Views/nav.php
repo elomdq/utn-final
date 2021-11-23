@@ -1,7 +1,5 @@
-<!-- <div id="wrapper"> -->
+<header id="content-wrapper" class="d-flex flex-column">
 
-<!-- Content Wrapper -->
-<div id="content-wrapper" class="d-flex flex-column">
 
     <nav class="navbar navbar-expand navbar-light fixed-top mb-4 static-top bg-white shadow topbar px-4">
 
@@ -92,6 +90,5 @@
         </ul>
     </nav>
 
-</div>
 
-<!-- </div> -->
+</header>
