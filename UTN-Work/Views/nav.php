@@ -3,18 +3,14 @@
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
 
-    <!-- Topbar -->
-    <nav class="navbar navbar-expand navbar-light fixed-top bg-white topbar mb-4 static-top shadow">
+    <nav class="navbar navbar-expand navbar-light fixed-top mb-4 static-top bg-white shadow topbar px-4">
 
-        <!-- Sidebar Toggle (Topbar) -->
-        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-        </button>
+        <a class="navbar-brand ml-3" href="#">
+            <img class="ml-2" src="<?php echo FRONT_ROOT . VIEWS_PATH; ?>assets/utn.png" width="" height="65" alt="logo UTN">
+        </a>
 
-        
         <!-- Topbar Navbar -->
-        <ul class="navbar-nav ml-auto">
-
+        <ul class="navbar-nav ms-auto">
             
             <?php if($_SESSION['userType']!=2) {?>
             <li class="nav-item mx-1">
@@ -40,13 +36,14 @@
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
+
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <?php echo $_SESSION['loggedUser']->getEmail(); ?></span>
                     <!-- <img class="img-profile rounded-circle" src="img/undraw_profile.svg"> -->
                 </a>
                 
                 <!-- Dropdown - User Information -->
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <div class="dropdown-menu dropend shadow animated--grow-in" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Profile/showProfile"; ?>">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Perfil
@@ -86,15 +83,6 @@
                         <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Mail/sendEmail/eloymrp@gmail.com/Saludo/Hola"; ?>">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Enviar Email
-                        </a>
-                    <?php } ?>
-                    -->
-
-                    <!--
-                    <?php if($_SESSION['userType'] == 2) {?>
-                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "Offer/addViewCompany"?>">
-                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Agregar Oferta
                         </a>
                     <?php } ?>
                     -->
