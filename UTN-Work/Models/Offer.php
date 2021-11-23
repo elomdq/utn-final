@@ -15,6 +15,7 @@ class Offer{
     private $dueDays;
     private $careerId;
     private $jobPosition;
+    private $city;
 
     private $applicants;
 
@@ -56,6 +57,9 @@ class Offer{
 
     public function getDueDays(){ return $this->dueDays; }
     public function setDueDays($dueDays): self { $this->dueDays = $dueDays; return $this; }
+
+    public function getCity(){ return $this->city; }
+    public function setCity($city): self { $this->city = $city; return $this; }
 }
 
 ?>

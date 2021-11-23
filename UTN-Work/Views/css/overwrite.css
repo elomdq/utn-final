@@ -50,5 +50,10 @@
   }
 
   .card {
-    border-radius: 0.35rem;
+    border: 0px;
+    border-radius: 0.20rem;
+  }
+
+  .z-index-up{
+    z-index:4;
   }

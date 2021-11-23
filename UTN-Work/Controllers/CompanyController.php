@@ -103,7 +103,7 @@ class CompanyController{
     }
 
 
-    public function listCompanies(){
+    public function listCompanies(...$values){
         SystemFunctions::validateSession();
 
         $alert = new Alert;
@@ -111,10 +111,10 @@ class CompanyController{
         try{
             $companiesList = array();
 
-            if(isset($_GET['searchKey']) && $_GET['searchKey']!= null)
+            if(isset($_POST['searchKey']) && $_POST['searchKey']!= null)
             {
                 foreach($this->companyDAO->getAll() as $company){
-                    if(stristr($company->getCompanyName(), $_GET['searchKey'])){
+                    if(stristr($company->getCompanyName(), $_POST['searchKey'])){
                         array_push($companiesList, $company); 
                     }
                 }
