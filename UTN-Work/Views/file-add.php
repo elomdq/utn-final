@@ -1,4 +1,4 @@
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-4">
      <div class="col-4">
           <div class="card shadow mb-4">
                <h3 class="card-header col-12 text-center mb-4">Agregar Curriculum</h3>
@@ -8,14 +8,14 @@
                     <form action="<?php echo FRONT_ROOT ?>file/createFile/" method="POST" enctype="multipart/form-data" class="bg-light-alpha p-3">
                          <div class="row">
                               <div class="col">
-                                   <div class="form-group">
+                                   <div class="form-group text-center">
                                         <label for="fileToUpload">Subir CV:</label>
                                         <input type="file" id="fileToUpload" name="fileToUpload" accept="application/pdf">
                                    </div>
                               </div>
                          </div>
                          <div class="text-center mx-auto">
-                              <button type="submit" class="btn btn-dark botonCentro mx-auto">Agregar</button>
+                              <button type="submit" class="btn btn-primary botonCentro mx-auto mt-3 mb-1">Agregar</button>
                          </div>
                          <div>
                               <p class="text-center my-1">Recorda que solo se acepta PDF</p>

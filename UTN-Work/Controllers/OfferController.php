@@ -443,13 +443,18 @@ class OfferController{
             $pdf->SetFont('Arial', 'B', 14);
             $pdf->Cell(60,20,"Puesto Laboral: ");
             $pdf->SetFont('Arial', '', 14);
-            $pdf->Cell(60,20,$jobPosition->getDescription());
+            $pdf->Cell(60,20,"No conecta a API"/*$jobPosition->getDescription()*/);
             $pdf->Ln(20);
 
             $pdf->SetFont('Arial', 'B', 12);
             $pdf->Cell(60,20,"Postulados: ");
+            $pdf->Ln(10);
             $pdf->SetFont('Arial', '', 12);
-            $pdf->Cell(60,20,$stringNombres);
+            foreach($justNames as $nombres){
+                $pdf->Cell(60,20,$nombres);
+                $pdf->Ln(5);
+            }
+            
             $pdf->Ln(20);
 
             $pdf->SetFont('Arial', 'B', 12);
