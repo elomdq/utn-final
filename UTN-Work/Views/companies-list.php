@@ -38,12 +38,15 @@
 
                                 <div class="row no-gutters align-items-center">
 
-                                    <div class="col-10 mr-2">
-                                        <div class="text-md font-weight-bold text-primary text-uppercase">
+                                    <div class="col-<?php echo ($_SESSION['userType'] == 1)? "10" : "12"; ?> mr-2">
+                                        <div class="text-md font-weight-bold text-primary text-uppercase d-inline">
                                             <?php echo $company->getCompanyName(); ?>
                                         </div>
+
                                         <?php if ($_SESSION['userType'] == 1) { ?>
                                             <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getIdCompany(); ?>" class="stretched-link"></a>
+                                        <?php } else { ?>
+                                            <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getIdCompany(); ?>" class="stretched-link float-end"> ver más </a>
                                         <?php } ?>
                                     </div>
 
@@ -52,10 +55,6 @@
                                             <a href="<?php echo FRONT_ROOT . "company/editCompany/" . $company->getIdCompany(); ?>" class="mx-2 z-index-up"><i class="fas fa-pencil-alt fa-1x"></i></a>
                                             <a href="<?php echo FRONT_ROOT . "company/deleteCompany/" . $company->getIdCompany(); ?>" class="mx-2 z-index-up"><i class="far fa-trash-alt fa-1x"></i></a>
                                         </div>
-                                    <?php } ?>
-
-                                    <?php if ($_SESSION['userType'] != 1) { ?>
-                                        <a href="<?php echo FRONT_ROOT . "company/showCompanyDetails/" . $company->getIdCompany(); ?>" class="stretched-link"> ver más </a>
                                     <?php } ?>
 
 

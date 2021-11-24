@@ -1,8 +1,10 @@
+<!--
+    
 <div class="row justify-content-center">
     <div class="col-5">
         <div class="card shadow mb-4">
 
-            <!-- Card Body -->
+            
             <div class="row card-body .flex-column justify-content-center py-5 " >
                 <h1 class="col-12 text-center mb-4">WELCOME!</h1>
                 <div class="">
@@ -21,3 +23,5 @@
         </div>
     </div>
 </div>
+
+-->

@@ -12,40 +12,44 @@
                             <div class="form-group col-12 py-3">
                                 <p>Carreras:</p>
                                 <div class="form-check">
-                                    <label class="form-check-label" for="1">Programacion</label>
-                                    <input id="1" type="checkbox" name="active" class="form-check-input" value="1">
+                                    <label class="form-check-label" for="1">1 - Programacion</label>
+                                    <input id="1" type="checkbox" name="career1" class="form-check-input" value="1">
                                 </div>
                                 <div class="form-check">
-                                    <label class="form-check-label" for="2">Sistemas</label>
-                                    <input id="2" type="checkbox" name="active" class="form-check-input" value="2">
+                                    <label class="form-check-label" for="2">2 - Sistemas</label>
+                                    <input id="2" type="checkbox" name="career2" class="form-check-input" value="2">
                                 </div>
                                 <div class="form-check">
-                                    <label class="form-check-label" for="3">Diseño de Interiores</label>
-                                    <input id="3" type="checkbox" name="active" class="form-check-input" value="3">
+                                    <label class="form-check-label" for="3">3 - Diseño de Interiores</label>
+                                    <input id="3" type="checkbox" name="career3" class="form-check-input" value="3">
                                 </div>
                                 <div class="form-check">
-                                    <label class="form-check-label" for="4">Ingenieria Naval</label>
-                                    <input id="4" type="checkbox" name="active" class="form-check-input" value="4">
+                                    <label class="form-check-label" for="4">4 - Ingenieria Naval</label>
+                                    <input id="4" type="checkbox" name="career4" class="form-check-input" value="4">
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="4">5 - dsddadasd</label>
+                                    <input id="4" type="checkbox" name="career5" class="form-check-input" value="5">
                                 </div>
                             </div>
 
                             <div class="form-group col-12 py-3">
                                 <p>Posiciones:</p>
                                 <div class="form-check">
-                                    <label class="form-check-label" for="5">Jr JAVA</label>
-                                    <input id="5" type="checkbox" name="active" class="form-check-input" value="1">
+                                    <label class="form-check-label" for="5">2 - Jr JAVA</label>
+                                    <input id="5" type="checkbox" name="jobPosition1" class="form-check-input" value="2">
                                 </div>
                                 <div class="form-check">
-                                    <label class="form-check-label" for="6">SSr PHP</label>
-                                    <input id="6" type="checkbox" name="active" class="form-check-input" value="2">
+                                    <label class="form-check-label" for="6">8 - SSr PHP</label>
+                                    <input id="6" type="checkbox" name="jobPosition2" class="form-check-input" value="8">
                                 </div>
                                 <div class="form-check">
-                                    <label class="form-check-label" for="7">Trainne JAVA</label>
-                                    <input id="7" type="checkbox" name="active" class="form-check-input" value="3">
+                                    <label class="form-check-label" for="7">9 - Trainne JAVA</label>
+                                    <input id="7" type="checkbox" name="jobPosition3" class="form-check-input" value="9">
                                 </div>
                                 <div class="form-check">
-                                    <label class="form-check-label" for="8">Sr JAVA</label>
-                                    <input id="8" type="checkbox" name="active" class="form-check-input" value="4">
+                                    <label class="form-check-label" for="8">3 - 56565</label>
+                                    <input id="8" type="checkbox" name="jobPosition4" class="form-check-input" value="3">
                                 </div>
                             </div>
 
@@ -66,7 +70,11 @@
                                     <div class="row no-gutters align-items-center">
 
                                         <div class="col-2  rounded-circle">
-                                            <img src="<?php echo FRONT_ROOT . VIEWS_PATH . "assets/no-img.jpg" ?>" alt="..." class="card-img" height="105">
+                                            <?php if($this->profilePictureDAO->getURLByOwnerId($this->companyDAO->getCompanyById($offer->getCompanyId())->getUserId()) == null) {?>
+                                                <img src="<?php echo FRONT_ROOT . VIEWS_PATH . "assets/no-img.jpg" ?>" alt="..." class="card-img" height="105">
+                                            <?php } else {  ?>
+                                                <img src="<?php echo FRONT_ROOT . $this->profilePictureDAO->getURLByOwnerId($this->companyDAO->getCompanyById($offer->getCompanyId()->getUserId())) ?>" alt="..." class="card-img" height="105">
+                                            <?php } ?>
                                         </div>
 
                                         <div class="col mr-3">

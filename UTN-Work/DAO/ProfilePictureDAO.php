@@ -13,10 +13,10 @@ class ProfilePictureDAO{
 
     public function add(File $file){
         try{
-            $query = "INSERT INTO ". $this->tableName . " (id_file, url) VALUES(:id_file, :url);";
+            $query = "INSERT INTO ". $this->tableName . " (id_user, url) VALUES(:id_user, :url);";
 
             $parameters = array();
-            $parameters['id_file'] = $file->getIdOwner();
+            $parameters['id_user'] = $file->getIdOwner();
             $parameters['url'] = $file->getUrl();
 
             $this->connection = Connection::GetInstance();
@@ -30,10 +30,10 @@ class ProfilePictureDAO{
     public function getURLByOwnerId($idOwner)
     {
         try {
-            $query = "SELECT * FROM " .  $this->tableName .  " WHERE id_owner = " . $idOwner . ";";
+            $query = "SELECT * FROM " .  $this->tableName .  " WHERE id_user = " . $idOwner . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
-            $url = "";
+            $url = null;
             if(!empty($resultSet)){
                 $url = $resultSet[0]['url'];
             }
@@ -46,12 +46,12 @@ class ProfilePictureDAO{
     public function getFileIdByOwnerId($idOwner)
     {
         try {
-            $query = "SELECT (id_file) FROM " .  $this->tableName .  " WHERE id_file = " . $idOwner . ";";
+            $query = "SELECT (id_profile) FROM " .  $this->tableName .  " WHERE id_user = " . $idOwner . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
             $url = "";
             if(!empty($resultSet)){
-                $url = $resultSet[0]['id_file'];
+                $url = $resultSet[0]['id_profile'];
             }
             return $url;
         } catch (Exception $e) {
@@ -62,7 +62,7 @@ class ProfilePictureDAO{
     public function getURLByFileId($idFile)
     {
         try {
-            $query = "SELECT * FROM " .  $this->tableName .  " WHERE id_file = " . $idFile . ";";
+            $query = "SELECT * FROM " .  $this->tableName .  " WHERE id_profile = " . $idFile . ";";
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->execute($query);
             $url = "";
@@ -79,7 +79,7 @@ class ProfilePictureDAO{
     public function deleteURLByFileId($idFile)
     {
         try {
-            $query = "DELETE FROM " .  $this->tableName .  " WHERE id_file = " . $idFile . ";";
+            $query = "DELETE FROM " .  $this->tableName .  " WHERE id_profile = " . $idFile . ";";
             $this->connection = Connection::GetInstance();
             $this->connection->executeNonQuery($query);
         } catch (Exception $e) {

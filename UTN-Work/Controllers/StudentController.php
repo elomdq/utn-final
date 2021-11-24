@@ -9,18 +9,22 @@ use Models\Alert as Alert;
 
 use DAO\StudentDAO as StudentDAO;
 use DAO\StudentsXOffersDAO as StudentsXOffersDAO;
-
-
+use DAO\ProfilePictureDAO as ProfilePictureDAO;
+use DAO\CompanyDAO as CompanyDAO;
 
 class StudentController{
 
     private $studentDAO;
     private $studentsXoffersDAO;
+    private $profilePictureDAO;
+    private $companyDAO;
 
     public function __construct()
     {
         $this->studentDAO = new StudentDAO;
         $this->studentsXoffersDAO = new StudentsXOffersDAO;
+        $this->profilePictureDAO = new ProfilePictureDAO;
+        $this->companyDAO = new CompanyDAO;
     }
 
 

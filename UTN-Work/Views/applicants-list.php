@@ -1,46 +1,48 @@
 <!-- Contenedor -->
 <div class="container">
-    
-<div class="alert alert-<?php if($alert!=null) echo $alert->getType();?> col-6 mx-auto" role="alert"> <?php if($alert!=null) echo $alert->getMessage(); ?> </div>
-    
-<!-- Content Row -->
+
+    <div class="alert alert-<?php if ($alert != null) echo $alert->getType(); ?> col-6 mx-auto" role="alert"> <?php if ($alert != null) echo $alert->getMessage(); ?> </div>
+
+   
     <div class="row justify-content-center">
-    
-        <!-- List of Companies -->
+
+       
         <?php foreach ($students as $student) { ?>
-            <!-- <a class="col-xl-8 col-md-8" href="#"> -->
+           
             <div class="col-8  mb-3">
-                <div class="card border-left-primary shadow h-100 py-1">
+                <div class="card border-left-primary shadow">
                     <div class="card-body py-2">
-                        <div class="row no-gutters align-items-center">
-                            
-                            <div class="col mr-2">
+                        <div class="row align-items-center">
+
+                            <div class="col-5 mr-2">
                                 <div class="text-md font-weight-bold text-primary text-uppercase">
-                                    <?php echo $student->getFirstName() ." " . $student->getLastName(); ?>
-                                </div>
-                            </div>
-                            <div class="col mr-2">
-                                <div class="text-md font-weight-bold text-primary text-uppercase">
-                                    <h6 class="d-inline">Email: </h6> <h6 class="m-0"><?php echo $student->getEmail(); ?></h6>
+                                    <?php echo $student->getFirstName() . " " . $student->getLastName(); ?>
                                 </div>
                             </div>
 
-                            <?php if($_SESSION['userType'] == 1) {?>
-                            <div class="dropdown no-arrow">
-                                <a class="dropdown-toggle" href="#" role="button" id="applicantMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="applicantMenu">
-                                    <a class="dropdown-item" href="<?php echo FRONT_ROOT . "offer/declineApplicant/". $offerId."/" .$student->getStudentId(); ?>">Declinar</a>
+                            <div class="col-5 mr-2">
+                                <div class="text-md font-weight-bold text-primary">
+                                    <p class="strong d-inline">Email : </p>
+                                    <p class="small m-0 d-inline"><?php echo $student->getEmail(); ?></p>
                                 </div>
                             </div>
+
+                            <?php if ($_SESSION['userType'] == 1) { ?>
+                                <div class="col-2 dropdown no-arrow">
+                                    <a class="dropdown-toggle float-end" href="#" role="button" id="applicantMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="applicantMenu">
+                                        <a class="dropdown-item" href="<?php echo FRONT_ROOT . "offer/declineApplicant/" . $offerId . "/" . $student->getStudentId(); ?>">Declinar</a>
+                                    </div>
+                                </div>
                             <?php } ?>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- </a> -->
+           
         <?php } ?>
     </div>
 </div>

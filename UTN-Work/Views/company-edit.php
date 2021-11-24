@@ -1,4 +1,4 @@
-<section id="company-edit-details" class="mb-5">
+<section id="company-edit-details" class="mb-5 ">
 
     <div class="container">
 
@@ -10,7 +10,7 @@
                 <div class="card">
 
                     <div class="card-header py-2">
-                        <h5 class="mt-2">Agregar Empresa</h5>
+                        <h5 class="mt-2">Editar Empresa</h5>
                     </div>
 
                     <div class="card-body">
@@ -72,7 +72,7 @@
                             <hr class="col-12 my-3">
 
                             <div class="col-12 pt-2 d-flex justify-content-center">
-                                <button type="submit" class="btn btn-dark botonCentro mx-1">Agregar</button>
+                                <button type="submit" class="btn btn-dark botonCentro mx-1">Confirmar</button>
                                 <button type="reset" class="btn btn-dark botonCentro mx-1">Resetear</button>
                             </div>
                         </form>

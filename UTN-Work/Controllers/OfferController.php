@@ -12,6 +12,7 @@ use DAO\CompanyDAO as CompanyDAO;
 use DAO\JobPositionDAO as JobPositionDAO;
 use DAO\StudentsXOffersDAO as StudentsXOffersDAO;
 use DAO\imageDAO as imageDAO;
+use DAO\ProfilePictureDAO as ProfilePictureDAO;
 
 use Exception;
 
@@ -30,6 +31,7 @@ class OfferController{
     private $careerDAO; 
     private $companyDAO;
     private $imageDAO;
+    private $profilePictureDAO;
     
 
     public function __construct()
@@ -40,14 +42,30 @@ class OfferController{
         $this->careerDAO = new CareerDAO;
         $this->companyDAO = new CompanyDAO;
         $this->imageDAO = new imageDAO;
+        $this->profilePictureDAO = new ProfilePictureDAO;
     }
 
-    public function showOffersList(Alert $alert = null){
+    public function showOffersList(Alert $alert = null, ...$values){
         SystemFunctions::validateSession();
         try{
             $offerList = array();
+            $searchKeysCareer = array();
+            $searchKeysJobPosition = array();
+            
 
+            while(!empty($values))
+            {
+                if(array_key_first($values) && str_contains(array_key_first($values), "career")){
+                    array_push($searchKeysCareer, $values[array_key_first($values)]);
+                } else if(array_key_first($values) && str_contains(array_key_first($values), "jobPosition")){
+                    array_push($searchKeysJobPosition, $values[array_key_first($values)]);
+                }
+
+                array_shift($values);
+            }
+            
             //filtrado de ofertas
+            /*
             if($_SESSION['userType'] == 0)
             {
                 foreach ($this->offersDAO->getAll() as $offer) { 
@@ -67,7 +85,52 @@ class OfferController{
             else{
                 $offerList = $this->offersDAO->getAll();
             }
+            */
 
+            //filtrado por sidebar
+            if(!empty($searchKeysCareer)){
+                foreach ($this->offersDAO->getAll() as $offer) { 
+                    if(in_array($offer->getCareerId(), $searchKeysCareer))
+                    {
+                        if(!in_array($offer, $offerList))
+                            array_push($offerList, $offer);
+                    }
+                }
+            }
+
+            if(!empty($searchKeysJobPosition)){
+                foreach ($this->offersDAO->getAll() as $offer) { 
+                    if(in_array($offer->getJobPosition(), $searchKeysJobPosition))
+                    {
+                        if(!in_array($offer, $offerList))
+                            array_push($offerList, $offer);
+                    }
+                }
+            }
+
+            if(empty($searchKeysCareer) && empty($searchKeysJobPosition))
+            {
+                if($_SESSION['userType'] == 0)
+                {
+                    foreach ($this->offersDAO->getAll() as $offer) { 
+                        if($offer->getActive())
+                        {
+                            array_push($offerList, $offer);
+                        }
+                    }
+                } else if($_SESSION['userType'] == 2){
+                    foreach ($this->offersDAO->getAll() as $offer) { 
+                        if($_SESSION['loggedUser']->getIdCompany() == $offer->getCompanyId() )
+                        {
+                            array_push($offerList, $offer);
+                        }
+                    }
+                }
+                else{
+                    $offerList = $this->offersDAO->getAll();
+                }
+            }
+            
             require_once VIEWS_PATH."header.php";
             require_once VIEWS_PATH ."nav.php" ;
             require_once VIEWS_PATH ."offers-list.php";

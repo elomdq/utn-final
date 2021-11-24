@@ -71,16 +71,16 @@ class CompanyController{
 
                     if($_FILES &&  $_FILES["fileToUpload"]["name"] != "")
                     {
-                    $target_dir = UPLOADS_PATH_PROFILE_PICTURE;
-                    $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+                        $target_dir = UPLOADS_PATH_PROFILE_PICTURE;
+                        $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
 
-                    $archivo = new Archivo();
-                    $archivo->setUrl($target_file);
-                    $archivo->setIdOwner($this->userDAO->getUserIdByEmail($company->getEmail()));
+                        $archivo = new Archivo();
+                        $archivo->setUrl($target_file);
+                        $archivo->setIdOwner($this->userDAO->getUserIdByEmail($company->getEmail()));
 
-                    $this->profilePictureDAO->uploadFile($target_file);
+                        $this->profilePictureDAO->uploadFile($target_file);
         
-                    $this->profilePictureDAO->add($archivo);
+                        $this->profilePictureDAO->add($archivo);
                     }
 
                     $alert->setType('success');

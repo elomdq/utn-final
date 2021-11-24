@@ -49,7 +49,7 @@ CREATE TABLE `companies` (
  `adress` varchar(100) DEFAULT NULL,
  `city` varchar(50) DEFAULT NULL,
  `cuit` varchar(100) DEFAULT NULL,
- `phoneNumber` int DEFAULT NULL,
+ `phoneNumber` varchar(50) DEFAULT NULL,
  PRIMARY KEY (`id_company`),
  KEY `fk_userCompany` (`id_user`),
  CONSTRAINT `fk_userCompany` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
@@ -57,9 +57,9 @@ CREATE TABLE `companies` (
 
 CREATE TABLE `offers` (
  `id_jobOffer` int(11) NOT NULL AUTO_INCREMENT,
- `id_company` int(11) NOT NULL,
- `jobPosition` varchar(50) NOT NULL,
- `career` varchar(50) NOT NULL,
+ `id_company` int(11) not null,
+ `jobPosition` varchar(50),
+ `career` varchar(50),
  `title` varchar(50) NOT NULL,
  `active` tinyint(1) NOT NULL,
  `publicationDate` date NOT NULL,
