@@ -114,3 +114,11 @@ label{
   .sidebar{
     background-color: #fff;
   }
+
+  #offer-detail .btn {
+    border: 0px solid transparent;
+    padding: 0;
+    width:8.5rem;
+    height: 2.2rem;
+    border-radius: 1rem;
+  }

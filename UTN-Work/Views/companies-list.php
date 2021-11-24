@@ -1,7 +1,7 @@
 <section class="company-list">
     <!-- Contenedor -->
     <div class="container mt-5">
-
+    <div class="alert alert-<?php if ($alert != null) echo $alert->getType(); ?> col-8 mx-auto" role="alert"> <?php if ($alert != null) echo $alert->getMessage(); ?> </div>
         <!-- Content Row -->
         <div class="row justify-content-center">
 
