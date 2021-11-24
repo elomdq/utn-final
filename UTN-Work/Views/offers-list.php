@@ -3,10 +3,12 @@
         <div class="alert alert-<?php if ($alert != null) echo $alert->getType(); ?> col-8 mx-auto" role="alert"> <?php if ($alert != null) echo $alert->getMessage(); ?> </div>
         <!-- Content Row -->
         <div class="row flex-row">
+
             <div class="col-3 d-flex flex-column flex-shrink-0 sidebar">
                 <div class="card">
                     <div class="card-body">
                         <form class="" action="<?php echo FRONT_ROOT ?>Offer/showOffersList/" method="post">
+                           
                             <div class="form-group col-12 py-3">
                                 <p>Carreras:</p>
                                 <div class="form-check">
@@ -25,10 +27,9 @@
                                     <label class="form-check-label" for="4">Ingenieria Naval</label>
                                     <input id="4" type="checkbox" name="active" class="form-check-input" value="4">
                                 </div>
-
                             </div>
-                            <div class="form-group col-12 py-3">
 
+                            <div class="form-group col-12 py-3">
                                 <p>Posiciones:</p>
                                 <div class="form-check">
                                     <label class="form-check-label" for="5">Jr JAVA</label>
@@ -46,7 +47,6 @@
                                     <label class="form-check-label" for="8">Sr JAVA</label>
                                     <input id="8" type="checkbox" name="active" class="form-check-input" value="4">
                                 </div>
-
                             </div>
 
                             <div class="col-12 pt-2 d-flex justify-content-center">
@@ -57,10 +57,10 @@
                 </div>
             </div>
 
-            <div class="col-8 mb-4">
-                <div class="row justify-content-center">
+            <div class="col-8 ">
+                <div class="row justify-content-center ">
                     <?php foreach ($offerList as $offer) { ?>
-                        <div class="col-12">
+                        <div class="col-12 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">

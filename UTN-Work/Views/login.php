@@ -2,7 +2,7 @@
 
     <div class="row justify-content-center">
 
-        <div class="card col-5 o-hidden border-0 shadow-lg my-3">
+        <div class="card col-5 col-lg-4 o-hidden border-0 shadow-lg my-3">
 
             <div class="card-body px-4 py-4 row justify-content-center">
 
@@ -10,7 +10,7 @@
                     <img class="" src="<?php echo FRONT_ROOT . VIEWS_PATH . "assets/utn.png"; ?>" height="80">
                 </div>
 
-                <div class="col-12 px-2 py-3">
+                <div class="col px-2 py-3">
 
                         <form class="user" action="<?php echo FRONT_ROOT ?>Home/login" method="post">
 
