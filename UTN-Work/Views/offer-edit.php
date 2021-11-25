@@ -12,28 +12,8 @@
                                         <label for="offerTitle">Titulo</label>
                                         <input id="offerTitle" type="text" name="offerTitle" required class="form-control" value="<?php echo $offer->getTitle(); ?>">
                                    </div>
-
-                                   <div class="form-group col-12">
-                                        <label>Carrera</label>
-                                        <select class="form-select" name="careerId">
-                                            <option value="<?php echo $offer->getCareerId();?>" selected> <?php echo $this->careerDAO->getCareerById_Api($offer->getCareerId())->getDescription()." - ". $this->careerDAO->getCareerById_Api($offer->getCareerId())->getDescription();?> </option>
-                                            <?php foreach ($listaCarreras as $carrera) { ?>
-                                                <option value="<?php echo $carrera->getIdCareer(); ?>"> <?php echo $carrera->getIdCareer()." - ". $carrera->getDescription(); ?> </option>
-                                            <?php } ?>
-                                        </select>
-                                   </div>
-
-                                   <div class="form-group col-12">
-                                        <label for="jobPosition">Puesto</label>
-                                        <select id="jobPosition" class="form-select" name="jobPosition">
-                                            <option value="<?php echo $offer->getJobPosition();?>" selected><?php echo $this->jobPositionsDAO->getjobPositionById($offer->getJobPosition())->getDescription() . " - " . $this->jobPositionsDAO->getjobPositionById($offer->getJobPosition())->getDescription(); ?></option>
-                                             <?php foreach ($listJobsPositions as $puesto) { ?>
-                                                  <option value="<?php echo $puesto->getIdJobPosition(); ?>"> <?php echo $carriersMap[$puesto->getCareerId()] . " - " .  $puesto->getDescription(); ?> </option>
-                                             <?php } ?>
-                                        </select>
-                                   </div>
-
-
+                                   
+                                  
                                    <div class="form-group col-12">
                                         <label>Empresa</label>
                                         <select class="form-select" name="companyId">
