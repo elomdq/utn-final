@@ -1,0 +1,52 @@
+[
+    {
+        "offerId": 1,
+        "title": "Propuesta Random 1",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis turpis ac purus consectetur tempor. Integer elementum arcu nec nisi interdum, id sagittis dui pellentesque. In efficitur sagittis lectus, semper vestibulum nisi laoreet quis. Nulla vehicula ultricies diam, sit amet dictum purus sodales id.",
+        "companyId": 3,
+        "salary": 95000,
+        "publicationDate": "15-11-2021",
+        "careerId": 2,
+        "active": true
+    },
+    {
+        "offerId": 2,
+        "title": "Propuesta Random 2",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis turpis ac purus consectetur tempor. Integer elementum arcu nec nisi interdum, id sagittis dui pellentesque. In efficitur sagittis lectus, semper vestibulum nisi laoreet quis. Nulla vehicula ultricies diam, sit amet dictum purus sodales id.",
+        "companyId": 3,
+        "salary": 120000,
+        "publicationDate": "15-11-2021",
+        "careerId": 1,
+        "active": true
+    },
+    {
+        "offerId": 3,
+        "title": "Propuesta Random 3",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis turpis ac purus consectetur tempor. Integer elementum arcu nec nisi interdum, id sagittis dui pellentesque. In efficitur sagittis lectus, semper vestibulum nisi laoreet quis. Nulla vehicula ultricies diam, sit amet dictum purus sodales id.",
+        "companyId": 3,
+        "salary": 75000,
+        "publicationDate": "15-11-2021",
+        "careerId": 2,
+        "active": true
+    },
+    {
+        "offerId": 4,
+        "title": "Propuesta Random 4",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis turpis ac purus consectetur tempor. Integer elementum arcu nec nisi interdum, id sagittis dui pellentesque. In efficitur sagittis lectus, semper vestibulum nisi laoreet quis. Nulla vehicula ultricies diam, sit amet dictum purus sodales id.",
+        "companyId": 3,
+        "salary": 180000,
+        "publicationDate": "15-11-2021",
+        "careerId": 3,
+        "active": true
+    },
+    {
+        "offerId": 5,
+        "title": "Propuesta Random 5",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis turpis ac purus consectetur tempor. Integer elementum arcu nec nisi interdum, id sagittis dui pellentesque. In efficitur sagittis lectus, semper vestibulum nisi laoreet quis. Nulla vehicula ultricies diam, sit amet dictum purus sodales id.",
+        "companyId": 3,
+        "salary": 95000,
+        "publicationDate": "15-11-2021",
+        "careerId": 2,
+        "active": true
+    }
+]

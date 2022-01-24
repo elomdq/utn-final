@@ -9,6 +9,7 @@ class UserDAO{
 
     private $connection;
     private $tableName = 'users';
+    private $defaultPass = "123456";
 
     public function __construct()
     {
@@ -18,7 +19,7 @@ class UserDAO{
     public function getTableName(){ return $this->tableName; }
     public function setTableName($tableName): self { $this->tableName = $tableName; return $this; }
 
-    public function add($email, $active, $userType, $pass="123456") //email, pass, active
+    public function add($email, $active, $userType, $pass) //email, pass, active
     {
         try{
             $query = "INSERT INTO ".$this->tableName."(email,pass,active,userType) VALUES(:email, :password, :active,:userType);";
@@ -34,7 +35,7 @@ class UserDAO{
         $this->connection->executeNonQuery($query, $parameters);
 
         } catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
 
     }
@@ -47,7 +48,7 @@ class UserDAO{
             $this->connection->executeNonQuery($query);
 
         } catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 
@@ -57,11 +58,11 @@ class UserDAO{
             $query = "SELECT (id_user) FROM ".$this->tableName." WHERE email= \"".$email."\";";
             $this->connection = Connection::GetInstance();
     
-            $resultSet=$this->connection->execute($query); //me devuelve array con rows
+            $resultSet=$this->connection->execute($query);
     
-            return $resultSet[0]['id_user']; //como email es constraint unique devuelvo la posicion 0 ya que solo hay una fila
+            return $resultSet[0]['id_user'];
         } catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
 
     }
@@ -76,7 +77,7 @@ class UserDAO{
             return $resultSet;
         }
         catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }  
     }
 
@@ -89,44 +90,8 @@ class UserDAO{
             return $resultSet[0];
 
         } catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
-    }
-
-    public function update($user){
-
-        try{
-            $query = "UPDATE ". $this->tableName . " SET
-            pass=\"". $user->getPassword()
-            ."\", email=\"". $user->getEmail()
-            ."\", active=". $user->getActive()
-            ."\", userType=". $user->getUserType()
-            ." WHERE id_user = ".$user->getUserId() .";";
-
-            $this->connection = Connection::getInstance();
-            $this->connection->executeNonQuery($query);
-        }
-        catch(Exception $e){
-            throw($e);
-        }
-
-    }
-
-    public function updateActive($id_user, $active){
-
-        try{
-            $query = "UPDATE ". $this->tableName . " SET
-             active=". $active
-            ." WHERE id_user = ".$id_user .";";
-
-
-            $this->connection = Connection::getInstance();
-            $this->connection->executeNonQuery($query);
-        }
-        catch(Exception $e){
-            throw($e);
-        }
-
     }
 
 }

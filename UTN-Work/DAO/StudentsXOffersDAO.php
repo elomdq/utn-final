@@ -7,6 +7,7 @@ use Models\Offer as Offer;
 use DAO\Connection as Connection;
 use DAO\OfferDAO as OfferDAO;
 use DAO\StudentDAO as StudentDAO;
+use DAO\CurriculumDAO as CurriculumDAO;
 
 use \Exception as Exception;
 
@@ -14,10 +15,11 @@ class StudentsXOffersDAO{
 
     private $connection;
     private $tableName = "students_x_offers";
+    private $curriculumDAO;
 
     public function __construct()
     {
-        
+        $this->curriculumDAO = new CurriculumDAO;
     }
 
     public function add(Offer $offer, Student $student)
@@ -33,7 +35,7 @@ class StudentsXOffersDAO{
             $this->connection->executeNonQuery($query, $parameters);
 
         }catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
         
     }
@@ -60,10 +62,32 @@ class StudentsXOffersDAO{
             return $applicants;
 
         }catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
+    
+    public function getOffersListByStudentId($studentId){
+        try{
+            $query = "SELECT * FROM ". $this->tableName . " WHERE id_student = " . $studentId . ";";
 
+            $this->connection = Connection::getInstance();
+            $resultSet = $this->connection->execute($query);
+
+            $offers = array();
+            $offerDAO = new offerDAO;
+
+            foreach($resultSet as $row)
+            {
+                $offer = $offerDAO->getOfferById($row['id_offer']);
+                array_push($offers, $offer);
+            }
+
+            return $offers;
+
+        }catch(Exception $e){
+            throw $e;
+        }
+    }
 
     public function isStudentInOffer($studentId, $offerId){
         
@@ -82,7 +106,19 @@ class StudentsXOffersDAO{
 
             return $flag;
         }catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
+        }
+    }
+
+    public function remove($offerId, $studentId){
+        try{
+            $query = "DELETE FROM ".$this->tableName." WHERE id_offer = ". $offerId . " AND id_student=" . $studentId . ";";
+
+            $this->connection = Connection::getInstance();
+            $this->connection->executeNonQuery($query);
+        }
+        catch(Exception $e){
+            throw $e;
         }
     }
 

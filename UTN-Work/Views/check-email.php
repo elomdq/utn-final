@@ -28,9 +28,8 @@ namespace Views;
                                         <input type="submit" class="btn btn-primary btn-block my-3" value="Validar">
                                     </div>
                                 </div>
-                           
-
                         </form>
+                        
                     </div>
                 </div>
             </div>

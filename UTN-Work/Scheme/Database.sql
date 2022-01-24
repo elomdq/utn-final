@@ -22,7 +22,7 @@ CREATE TABLE `admins` (
  CONSTRAINT `fk_userAdmin` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;
 
-INSERT INTO `users`(email, pass, active) VALUES('admin@admin', '123456', 1);
+INSERT INTO `users`(email, pass, active, userType) VALUES('admin@admin', '123456', 1, 1);
 INSERT INTO `admins`(id_user) VALUES(1);
 
 /*
@@ -49,7 +49,7 @@ CREATE TABLE `companies` (
  `adress` varchar(100) DEFAULT NULL,
  `city` varchar(50) DEFAULT NULL,
  `cuit` varchar(100) DEFAULT NULL,
- `phoneNumber` int DEFAULT NULL,
+ `phoneNumber` varchar(50) DEFAULT NULL,
  PRIMARY KEY (`id_company`),
  KEY `fk_userCompany` (`id_user`),
  CONSTRAINT `fk_userCompany` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
@@ -57,12 +57,13 @@ CREATE TABLE `companies` (
 
 CREATE TABLE `offers` (
  `id_jobOffer` int(11) NOT NULL AUTO_INCREMENT,
- `id_company` int(11) NOT NULL,
- `jobPosition` varchar(50) NOT NULL,
- `career` varchar(50) NOT NULL,
+ `id_company` int(11) not null,
+ `jobPosition` varchar(50),
+ `career` varchar(50),
  `title` varchar(50) NOT NULL,
  `active` tinyint(1) NOT NULL,
  `publicationDate` date NOT NULL,
+ `dueDays` int(11) NOT NULL,
  `offerDescription` varchar(5000) DEFAULT NULL,
  PRIMARY KEY (`id_jobOffer`),
  KEY `fk_company` (`id_company`),
@@ -97,4 +98,31 @@ CREATE TABLE `students_x_offers` (
  KEY `fk_student` (`id_student`),
  CONSTRAINT `fk_jobOffer` FOREIGN KEY (`id_offer`) REFERENCES `offers` (`id_jobOffer`),
  CONSTRAINT `fk_student` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `images` (
+ `id_images` int(11) NOT NULL AUTO_INCREMENT,
+ `id_offer` int(11) NOT NULL,
+ `url` varchar(100) NOT NULL,
+ PRIMARY KEY (`id_images`),
+ KEY `fk_jobOffer_images` (`id_offer`),
+ CONSTRAINT `fk_jobOffer_images` FOREIGN KEY (`id_offer`) REFERENCES `offers` (`id_jobOffer`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `curriculums` (
+ `id_curriculum` int(11) NOT NULL AUTO_INCREMENT,
+ `id_student` int(11) NOT NULL,
+ `url` varchar(100) NOT NULL,
+ PRIMARY KEY (`id_curriculum`),
+ KEY `fk_student_cv` (`id_student`),
+ CONSTRAINT `fk_student_cv` FOREIGN KEY (`id_student`) REFERENCES `students` (`id_student`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `profile_pictures` (
+ `id_profile` int(11) NOT NULL AUTO_INCREMENT,
+ `id_user` int(11) NOT NULL,
+ `url` varchar(100) NOT NULL,
+ PRIMARY KEY (`id_profile`),
+ KEY `fk_user_picture` (`id_user`),
+ CONSTRAINT `fk_user_picture` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`)
 ) ENGINE=InnoDB;

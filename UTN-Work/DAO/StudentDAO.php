@@ -41,8 +41,7 @@ class StudentDAO implements IStudentDAO{
             $this->connection->executeNonQuery($query, $parameters);
         }
         catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
-            throw new Exception('Error!! ',  $e->getMessage());
+            throw $e;
         }
     }
 
@@ -72,7 +71,7 @@ class StudentDAO implements IStudentDAO{
             return $students;
 
         }catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 
@@ -109,7 +108,7 @@ class StudentDAO implements IStudentDAO{
             $arrayStudents = json_decode($this->studentApiConnection->executeCurl(), true);
             return $arrayStudents;
         } catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 
@@ -135,7 +134,7 @@ class StudentDAO implements IStudentDAO{
             return $student;
 
         } catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
     }
 
@@ -161,8 +160,22 @@ class StudentDAO implements IStudentDAO{
     
             return $student;
         } catch (Exception $e){
-            echo "El problema: ".$e->getMessage();
+            throw $e;
         }
+    }
+
+    public function getStudentIdByIdUser($idUser){
+        try{
+            $query = "SELECT (id_student) FROM ".$this->tableName." WHERE id_user= \"".$idUser."\";";
+            $this->connection = Connection::GetInstance();
+    
+            $resultSet=$this->connection->execute($query);
+    
+            return $resultSet[0]['id_student'];
+        } catch (Exception $e){
+            throw $e;
+        }
+
     }
 
 }

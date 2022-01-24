@@ -20,7 +20,6 @@ class Connection{
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch(Exception $e){
-            echo "El problema: ".$e->getMessage();
             throw $e;
         }
     }
@@ -52,8 +51,7 @@ class Connection{
             return $this->pdoStatement->fetchAll(); //devuelve el resultado en forma de array clave->valor
 
         } catch (Exception $ex) {
-            echo "El problema: ".$ex->getMessage();
-            throw new Exception('Error!! ',  $ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -69,10 +67,9 @@ class Connection{
 
             return $this->pdoStatement->rowCount();
         } catch (PDOException $pdo){
-            echo "El problema: ".$pdo->getMessage();
+            throw $pdo;
         } catch(Exception $ex ){
-            echo "El problema: ".$ex->getMessage();
-            throw new Exception('Error!! ',  $ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -82,8 +79,7 @@ class Connection{
         try {
             $this->pdoStatement = $this->pdo->prepare($query);
         } catch (Exception $ex) {
-            echo "El problema: ".$ex->getMessage();
-            throw new Exception('Error!! ',  $ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -91,17 +87,21 @@ class Connection{
     private function bindParameters($parameters = array(), $queryType = QueryType::Query)
     {
         $i = 0;
-
-        foreach ($parameters as $parameterName => $value) {
-            $i++;
-
-            if ($queryType == QueryType::Query)
-            {
-                $this->pdoStatement->bindParam(":" . $parameterName, $parameters[$parameterName]); //si pongo directo el $value no lo toma
+        try{
+            foreach ($parameters as $parameterName => $value) {
+                $i++;
+    
+                if ($queryType == QueryType::Query)
+                {
+                    $this->pdoStatement->bindParam(":" . $parameterName, $parameters[$parameterName]); //si pongo directo el $value no lo toma
+                }
+                else
+                    $this->pdoStatement->bindParam($i, $parameters[$parameterName]);
             }
-            else
-                $this->pdoStatement->bindParam($i, $parameters[$parameterName]);
+        } catch (Exception $e){
+            throw $e;
         }
+
     }
 }
 
